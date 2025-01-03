@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Delete,
@@ -9,56 +10,83 @@ import {
   Put,
 } from '@nestjs/common';
 
+import { Types } from 'mongoose';
+
 import { TripsService } from '../service/trips.service';
 
-import { Trip } from '../model/trip.model';
-import { TripDto } from '../model/trip.dto';
+import { Trip } from '../schema/trip.schema';
 
-export interface TripParam {
-  id: string;
-}
+import { CreateTripDto } from '../dto/create-trip.dto';
+import { UpdateTripDto } from '../dto/update-trip.dto';
 
 @Controller('trips')
 export class TripsController {
   constructor(private readonly tripsService: TripsService) {}
 
   @Get()
-  getTrips(): Trip[] {
+  async getTrips(): Promise<Trip[]> {
     return this.tripsService.getTrips();
   }
 
   @Get(':id')
-  getTrip(@Param() params: TripParam): Trip {
-    const trip: Trip = this.tripsService.getTrip(params.id);
-    if (!trip) {
-      throw new NotFoundException('Trip not found');
+  async getTrip(@Param('id') id: string): Promise<Trip> {
+    try {
+      if (Types.ObjectId.isValid(id)) {
+        const trip = await this.tripsService.getTrip(id);
+        if (trip) {
+          return trip;
+        } else {
+          throw new NotFoundException(`Trip with id ${id} not found`);
+        }
+      } else {
+        throw new BadRequestException(`Invalid player ID: ${id}`);
+      }
+    } catch {
+      throw new NotFoundException(`Trip with id ${id} not found`);
     }
-
-    return trip;
   }
 
   @Post()
-  createTrip(@Body() tripDto: TripDto): Trip {
-    return this.tripsService.createTrip(tripDto);
+  async createTrip(@Body() createTripDto: CreateTripDto): Promise<Trip> {
+    return this.tripsService.createTrip(createTripDto);
   }
 
-  @Put() // @Put(':id')
-  updateTrip(@Body() tripDto: TripDto): Trip {
-    const trip: Trip = this.tripsService.updateTrip(tripDto);
-    if (!trip) {
-      throw new NotFoundException('Trip not found');
+  @Put(':id')
+  async updateTrip(
+    @Param('id') id: string,
+    @Body() updateTripDto: UpdateTripDto,
+  ): Promise<Trip> {
+    try {
+      if (Types.ObjectId.isValid(id)) {
+        const trip = await this.tripsService.updateTrip(id, updateTripDto);
+        if (trip) {
+          return trip;
+        } else {
+          throw new NotFoundException(`Trip with id ${id} not found`);
+        }
+      } else {
+        throw new BadRequestException(`Invalid player ID: ${id}`);
+      }
+    } catch {
+      throw new NotFoundException(`Trip with id ${id} not found`);
     }
-
-    return trip;
   }
 
   @Delete(':id')
-  resetTrip(@Param() params: TripParam): Trip {
-    const trip: Trip = this.tripsService.deleteTrip(params.id);
-    if (!trip) {
-      throw new NotFoundException('Trip not found');
+  async deleteTrip(@Param('id') id: string): Promise<Trip> {
+    try {
+      if (Types.ObjectId.isValid(id)) {
+        const trip = await this.tripsService.deleteTrip(id);
+        if (trip) {
+          return trip;
+        } else {
+          throw new NotFoundException(`Trip with id ${id} not found`);
+        }
+      } else {
+        throw new BadRequestException(`Invalid player ID: ${id}`);
+      }
+    } catch {
+      throw new NotFoundException(`Trip with id ${id} not found`);
     }
-
-    return trip;
   }
 }

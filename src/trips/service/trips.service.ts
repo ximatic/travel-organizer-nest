@@ -1,75 +1,38 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
 
-import * as uuid from 'uuid';
+import { Model } from 'mongoose';
 
-import { Trip } from '../model/trip.model';
-import { TripDto } from '../model/trip.dto';
+import { Trip } from '../schema/trip.schema';
+
+import { CreateTripDto } from '../dto/create-trip.dto';
+import { UpdateTripDto } from '../dto/update-trip.dto';
 
 @Injectable()
 export class TripsService {
-  // TODO - temp solution, move it to DB
-  private trips: Trip[] = [
-    {
-      id: 'a5f21804-6746-4798-86f6-18b0294ccd00',
-      name: 'Test Trip #1',
-      location: 'Berlin, Germany',
-      description: 'Test description for Test Trip #1 asd',
-      endDate: new Date('2024-12-28T23:00:00.000Z'),
-      startDate: new Date('2024-12-21T23:00:00.000Z'),
-      items: [],
-    },
-  ];
+  constructor(
+    @InjectModel(Trip.name) private readonly tripModel: Model<Trip>,
+  ) {}
 
-  getTrips(): Trip[] {
-    return this.trips;
+  async getTrips(): Promise<Trip[]> {
+    return this.tripModel.find().exec();
   }
 
-  getTrip(id: string): Trip {
-    const tripIndex = this.getTripIndex(id);
-    let trip: Trip;
-    if (tripIndex > -1) {
-      trip = this.trips[tripIndex];
-    }
-
-    return trip;
+  async getTrip(id: string): Promise<Trip> {
+    return await this.tripModel.findOne({ _id: id }).exec();
   }
 
-  createTrip(trip: TripDto): Trip {
-    const newTrip = {
-      ...trip,
-      id: uuid.v4(),
-    };
-    this.trips.push(newTrip);
-
-    return newTrip;
+  async createTrip(createTripDto: CreateTripDto): Promise<Trip> {
+    return this.tripModel.create(createTripDto);
   }
 
-  updateTrip(trip: TripDto): Trip {
-    const tripIndex = this.getTripIndex(trip.id);
-    let updatedTrip: Trip;
-
-    if (tripIndex > -1) {
-      updatedTrip = {
-        ...trip,
-      } as Trip;
-      this.trips[tripIndex] = updatedTrip;
-    }
-
-    return updatedTrip;
+  updateTrip(id: string, updateTripDto: UpdateTripDto): Promise<Trip> {
+    return this.tripModel
+      .findByIdAndUpdate({ _id: id }, updateTripDto, { new: true })
+      .exec();
   }
 
-  deleteTrip(id: string): Trip {
-    const tripIndex = this.getTripIndex(id);
-    let deletedTrip: Trip;
-
-    if (tripIndex > -1) {
-      deletedTrip = this.trips.splice(tripIndex, 1)[0];
-    }
-
-    return deletedTrip;
-  }
-
-  private getTripIndex(id: string): number {
-    return this.trips.findIndex((trip: Trip) => trip.id == id);
+  async deleteTrip(id: string): Promise<Trip> {
+    return this.tripModel.findByIdAndDelete({ _id: id }).exec();
   }
 }
