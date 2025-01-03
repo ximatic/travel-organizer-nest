@@ -36,13 +36,13 @@ export class TripsController {
         if (trip) {
           return trip;
         } else {
-          throw new NotFoundException(`Trip with id ${id} not found`);
+          throw new NotFoundException(`Trip with ID ${id} not found`);
         }
       } else {
-        throw new BadRequestException(`Invalid player ID: ${id}`);
+        throw new BadRequestException(`Invalid trip ID: ${id}`);
       }
-    } catch {
-      throw new NotFoundException(`Trip with id ${id} not found`);
+    } catch (error: any) {
+      this.handleError(id, error);
     }
   }
 
@@ -62,13 +62,13 @@ export class TripsController {
         if (trip) {
           return trip;
         } else {
-          throw new NotFoundException(`Trip with id ${id} not found`);
+          throw new NotFoundException(`Trip with ID ${id} not found`);
         }
       } else {
-        throw new BadRequestException(`Invalid player ID: ${id}`);
+        throw new BadRequestException(`Invalid trip ID: ${id}`);
       }
-    } catch {
-      throw new NotFoundException(`Trip with id ${id} not found`);
+    } catch (error: any) {
+      this.handleError(id, error);
     }
   }
 
@@ -80,13 +80,21 @@ export class TripsController {
         if (trip) {
           return trip;
         } else {
-          throw new NotFoundException(`Trip with id ${id} not found`);
+          throw new NotFoundException(`Trip with ID ${id} not found`);
         }
       } else {
-        throw new BadRequestException(`Invalid player ID: ${id}`);
+        throw new BadRequestException(`Invalid trip ID: ${id}`);
       }
-    } catch {
-      throw new NotFoundException(`Trip with id ${id} not found`);
+    } catch (error: any) {
+      this.handleError(id, error);
+    }
+  }
+
+  private handleError(id: string, error: any): void {
+    if (error instanceof BadRequestException) {
+      throw error;
+    } else {
+      throw new NotFoundException(`Trip with ID ${id} not found`);
     }
   }
 }
