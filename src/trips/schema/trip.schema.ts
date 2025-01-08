@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 import * as mongoose from 'mongoose';
 
-import { TripItem } from './trip-item.schema';
+import { TripItem, TripItemSchema } from './trip-item.schema';
 
 export type TripDocument = mongoose.HydratedDocument<Trip>;
 
@@ -26,7 +26,7 @@ export class Trip {
   @Prop()
   endDate: Date;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'TripItem' })
+  @Prop({ type: [TripItemSchema] })
   items: TripItem[];
 }
 

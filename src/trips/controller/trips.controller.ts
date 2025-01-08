@@ -4,6 +4,7 @@ import {
   Controller,
   Delete,
   Get,
+  InternalServerErrorException,
   NotFoundException,
   Param,
   Post,
@@ -18,10 +19,14 @@ import { Trip } from '../schema/trip.schema';
 
 import { CreateTripDto } from '../dto/create-trip.dto';
 import { UpdateTripDto } from '../dto/update-trip.dto';
+import { CreateTripItemDto } from '../dto/create-trip-item.dto';
+import { UpdateTripItemDto } from '../dto/update-trip-item.dto';
 
 @Controller('trips')
 export class TripsController {
   constructor(private readonly tripsService: TripsService) {}
+
+  // trip
 
   @Get()
   async getTrips(): Promise<Trip[]> {
@@ -42,7 +47,7 @@ export class TripsController {
         throw new BadRequestException(`Invalid trip ID: ${id}`);
       }
     } catch (error: any) {
-      this.handleError(id, error);
+      this.handleTripError(id, error);
     }
   }
 
@@ -68,7 +73,7 @@ export class TripsController {
         throw new BadRequestException(`Invalid trip ID: ${id}`);
       }
     } catch (error: any) {
-      this.handleError(id, error);
+      this.handleTripError(id, error);
     }
   }
 
@@ -86,15 +91,96 @@ export class TripsController {
         throw new BadRequestException(`Invalid trip ID: ${id}`);
       }
     } catch (error: any) {
-      this.handleError(id, error);
+      this.handleTripError(id, error);
     }
   }
 
-  private handleError(id: string, error: any): void {
+  // trip item
+
+  @Post(':id/item')
+  async createTripItem(
+    @Param('id') id: string,
+    @Body() createTripItemDto: CreateTripItemDto,
+  ): Promise<Trip> {
+    try {
+      if (Types.ObjectId.isValid(id)) {
+        const trip = await this.tripsService.createTripItem(
+          id,
+          createTripItemDto,
+        );
+        if (trip) {
+          return trip;
+        } else {
+          throw new NotFoundException(`Trip with ID ${id} not found`);
+        }
+      } else {
+        throw new BadRequestException(`Invalid trip ID: ${id}`);
+      }
+    } catch (error: any) {
+      this.handleTripError(id, error);
+    }
+  }
+
+  @Put(':id/item/:itemId')
+  async updateTripItem(
+    @Param('id') id: string,
+    @Param('itemId') itemId: string,
+    @Body() updateTripItemDto: UpdateTripItemDto,
+  ): Promise<Trip> {
+    try {
+      if (Types.ObjectId.isValid(id)) {
+        const trip = await this.tripsService.updateTripItem(
+          id,
+          itemId,
+          updateTripItemDto,
+        );
+        if (trip) {
+          return trip;
+        } else {
+          throw new NotFoundException(`Trip with ID ${id} not found`);
+        }
+      } else {
+        throw new BadRequestException(`Invalid trip ID: ${id}`);
+      }
+    } catch (error: any) {
+      this.handleTripError(id, error);
+    }
+  }
+
+  @Delete(':id/item/:itemId')
+  async deleteTripItem(
+    @Param('id') id: string,
+    @Param('itemId') itemId: string,
+  ): Promise<Trip> {
+    try {
+      if (Types.ObjectId.isValid(id)) {
+        const trip = await this.tripsService.deleteTripItem(id, itemId);
+        if (trip) {
+          return trip;
+        } else {
+          throw new NotFoundException(`Trip with ID ${id} not found`);
+        }
+      } else {
+        throw new BadRequestException(`Invalid trip ID: ${id}`);
+      }
+    } catch (error: any) {
+      this.handleTripError(id, error);
+    }
+  }
+
+  // other
+
+  private handleTripError(id: string, error: any): void {
     if (error instanceof BadRequestException) {
       throw error;
-    } else {
+    } else if (error instanceof NotFoundException) {
       throw new NotFoundException(`Trip with ID ${id} not found`);
+    } else {
+      // TODO - think about better solution for logs
+      console.error('Trip request error:', error);
+      throw new InternalServerErrorException(
+        `Can't process request. Try again later.`,
+      );
     }
   }
 }

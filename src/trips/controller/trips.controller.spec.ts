@@ -2,18 +2,23 @@ import {
   NotFoundException,
   HttpStatus,
   BadRequestException,
+  InternalServerErrorException,
 } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 
 import {
   DEFAULT_TRIP_1,
   DEFAULT_TRIP_2,
+  DEFAULT_TRIP_ITEM_1,
+  DEFAULT_TRIP_ITEM_2,
 } from '../../__mocks__/trips.constants';
 
 import { TripsService } from '../service/trips.service';
 
 import { CreateTripDto } from '../dto/create-trip.dto';
 import { UpdateTripDto } from '../dto/update-trip.dto';
+import { CreateTripItemDto } from '../dto/create-trip-item.dto';
+import { UpdateTripItemDto } from '../dto/update-trip-item.dto';
 
 import { TripsController } from './trips.controller';
 
@@ -23,6 +28,9 @@ const tripsServiceMock = {
   createTrip: jest.fn(),
   updateTrip: jest.fn(),
   deleteTrip: jest.fn(),
+  createTripItem: jest.fn(),
+  updateTripItem: jest.fn(),
+  deleteTripItem: jest.fn(),
 };
 
 describe('TripsController', () => {
@@ -47,6 +55,8 @@ describe('TripsController', () => {
   it('should be created', () => {
     expect(tripsController).toBeTruthy();
   });
+
+  // trip
 
   describe('getTrips()', () => {
     it('returning no trips works', async () => {
@@ -83,7 +93,7 @@ describe('TripsController', () => {
       expect(tripsService.getTrip).toHaveBeenCalled();
     });
 
-    it('requesting trip with non-exisiting ID throws NotFoundException error', async () => {
+    it('requesting invalid trip throws InternalServerErrorException error', async () => {
       tripsService.getTrip.mockImplementation(() => {
         throw new Error();
       });
@@ -94,14 +104,14 @@ describe('TripsController', () => {
         await tripsController.getTrip(id);
       } catch (error: any) {
         hasThrown = true;
-        expect(error).toBeInstanceOf(NotFoundException);
-        expect((error as NotFoundException).getStatus()).toBe(
-          HttpStatus.NOT_FOUND,
+        expect(error).toBeInstanceOf(InternalServerErrorException);
+        expect((error as InternalServerErrorException).getStatus()).toBe(
+          HttpStatus.INTERNAL_SERVER_ERROR,
         );
-        expect((error as NotFoundException).getResponse()).toEqual({
-          error: 'Not Found',
-          message: `Trip with ID ${id} not found`,
-          statusCode: 404,
+        expect((error as InternalServerErrorException).getResponse()).toEqual({
+          error: 'Internal Server Error',
+          message: `Can't process request. Try again later.`,
+          statusCode: 500,
         });
       }
 
@@ -185,8 +195,8 @@ describe('TripsController', () => {
       expect(tripsService.updateTrip).toHaveBeenCalled();
     });
 
-    it('updating trip with non-exisiting ID throws NotFoundException error', async () => {
-      tripsService.getTrip.mockImplementation(() => {
+    it('updating invalid trip throws InternalServerErrorException error', async () => {
+      tripsService.updateTrip.mockImplementation(() => {
         throw new Error();
       });
 
@@ -199,14 +209,14 @@ describe('TripsController', () => {
         await tripsController.updateTrip(id, updateTripDto);
       } catch (error: any) {
         hasThrown = true;
-        expect(error).toBeInstanceOf(NotFoundException);
-        expect((error as NotFoundException).getStatus()).toBe(
-          HttpStatus.NOT_FOUND,
+        expect(error).toBeInstanceOf(InternalServerErrorException);
+        expect((error as InternalServerErrorException).getStatus()).toBe(
+          HttpStatus.INTERNAL_SERVER_ERROR,
         );
-        expect((error as NotFoundException).getResponse()).toEqual({
-          error: 'Not Found',
-          message: `Trip with ID ${id} not found`,
-          statusCode: 404,
+        expect((error as InternalServerErrorException).getResponse()).toEqual({
+          error: 'Internal Server Error',
+          message: `Can't process request. Try again later.`,
+          statusCode: 500,
         });
       }
 
@@ -214,7 +224,7 @@ describe('TripsController', () => {
     });
 
     it('updating non-exisiting trip throws NotFoundException error', async () => {
-      tripsService.getTrip.mockImplementation(null);
+      tripsService.updateTrip.mockImplementation(null);
 
       const id = DEFAULT_TRIP_1._id.toString();
       const updateTripDto: UpdateTripDto = {
@@ -279,8 +289,8 @@ describe('TripsController', () => {
       expect(tripsService.deleteTrip).toHaveBeenCalled();
     });
 
-    it('deleting trip with non-exisiting ID throws NotFoundException error', async () => {
-      tripsService.getTrip.mockImplementation(() => {
+    it('deleting invalid trip throws InternalServerErrorException error', async () => {
+      tripsService.deleteTrip.mockImplementation(() => {
         throw new Error();
       });
 
@@ -290,14 +300,14 @@ describe('TripsController', () => {
         await tripsController.deleteTrip(id);
       } catch (error: any) {
         hasThrown = true;
-        expect(error).toBeInstanceOf(NotFoundException);
-        expect((error as NotFoundException).getStatus()).toBe(
-          HttpStatus.NOT_FOUND,
+        expect(error).toBeInstanceOf(InternalServerErrorException);
+        expect((error as InternalServerErrorException).getStatus()).toBe(
+          HttpStatus.INTERNAL_SERVER_ERROR,
         );
-        expect((error as NotFoundException).getResponse()).toEqual({
-          error: 'Not Found',
-          message: `Trip with ID ${id} not found`,
-          statusCode: 404,
+        expect((error as InternalServerErrorException).getResponse()).toEqual({
+          error: 'Internal Server Error',
+          message: `Can't process request. Try again later.`,
+          statusCode: 500,
         });
       }
 
@@ -305,7 +315,7 @@ describe('TripsController', () => {
     });
 
     it('deleting non-exisiting trip throws NotFoundException error', async () => {
-      tripsService.getTrip.mockImplementation(null);
+      tripsService.deleteTrip.mockImplementation(null);
 
       const id = DEFAULT_TRIP_1._id.toString();
       let hasThrown = false;
@@ -348,4 +358,267 @@ describe('TripsController', () => {
       expect(hasThrown).toBe(true);
     });
   });
+
+  // trip item
+
+  describe('createTripItem()', () => {
+    it('creating trip item for a trip with exisiting ID works', async () => {
+      const mockedData = { ...DEFAULT_TRIP_1, items: [DEFAULT_TRIP_ITEM_1] };
+      tripsService.createTripItem.mockResolvedValueOnce(mockedData);
+
+      const createTripItemDto: CreateTripItemDto = {
+        ...DEFAULT_TRIP_ITEM_1,
+      };
+      const result = await tripsController.createTripItem(
+        DEFAULT_TRIP_1._id.toString(),
+        createTripItemDto,
+      );
+
+      expect(result).toEqual(mockedData);
+      expect(tripsService.createTripItem).toHaveBeenCalled();
+    });
+
+    it('creating trip item for an invalid trip throws InternalServerErrorException error', async () => {
+      tripsService.createTripItem.mockImplementation(() => {
+        throw new Error();
+      });
+
+      const id = DEFAULT_TRIP_1._id.toString();
+      const createTripItemDto: CreateTripItemDto = {
+        ...DEFAULT_TRIP_ITEM_1,
+      };
+      let hasThrown = false;
+      try {
+        await tripsController.createTripItem(id, createTripItemDto);
+      } catch (error: any) {
+        hasThrown = true;
+        verifyExpectedInternalServerErrorException(error);
+      }
+
+      expect(hasThrown).toBe(true);
+    });
+
+    it('creating trip item for a non-exisiting trip throws NotFoundException error', async () => {
+      tripsService.createTripItem.mockImplementation(null);
+
+      const id = DEFAULT_TRIP_1._id.toString();
+      const createTripItemDto: CreateTripItemDto = {
+        ...DEFAULT_TRIP_ITEM_1,
+      };
+      let hasThrown = false;
+      try {
+        await tripsController.createTripItem(id, createTripItemDto);
+      } catch (error: any) {
+        hasThrown = true;
+        verifyExpectedNotFoundException(error, id);
+      }
+
+      expect(hasThrown).toBe(true);
+    });
+
+    it('creating trip item for a trip with invalid ID throws BadRequestException error', async () => {
+      const id = null;
+      const createTripItemDto: CreateTripItemDto = {
+        ...DEFAULT_TRIP_ITEM_1,
+      };
+      let hasThrown = false;
+      try {
+        await tripsController.createTripItem(id, createTripItemDto);
+      } catch (error: any) {
+        hasThrown = true;
+        verifyExpectedBadRequestException(error, id);
+      }
+
+      expect(hasThrown).toBe(true);
+    });
+  });
+
+  describe('updateTripItem()', () => {
+    it('updating trip item for a trip with exisiting ID works', async () => {
+      const mockedData = { ...DEFAULT_TRIP_1, items: [DEFAULT_TRIP_ITEM_2] };
+      tripsService.updateTripItem.mockResolvedValueOnce(mockedData);
+
+      const tripId = DEFAULT_TRIP_1._id.toString();
+      const tripItemId = DEFAULT_TRIP_1._id.toString();
+      const updateTripItemDto: UpdateTripItemDto = {
+        ...DEFAULT_TRIP_ITEM_2,
+      };
+      const result = await tripsController.updateTripItem(
+        tripId,
+        tripItemId,
+        updateTripItemDto,
+      );
+
+      expect(result).toEqual(mockedData);
+      expect(tripsService.createTripItem).toHaveBeenCalled();
+    });
+
+    it('updating trip item for an invalid trip throws InternalServerErrorException error', async () => {
+      tripsService.updateTripItem.mockImplementation(() => {
+        throw new Error();
+      });
+
+      const tripId = DEFAULT_TRIP_1._id.toString();
+      const tripItemId = DEFAULT_TRIP_1._id.toString();
+      const updateTripItemDto: UpdateTripItemDto = {
+        ...DEFAULT_TRIP_ITEM_2,
+      };
+      let hasThrown = false;
+      try {
+        await tripsController.updateTripItem(
+          tripId,
+          tripItemId,
+          updateTripItemDto,
+        );
+      } catch (error: any) {
+        hasThrown = true;
+        verifyExpectedInternalServerErrorException(error);
+      }
+
+      expect(hasThrown).toBe(true);
+    });
+
+    it('updating trip item for a non-exisiting trip throws NotFoundException error', async () => {
+      tripsService.updateTripItem.mockImplementation(null);
+
+      const tripId = DEFAULT_TRIP_1._id.toString();
+      const tripItemId = DEFAULT_TRIP_1._id.toString();
+      const updateTripItemDto: UpdateTripItemDto = {
+        ...DEFAULT_TRIP_ITEM_2,
+      };
+      let hasThrown = false;
+      try {
+        await tripsController.updateTripItem(
+          tripId,
+          tripItemId,
+          updateTripItemDto,
+        );
+      } catch (error: any) {
+        hasThrown = true;
+        verifyExpectedNotFoundException(error, tripId);
+      }
+
+      expect(hasThrown).toBe(true);
+    });
+
+    it('updating trip item for a trip with invalid ID throws BadRequestException error', async () => {
+      const tripId = null;
+      const tripItemId = null;
+      const updateTripItemDto: UpdateTripItemDto = {
+        ...DEFAULT_TRIP_ITEM_2,
+      };
+      let hasThrown = false;
+      try {
+        await tripsController.updateTripItem(
+          tripId,
+          tripItemId,
+          updateTripItemDto,
+        );
+      } catch (error: any) {
+        hasThrown = true;
+        verifyExpectedBadRequestException(error, tripId);
+      }
+
+      expect(hasThrown).toBe(true);
+    });
+  });
+
+  describe('deleteTripItem()', () => {
+    it('deleting trip item for a trip with exisiting ID works', async () => {
+      const mockedData = { ...DEFAULT_TRIP_1 };
+      tripsService.deleteTripItem.mockResolvedValueOnce(mockedData);
+
+      const tripId = DEFAULT_TRIP_1._id.toString();
+      const tripItemId = DEFAULT_TRIP_1._id.toString();
+      const result = await tripsController.deleteTripItem(tripId, tripItemId);
+
+      expect(result).toEqual(mockedData);
+      expect(tripsService.createTripItem).toHaveBeenCalled();
+    });
+
+    it('deleting trip item for an invalid trip throws InternalServerErrorException error', async () => {
+      tripsService.deleteTripItem.mockImplementation(() => {
+        throw new Error();
+      });
+
+      const tripId = DEFAULT_TRIP_1._id.toString();
+      const tripItemId = DEFAULT_TRIP_1._id.toString();
+      let hasThrown = false;
+      try {
+        await tripsController.deleteTripItem(tripId, tripItemId);
+      } catch (error: any) {
+        hasThrown = true;
+        verifyExpectedInternalServerErrorException(error);
+      }
+
+      expect(hasThrown).toBe(true);
+    });
+
+    it('deleting trip item for a non-exisiting trip throws NotFoundException error', async () => {
+      tripsService.deleteTripItem.mockImplementation(null);
+
+      const tripId = DEFAULT_TRIP_1._id.toString();
+      const tripItemId = DEFAULT_TRIP_1._id.toString();
+      let hasThrown = false;
+      try {
+        await tripsController.deleteTripItem(tripId, tripItemId);
+      } catch (error: any) {
+        hasThrown = true;
+        verifyExpectedNotFoundException(error, tripId);
+      }
+
+      expect(hasThrown).toBe(true);
+    });
+
+    it('deleting trip item for a trip with invalid ID throws BadRequestException error', async () => {
+      const tripId = null;
+      const tripItemId = null;
+      let hasThrown = false;
+      try {
+        await tripsController.deleteTripItem(tripId, tripItemId);
+      } catch (error: any) {
+        hasThrown = true;
+        verifyExpectedBadRequestException(error, tripId);
+      }
+
+      expect(hasThrown).toBe(true);
+    });
+  });
 });
+
+function verifyExpectedInternalServerErrorException(error: any): void {
+  expect(error).toBeInstanceOf(InternalServerErrorException);
+  expect((error as InternalServerErrorException).getStatus()).toBe(
+    HttpStatus.INTERNAL_SERVER_ERROR,
+  );
+  expect((error as InternalServerErrorException).getResponse()).toEqual({
+    error: 'Internal Server Error',
+    message: `Can't process request. Try again later.`,
+    statusCode: 500,
+  });
+}
+
+function verifyExpectedNotFoundException(error: any, id: string | null): void {
+  expect(error).toBeInstanceOf(NotFoundException);
+  expect((error as NotFoundException).getStatus()).toBe(HttpStatus.NOT_FOUND);
+  expect((error as NotFoundException).getResponse()).toEqual({
+    error: 'Not Found',
+    message: `Trip with ID ${id} not found`,
+    statusCode: 404,
+  });
+}
+
+function verifyExpectedBadRequestException(
+  error: any,
+  id: string | null,
+): void {
+  expect(error).toBeInstanceOf(BadRequestException);
+  expect((error as BadRequestException).getStatus()).toBe(
+    HttpStatus.BAD_REQUEST,
+  );
+  expect((error as BadRequestException).getResponse()).toEqual({
+    error: 'Bad Request',
+    message: `Invalid trip ID: ${id}`,
+    statusCode: 400,
+  });
+}
