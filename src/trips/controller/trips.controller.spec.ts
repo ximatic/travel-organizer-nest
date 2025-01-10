@@ -104,15 +104,7 @@ describe('TripsController', () => {
         await tripsController.getTrip(id);
       } catch (error: any) {
         hasThrown = true;
-        expect(error).toBeInstanceOf(InternalServerErrorException);
-        expect((error as InternalServerErrorException).getStatus()).toBe(
-          HttpStatus.INTERNAL_SERVER_ERROR,
-        );
-        expect((error as InternalServerErrorException).getResponse()).toEqual({
-          error: 'Internal Server Error',
-          message: `Can't process request. Try again later.`,
-          statusCode: 500,
-        });
+        verifyExpectedInternalServerErrorException(error);
       }
 
       expect(hasThrown).toBe(true);
@@ -127,15 +119,7 @@ describe('TripsController', () => {
         await tripsController.getTrip(id);
       } catch (error: any) {
         hasThrown = true;
-        expect(error).toBeInstanceOf(NotFoundException);
-        expect((error as NotFoundException).getStatus()).toBe(
-          HttpStatus.NOT_FOUND,
-        );
-        expect((error as NotFoundException).getResponse()).toEqual({
-          error: 'Not Found',
-          message: `Trip with ID ${id} not found`,
-          statusCode: 404,
-        });
+        verifyExpectedNotFoundException(error, id);
       }
 
       expect(hasThrown).toBe(true);
@@ -148,15 +132,7 @@ describe('TripsController', () => {
         await tripsController.getTrip(id);
       } catch (error: any) {
         hasThrown = true;
-        expect(error).toBeInstanceOf(BadRequestException);
-        expect((error as BadRequestException).getStatus()).toBe(
-          HttpStatus.BAD_REQUEST,
-        );
-        expect((error as BadRequestException).getResponse()).toEqual({
-          error: 'Bad Request',
-          message: `Invalid trip ID: ${id}`,
-          statusCode: 400,
-        });
+        verifyExpectedBadRequestException(error, id);
       }
 
       expect(hasThrown).toBe(true);
@@ -209,15 +185,7 @@ describe('TripsController', () => {
         await tripsController.updateTrip(id, updateTripDto);
       } catch (error: any) {
         hasThrown = true;
-        expect(error).toBeInstanceOf(InternalServerErrorException);
-        expect((error as InternalServerErrorException).getStatus()).toBe(
-          HttpStatus.INTERNAL_SERVER_ERROR,
-        );
-        expect((error as InternalServerErrorException).getResponse()).toEqual({
-          error: 'Internal Server Error',
-          message: `Can't process request. Try again later.`,
-          statusCode: 500,
-        });
+        verifyExpectedInternalServerErrorException(error);
       }
 
       expect(hasThrown).toBe(true);
@@ -236,15 +204,7 @@ describe('TripsController', () => {
         await tripsController.updateTrip(id, updateTripDto);
       } catch (error: any) {
         hasThrown = true;
-        expect(error).toBeInstanceOf(NotFoundException);
-        expect((error as NotFoundException).getStatus()).toBe(
-          HttpStatus.NOT_FOUND,
-        );
-        expect((error as NotFoundException).getResponse()).toEqual({
-          error: 'Not Found',
-          message: `Trip with ID ${id} not found`,
-          statusCode: 404,
-        });
+        verifyExpectedNotFoundException(error, id);
       }
 
       expect(hasThrown).toBe(true);
@@ -261,15 +221,7 @@ describe('TripsController', () => {
         await tripsController.updateTrip(id, updateTripDto);
       } catch (error: any) {
         hasThrown = true;
-        expect(error).toBeInstanceOf(BadRequestException);
-        expect((error as BadRequestException).getStatus()).toBe(
-          HttpStatus.BAD_REQUEST,
-        );
-        expect((error as BadRequestException).getResponse()).toEqual({
-          error: 'Bad Request',
-          message: `Invalid trip ID: ${id}`,
-          statusCode: 400,
-        });
+        verifyExpectedBadRequestException(error, id);
       }
 
       expect(hasThrown).toBe(true);
@@ -300,15 +252,7 @@ describe('TripsController', () => {
         await tripsController.deleteTrip(id);
       } catch (error: any) {
         hasThrown = true;
-        expect(error).toBeInstanceOf(InternalServerErrorException);
-        expect((error as InternalServerErrorException).getStatus()).toBe(
-          HttpStatus.INTERNAL_SERVER_ERROR,
-        );
-        expect((error as InternalServerErrorException).getResponse()).toEqual({
-          error: 'Internal Server Error',
-          message: `Can't process request. Try again later.`,
-          statusCode: 500,
-        });
+        verifyExpectedInternalServerErrorException(error);
       }
 
       expect(hasThrown).toBe(true);
@@ -323,15 +267,7 @@ describe('TripsController', () => {
         await tripsController.deleteTrip(id);
       } catch (error: any) {
         hasThrown = true;
-        expect(error).toBeInstanceOf(NotFoundException);
-        expect((error as NotFoundException).getStatus()).toBe(
-          HttpStatus.NOT_FOUND,
-        );
-        expect((error as NotFoundException).getResponse()).toEqual({
-          error: 'Not Found',
-          message: `Trip with ID ${id} not found`,
-          statusCode: 404,
-        });
+        verifyExpectedNotFoundException(error, id);
       }
 
       expect(hasThrown).toBe(true);
@@ -344,15 +280,7 @@ describe('TripsController', () => {
         await tripsController.deleteTrip(id);
       } catch (error: any) {
         hasThrown = true;
-        expect(error).toBeInstanceOf(BadRequestException);
-        expect((error as BadRequestException).getStatus()).toBe(
-          HttpStatus.BAD_REQUEST,
-        );
-        expect((error as BadRequestException).getResponse()).toEqual({
-          error: 'Bad Request',
-          message: `Invalid trip ID: ${id}`,
-          statusCode: 400,
-        });
+        verifyExpectedBadRequestException(error, id);
       }
 
       expect(hasThrown).toBe(true);

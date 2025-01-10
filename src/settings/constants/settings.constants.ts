@@ -1,10 +1,11 @@
+import { Settings } from '../schema/settings.schema';
+
 import {
-  Settings,
   SettingsLanguage,
   SettingsDateFormat,
   SettingsTimeFormat,
   SettingsTheme,
-} from '../model/settings.model';
+} from '../model/settings.enum';
 
 export const DEFAULT_LANGUAGE = SettingsLanguage.English;
 export const DEFAULT_DATE_FORMAT = SettingsDateFormat.DMY;
