@@ -2,8 +2,10 @@ import { Module } from '@nestjs/common';
 
 import { MongooseModule } from '@nestjs/mongoose';
 
+import { AuthModule } from './auth/auth.module';
 import { SettingsModule } from './settings/settings.module';
 import { TripsModule } from './trips/trips.module';
+import { UsersModule } from './users/users.module';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -15,6 +17,8 @@ import { AppService } from './app.service';
     // local imports
     SettingsModule,
     TripsModule,
+    AuthModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
