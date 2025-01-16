@@ -53,9 +53,9 @@ export class AuthService {
     return this.tokenService.deleteAccessToken(accessToken.token);
   }
 
-  async verifyToken(): Promise<boolean> {
+  async verifyToken(accessToken: AccessToken): Promise<AuthToken> {
     // TODO - token verification (by JWT) and existence (in DB) is done in Auth Guard so no extra logic is needed for now
-    return true;
+    return this.createTokenResponse(accessToken.token);
   }
 
   // async refreshToken(): Promise<AuthToken> {

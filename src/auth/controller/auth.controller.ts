@@ -33,14 +33,15 @@ export class AuthController {
   @Get('logout')
   @HttpCode(HttpStatus.OK)
   @UseGuards(AuthGuard)
-  logout(@Req() request: Request) {
+  logout(@Req() request: Request): Promise<AuthToken> {
     return this.authService.logout(request['accessToken']);
   }
 
-  @Post('verify')
+  @Get('verify')
+  @HttpCode(HttpStatus.OK)
   @UseGuards(AuthGuard)
-  async verifyToken(): Promise<boolean> {
-    return this.authService.verifyToken();
+  async verifyToken(@Req() request: Request): Promise<AuthToken> {
+    return this.authService.verifyToken(request['accessToken']);
   }
 
   //   @Post('refresh')
