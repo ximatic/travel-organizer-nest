@@ -6,8 +6,7 @@ import {
 } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { SettingsService } from '../service/settings.service';
-
+import { authGuardMock } from '../../__mocks__/auth.constants';
 import {
   DEFAULT_SETTINGS_0,
   DEFAULT_SETTINGS_1,
@@ -15,9 +14,14 @@ import {
   DEFAULT_SETTINGS_ID_1,
 } from '../../__mocks__/settings.constants';
 
-import { SettingsController } from './settings.controller';
+import { AuthGuard } from '../../auth/guards/auth.guard';
+
+import { SettingsService } from '../service/settings.service';
+
 import { CreateSettingsDto } from '../dto/create-settings.dto';
 import { UpdateSettingsDto } from '../dto/update-settings.dto';
+
+import { SettingsController } from './settings.controller';
 
 const settingsServiceMock = {
   getSettings: jest.fn(),
@@ -40,7 +44,10 @@ describe('SettingsController', () => {
           useValue: settingsServiceMock,
         },
       ],
-    }).compile();
+    })
+      .overrideGuard(AuthGuard)
+      .useValue(authGuardMock)
+      .compile();
 
     controller = app.get<SettingsController>(SettingsController);
     service = app.get(SettingsService);

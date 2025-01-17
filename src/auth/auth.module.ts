@@ -6,6 +6,8 @@ import { UsersModule } from '../users/users.module';
 
 import { jwt } from './constants/auth.constants';
 
+import { AuthGuard } from './guards/auth.guard';
+
 import { AuthController } from './controller/auth.controller';
 import { AuthService } from './service/auth.service';
 
@@ -25,7 +27,6 @@ import {
       secret: jwt.secret,
       signOptions: { expiresIn: '1d' },
     }),
-
     MongooseModule.forFeature([
       { name: AccessToken.name, schema: AccessTokenSchema },
       { name: RefreshToken.name, schema: RefreshTokenSchema },
@@ -34,6 +35,7 @@ import {
     UsersModule,
   ],
   controllers: [AuthController],
-  providers: [AuthService, TokenService],
+  providers: [AuthGuard, AuthService, TokenService],
+  exports: [AuthGuard, TokenService],
 })
 export class AuthModule {}

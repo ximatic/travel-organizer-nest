@@ -175,8 +175,8 @@ describe('UsersService', () => {
 
   // user profiles
 
-  describe('getUserProfiless()', () => {
-    it('returning all user profiless works', async () => {
+  describe('getUserProfiles()', () => {
+    it('returning all user profiles works', async () => {
       const mockData = [DEFAULT_USER_PROFILE_1, DEFAULT_USER_PROFILE_2];
       userProfileModel.find.mockReturnValueOnce({
         exec: jest.fn().mockResolvedValueOnce(mockData),

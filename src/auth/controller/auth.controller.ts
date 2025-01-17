@@ -5,6 +5,7 @@ import {
   Get,
   HttpCode,
   HttpStatus,
+  InternalServerErrorException,
   Post,
   Req,
   UseGuards,
@@ -33,8 +34,14 @@ export class AuthController {
   @Get('logout')
   @HttpCode(HttpStatus.OK)
   @UseGuards(AuthGuard)
-  logout(@Req() request: Request): Promise<AuthToken> {
-    return this.authService.logout(request['accessToken']);
+  logout(@Req() request: Request): void {
+    try {
+      this.authService.logout(request['accessToken']);
+    } catch {
+      throw new InternalServerErrorException(
+        `Can't process request. Try again later.`,
+      );
+    }
   }
 
   @Get('verify')

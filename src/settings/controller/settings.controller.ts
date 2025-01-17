@@ -9,7 +9,12 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
+
+import { Types } from 'mongoose';
+
+import { AuthGuard } from '../../auth/guards/auth.guard';
 
 import { SettingsService } from '../service/settings.service';
 
@@ -17,9 +22,9 @@ import { Settings } from '../schema/settings.schema';
 
 import { CreateSettingsDto } from '../dto/create-settings.dto';
 import { UpdateSettingsDto } from '../dto/update-settings.dto';
-import { Types } from 'mongoose';
 
 @Controller('settings')
+@UseGuards(AuthGuard)
 export class SettingsController {
   constructor(private readonly settingsService: SettingsService) {}
 

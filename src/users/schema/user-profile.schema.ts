@@ -10,7 +10,7 @@ export type UserProfileDocument = mongoose.HydratedDocument<UserProfile>;
   collection: 'user-profiles',
 })
 export class UserProfile {
-  id: mongoose.Types.ObjectId;
+  _id: mongoose.Types.ObjectId;
 
   @Prop({ required: true })
   firstname: string;
@@ -30,7 +30,7 @@ export class UserProfile {
   createdAt: Date;
 
   @Prop()
-  updateAt: Date;
+  updatedAt: Date;
 }
 
 export const UserProfileSchema = SchemaFactory.createForClass(UserProfile);

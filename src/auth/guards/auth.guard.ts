@@ -5,9 +5,12 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { jwt } from '../constants/auth.constants';
+
 import { Request } from 'express';
+
 import { TokenService } from '../service/token.service';
+
+import { jwt } from '../constants/auth.constants';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -22,10 +25,12 @@ export class AuthGuard implements CanActivate {
     if (!token) {
       throw new UnauthorizedException();
     }
+
     const accessToken = await this.tokenService.getAccessToken(token);
     if (!accessToken) {
       throw new UnauthorizedException();
     }
+
     try {
       const jwtToken = await this.jwtService.verifyAsync(token, {
         secret: jwt.secret,
@@ -38,6 +43,7 @@ export class AuthGuard implements CanActivate {
     } catch {
       throw new UnauthorizedException();
     }
+
     return true;
   }
 

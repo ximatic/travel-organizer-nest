@@ -11,5 +11,5 @@ export class LoginDto {
 
   @IsOptional()
   @IsBoolean()
-  readonly rememberMe: boolean;
+  readonly rememberMe?: boolean;
 }

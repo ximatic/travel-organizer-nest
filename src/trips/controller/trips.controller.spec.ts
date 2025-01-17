@@ -6,12 +6,15 @@ import {
 } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 
+import { authGuardMock } from '../../__mocks__/auth.constants';
 import {
   DEFAULT_TRIP_1,
   DEFAULT_TRIP_2,
   DEFAULT_TRIP_ITEM_1,
   DEFAULT_TRIP_ITEM_2,
 } from '../../__mocks__/trips.constants';
+
+import { AuthGuard } from '../../auth/guards/auth.guard';
 
 import { TripsService } from '../service/trips.service';
 
@@ -46,7 +49,10 @@ describe('TripsController', () => {
           useValue: tripsServiceMock,
         },
       ],
-    }).compile();
+    })
+      .overrideGuard(AuthGuard)
+      .useValue(authGuardMock)
+      .compile();
 
     tripsController = app.get<TripsController>(TripsController);
     tripsService = app.get(TripsService);

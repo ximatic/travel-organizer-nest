@@ -9,9 +9,12 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 
 import { Types } from 'mongoose';
+
+import { AuthGuard } from '../../auth/guards/auth.guard';
 
 import { TripsService } from '../service/trips.service';
 
@@ -23,6 +26,7 @@ import { CreateTripItemDto } from '../dto/create-trip-item.dto';
 import { UpdateTripItemDto } from '../dto/update-trip-item.dto';
 
 @Controller('trips')
+@UseGuards(AuthGuard)
 export class TripsController {
   constructor(private readonly tripsService: TripsService) {}
 
