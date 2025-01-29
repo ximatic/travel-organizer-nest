@@ -3,14 +3,15 @@ import { getModelToken } from '@nestjs/mongoose';
 
 import { Model } from 'mongoose';
 
-import { AccessToken } from '../schema/access-token.schema';
-import { RefreshToken } from '../schema/refresh-token.schema';
-
-import { TokenService } from './token.service';
 import {
   DEFAULT_ACCESS_TOKEN_1,
   DEFAULT_REFRESH_TOKEN_1,
 } from '../../__mocks__/auth.constants';
+
+import { AccessToken } from '../schema/access-token.schema';
+import { RefreshToken } from '../schema/refresh-token.schema';
+
+import { TokenService } from './token.service';
 
 const accessTokenModelMock = {
   find: jest.fn(),
@@ -67,7 +68,7 @@ describe('TokenService', () => {
       } as any);
 
       const result = await service.getAccessTokenByUserId(
-        DEFAULT_ACCESS_TOKEN_1.userId,
+        DEFAULT_ACCESS_TOKEN_1.user,
       );
 
       expect(result).toEqual(mockData);
@@ -85,7 +86,7 @@ describe('TokenService', () => {
       } as any);
 
       const result = await service.getRefreshTokenByUserId(
-        DEFAULT_REFRESH_TOKEN_1.userId,
+        DEFAULT_REFRESH_TOKEN_1.user,
       );
 
       expect(result).toEqual(mockData);

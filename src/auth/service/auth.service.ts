@@ -13,10 +13,19 @@ import { TokenService } from './token.service';
 import { AuthToken } from '../model/auth-token.model';
 
 import { User } from '../../users/schema/user.schema';
-import { UserProfile } from '../../users/schema/user-profile.schema';
 import { AccessToken } from '../schema/access-token.schema';
 
+import { DEFAULT_SETTINGS } from '../../settings/constants/settings.constants';
+
+import { UserInfoResponse } from '../../users/model/user-info.model';
+import { UserProfileResponse } from '../../users/model/user-profile.model';
+import { UserSettingsResponse } from '../../users/model/user-settings.model';
+
 import { SignUpDto } from '../dto/sign-up.dto';
+import { UpdateUserDto } from '../../users/dto/update-user.dto';
+import { UpdateUserInfoDto } from '../../users/dto/update-user-info.dto';
+import { UpdateUserProfileDto } from '../../users/dto/update-user-profile.dto';
+import { UpdateUserSettingsDto } from '../../users/dto/update-user-settings.dto';
 
 @Injectable()
 export class AuthService {
@@ -30,6 +39,10 @@ export class AuthService {
 
   async login(email: string, password: string): Promise<AuthToken> {
     const user = await this.usersService.getUserByEmail(email);
+    if (!user) {
+      throw new UnauthorizedException();
+    }
+
     const isMatch = await bcrypt.compare(password, user?.password);
     if (!isMatch) {
       throw new UnauthorizedException();
@@ -62,11 +75,14 @@ export class AuthService {
   //   // TODO - return new access token
   // }
 
-  async getProfile(accessToken: AccessToken): Promise<UserProfile> {
-    return this.usersService.getUserProfileByUserId(accessToken.userId._id);
-  }
-
+  // TODO - consider renaming to createUser
   async signup(signUpDto: SignUpDto): Promise<AuthToken> {
+    if (!this.isValidPassword(signUpDto.password, signUpDto.passwordRepeat)) {
+      throw new InternalServerErrorException(
+        `Password is invalid. Please try again later.`,
+      );
+    }
+
     const hashPasssword = await this.hashPassword(signUpDto.password);
     const user = await this.usersService.createUser({
       email: signUpDto.email,
@@ -78,15 +94,25 @@ export class AuthService {
         `Can't process request and create an user. Please try again later.`,
       );
     }
+
     const userProfile = await this.usersService.createUserProfile({
-      userId: user._id,
       firstname: signUpDto.firstname,
       lastname: signUpDto.lastname,
+      user: user._id,
     });
-
     if (!userProfile) {
       throw new InternalServerErrorException(
         `Can't process request and create a profile. Please try again later.`,
+      );
+    }
+
+    const userSettings = await this.usersService.createUserSettings({
+      ...DEFAULT_SETTINGS,
+      user: user._id,
+    });
+    if (!userSettings) {
+      throw new InternalServerErrorException(
+        `Can't process request and create a settings. Please try again later.`,
       );
     }
 
@@ -101,6 +127,87 @@ export class AuthService {
     }
 
     return this.createTokenResponse(accessToken.token);
+  }
+
+  // user
+
+  async updateUser(
+    accessToken: AccessToken,
+    updateUserDto: UpdateUserDto,
+  ): Promise<User> {
+    if (
+      !this.isValidPassword(
+        updateUserDto.password,
+        updateUserDto.passwordRepeat,
+      )
+    ) {
+      throw new InternalServerErrorException(
+        `Password is invalid. Please try again later.`,
+      );
+    }
+
+    return this.usersService.updateUser(
+      accessToken.user._id.toString(),
+      updateUserDto,
+    );
+  }
+
+  // user info
+
+  async getUserInfo(accessToken: AccessToken): Promise<UserInfoResponse> {
+    return this.usersService.getUserInfo(accessToken.user);
+  }
+
+  // TODO - remove?
+  // async updateUserInfo(
+  //   accessToken: AccessToken,
+  //   updateUserInfoDto: UpdateUserInfoDto,
+  // ): Promise<UserInfoResponse> {
+  //   return this.usersService.updateUserInfo(
+  //     accessToken.user,
+  //     updateUserInfoDto,
+  //   );
+  // }
+
+  // user profile
+
+  async getUserProfile(accessToken: AccessToken): Promise<UserProfileResponse> {
+    return this.usersService.getUserProfile(accessToken.user);
+  }
+
+  async updateUserProfile(
+    accessToken: AccessToken,
+    updateUserProfileDto: UpdateUserProfileDto,
+  ): Promise<UserProfileResponse> {
+    return this.usersService.updateUserProfile(
+      accessToken.user,
+      updateUserProfileDto,
+    );
+  }
+
+  // user settings
+
+  async getUserSettings(
+    accessToken: AccessToken,
+  ): Promise<UserSettingsResponse> {
+    return this.usersService.getUserSettings(accessToken.user);
+  }
+
+  async updateUserSettings(
+    accessToken: AccessToken,
+    updateUserSettingsDto: UpdateUserSettingsDto,
+  ): Promise<UserSettingsResponse> {
+    return this.usersService.updateUserSettings(
+      accessToken.user,
+      updateUserSettingsDto,
+    );
+  }
+
+  // other
+
+  private isValidPassword(password: string, passwordRepeat: string): boolean {
+    // TODO - add extra logic for password requirements
+    return password === passwordRepeat;
   }
 
   private hashPassword(password: string): Promise<string> {

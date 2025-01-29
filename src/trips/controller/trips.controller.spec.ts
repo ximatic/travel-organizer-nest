@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { authGuardMock } from '../../__mocks__/auth.constants';
+import { authGuardMock } from '../../__mocks__/guards/auth.guard.mock';
 import {
   DEFAULT_TRIP_1,
   DEFAULT_TRIP_2,

@@ -9,6 +9,8 @@ import { Request } from 'express';
 
 import { createMock } from '@golevelup/ts-jest';
 
+import { authGuardMock } from '../../__mocks__/guards/auth.guard.mock';
+import { authServiceMock } from '../../__mocks__/services/auth.service.mock';
 import {
   DEFAULT_EMAIL_1,
   DEFAULT_PASSWORD_1,
@@ -17,11 +19,13 @@ import {
   DEFAULT_LASTNAME_1,
 } from '../../__mocks__/common.constants';
 import {
-  authGuardMock,
   DEFAULT_ACCESS_TOKEN_1,
   DEFAULT_AUTH_TOKEN_1,
 } from '../../__mocks__/auth.constants';
-import { DEFAULT_USER_PROFILE_1 } from '../../__mocks__/user.constants';
+import {
+  DEFAULT_USER_PROFILE_RESPONSE_1,
+  DEFAULT_USER_SETTINGS_RESPONSE_1,
+} from '../../__mocks__/user.constants';
 
 import { AuthGuard } from '../guards/auth.guard';
 
@@ -36,15 +40,6 @@ const getExecutionContextMock = (accessToken: string): ExecutionContext => {
   });
 
   return mockContext;
-};
-
-const authServiceMock = {
-  login: jest.fn(),
-  logout: jest.fn(),
-  verifyToken: jest.fn(),
-  refreshToken: jest.fn(),
-  getProfile: jest.fn(),
-  signup: jest.fn(),
 };
 
 describe('AuthController', () => {
@@ -158,26 +153,6 @@ describe('AuthController', () => {
     });
   });
 
-  describe('profile()', () => {
-    it('getting profile works', async () => {
-      const mockedData = DEFAULT_USER_PROFILE_1;
-      service.getProfile.mockResolvedValueOnce(
-        new Promise((resolve) => {
-          resolve(mockedData);
-        }),
-      );
-
-      const mockContext = getExecutionContextMock(DEFAULT_ACCESS_TOKEN_1.token);
-
-      const result = await controller.profile(
-        mockContext.switchToHttp().getRequest() as Request,
-      );
-
-      expect(result).toEqual(mockedData);
-      expect(service.getProfile).toHaveBeenCalled();
-    });
-  });
-
   describe('signup()', () => {
     it('signing up does not work if passwords are different', async () => {
       const signupSpy = jest.spyOn(service, 'signup');
@@ -221,6 +196,46 @@ describe('AuthController', () => {
 
       expect(result).toEqual(mockedData);
       expect(signupSpy).toHaveBeenCalled();
+    });
+  });
+
+  describe('getUserProfile()', () => {
+    it('getting user profile works', async () => {
+      const mockedData = DEFAULT_USER_PROFILE_RESPONSE_1;
+      service.getUserProfile.mockResolvedValueOnce(
+        new Promise((resolve) => {
+          resolve(mockedData);
+        }),
+      );
+
+      const mockContext = getExecutionContextMock(DEFAULT_ACCESS_TOKEN_1.token);
+
+      const result = await controller.getUserProfile(
+        mockContext.switchToHttp().getRequest() as Request,
+      );
+
+      expect(result).toEqual(mockedData);
+      expect(service.getUserProfile).toHaveBeenCalled();
+    });
+  });
+
+  describe('getUserSettings()', () => {
+    it('getting user settings works', async () => {
+      const mockedData = DEFAULT_USER_SETTINGS_RESPONSE_1;
+      service.getUserSettings.mockResolvedValueOnce(
+        new Promise((resolve) => {
+          resolve(mockedData);
+        }),
+      );
+
+      const mockContext = getExecutionContextMock(DEFAULT_ACCESS_TOKEN_1.token);
+
+      const result = await controller.getUserSettings(
+        mockContext.switchToHttp().getRequest() as Request,
+      );
+
+      expect(result).toEqual(mockedData);
+      expect(service.getUserSettings).toHaveBeenCalled();
     });
   });
 });

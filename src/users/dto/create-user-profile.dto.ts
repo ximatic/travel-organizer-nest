@@ -12,5 +12,5 @@ export class CreateUserProfileDto {
 
   @IsNotEmpty()
   @IsString()
-  readonly userId: Types.ObjectId;
+  readonly user: Types.ObjectId;
 }

@@ -3,8 +3,8 @@ import { InjectModel } from '@nestjs/mongoose';
 
 import { Model, Types } from 'mongoose';
 
-import { RefreshToken } from '../schema/refresh-token.schema';
 import { AccessToken } from '../schema/access-token.schema';
+import { RefreshToken } from '../schema/refresh-token.schema';
 
 @Injectable()
 export class TokenService {
@@ -20,12 +20,12 @@ export class TokenService {
   async getAccessToken(token: string): Promise<AccessToken> {
     return await this.accessTokenModel
       .findOne({ token })
-      .populate('userId')
+      .populate('user')
       .exec();
   }
 
   async getAccessTokenByUserId(userId: Types.ObjectId): Promise<AccessToken> {
-    return await this.accessTokenModel.findOne({ userId }).exec();
+    return await this.accessTokenModel.findOne({ user: userId }).exec();
   }
 
   async createAccessTokenUserId(
@@ -33,7 +33,7 @@ export class TokenService {
     token: string,
   ): Promise<AccessToken> {
     return this.accessTokenModel.create({
-      userId,
+      user: userId,
       token,
       createdAt: new Date(),
     });
@@ -43,7 +43,7 @@ export class TokenService {
     userId: Types.ObjectId,
   ): Promise<AccessToken> {
     // TODO - should be done together with deleteUser
-    return this.accessTokenModel.findOneAndDelete({ userId }).exec();
+    return this.accessTokenModel.findOneAndDelete({ user: userId }).exec();
   }
 
   async deleteAccessToken(token: string): Promise<AccessToken> {
@@ -53,7 +53,7 @@ export class TokenService {
   // refresh token
 
   async getRefreshTokenByUserId(userId: Types.ObjectId): Promise<RefreshToken> {
-    return await this.refreshTokenModel.findOne({ userId }).exec();
+    return await this.refreshTokenModel.findOne({ user: userId }).exec();
   }
 
   async createRefreshTokenUserId(
@@ -61,7 +61,7 @@ export class TokenService {
     token: string,
   ): Promise<RefreshToken> {
     return this.refreshTokenModel.create({
-      userId,
+      user: userId,
       token,
       createdAt: new Date(),
     });
@@ -71,7 +71,7 @@ export class TokenService {
     userId: Types.ObjectId,
   ): Promise<RefreshToken> {
     // TODO - should be done together with deleteUser
-    return this.refreshTokenModel.findOneAndDelete({ userId }).exec();
+    return this.refreshTokenModel.findOneAndDelete({ user: userId }).exec();
   }
 
   async deleteRefreshToken(token: string): Promise<RefreshToken> {

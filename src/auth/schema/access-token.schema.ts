@@ -18,7 +18,7 @@ export class AccessToken {
     type: mongoose.Types.ObjectId,
     ref: User.name,
   })
-  userId: User;
+  user: User;
 
   @Prop({ required: true })
   createdAt: Date;

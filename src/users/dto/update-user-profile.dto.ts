@@ -1,15 +1,11 @@
-import { IsBoolean, IsOptional, IsString } from 'class-validator';
+import { IsOptional, IsString } from 'class-validator';
 
 export class UpdateUserProfileDto {
   @IsOptional()
   @IsString()
-  readonly firstname: string;
-
-  @IsOptional()
-  @IsBoolean()
-  readonly lastname: string;
+  readonly firstname?: string;
 
   @IsOptional()
   @IsString()
-  readonly role: string;
+  readonly lastname?: string;
 }
