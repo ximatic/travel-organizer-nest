@@ -17,15 +17,15 @@ import {
   DEFAULT_PASSWORD_2,
   DEFAULT_FIRSTNAME_1,
   DEFAULT_LASTNAME_1,
-} from '../../__mocks__/common.constants';
+} from '../../__mocks__/constants/common.constants';
 import {
   DEFAULT_ACCESS_TOKEN_1,
   DEFAULT_AUTH_TOKEN_1,
-} from '../../__mocks__/auth.constants';
+} from '../../__mocks__/constants/auth.constants';
 import {
   DEFAULT_USER_PROFILE_RESPONSE_1,
   DEFAULT_USER_SETTINGS_RESPONSE_1,
-} from '../../__mocks__/user.constants';
+} from '../../__mocks__/constants/user.constants';
 
 import { AuthGuard } from '../guards/auth.guard';
 

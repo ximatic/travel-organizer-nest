@@ -1,6 +1,6 @@
 import { Types } from 'mongoose';
 
-import { DEFAULT_USER_1 } from '../user.constants';
+import { DEFAULT_USER_1 } from './user.constants';
 
 // trip
 

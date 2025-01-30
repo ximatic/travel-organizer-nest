@@ -1,12 +1,12 @@
 import { Types } from 'mongoose';
 
-import { UserRole } from '../users/model/user.enum';
+import { UserRole } from '../../users/model/user.enum';
 import {
   SettingsLanguage,
   SettingsDateFormat,
   SettingsTimeFormat,
   SettingsTheme,
-} from '../users/model/user-settings.enum';
+} from '../../users/model/user-settings.enum';
 
 // user
 

@@ -1,22 +1,13 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { JwtService } from '@nestjs/jwt';
 
+import { tokenServiceMock } from '../../__mocks__/services/token.service.mock';
+import { userServiceMock } from '../../__mocks__/services/user.service.mock';
+
 import { UsersService } from '../../users/service/users.service';
 import { TokenService } from './token.service';
 
 import { AuthService } from './auth.service';
-
-const userServiceMock = {
-  getUserByEmail: jest.fn(),
-  getUserProfileByUserId: jest.fn(),
-  createUser: jest.fn(),
-  createUserProfile: jest.fn(),
-};
-
-const tokenServiceMock = {
-  createAccessTokenUserId: jest.fn(),
-  deleteAccessToken: jest.fn(),
-};
 
 describe('AuthService', () => {
   let service: AuthService;

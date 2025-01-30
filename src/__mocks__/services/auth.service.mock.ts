@@ -6,7 +6,7 @@ export const authServiceMock = {
   signup: jest.fn(),
   updateUser: jest.fn(),
   getUserInfo: jest.fn(),
-  updateUserInfo: jest.fn(),
+  //updateUserInfo: jest.fn(),
   getUserProfile: jest.fn(),
   updateUserProfile: jest.fn(),
   getUserSettings: jest.fn(),

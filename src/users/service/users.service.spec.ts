@@ -8,9 +8,10 @@ import {
   DEFAULT_USER_2,
   DEFAULT_USER_PROFILE_1,
   DEFAULT_USER_SETTINGS_1,
-} from '../../__mocks__/user.constants';
+} from '../../__mocks__/constants/user.constants';
 import { userProfileServiceMock } from '../../__mocks__/services/user-profile.service.mock';
 import { userSettingsServiceMock } from '../../__mocks__/services/user-settings.service.mock';
+import { userModelMock } from '../../__mocks__/schema/user.schema.mock';
 
 import { UserProfileService } from './user-profile.service';
 import { UserSettingsService } from './user-settings.service';
@@ -21,14 +22,6 @@ import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
 
 import { UsersService } from './users.service';
-
-const userModelMock = {
-  find: jest.fn(),
-  findOne: jest.fn(),
-  create: jest.fn(),
-  findByIdAndUpdate: jest.fn(),
-  findByIdAndDelete: jest.fn(),
-};
 
 describe('UsersService', () => {
   let service: UsersService;

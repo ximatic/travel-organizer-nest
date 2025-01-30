@@ -1,0 +1,17 @@
+export const userServiceMock = {
+  getUsers: jest.fn(),
+  getUserById: jest.fn(),
+  getUserByEmail: jest.fn(),
+  getUserByEmailAndPassword: jest.fn(),
+  createUser: jest.fn(),
+  updateUser: jest.fn(),
+  deleteUser: jest.fn(),
+  getUserInfo: jest.fn(),
+  //updateUserInfo: jest.fn(),
+  getUserProfile: jest.fn(),
+  createUserProfile: jest.fn(),
+  updateUserProfile: jest.fn(),
+  getUserSettings: jest.fn(),
+  createUserSettings: jest.fn(),
+  updateUserSettings: jest.fn(),
+};

@@ -6,28 +6,14 @@ import { Model } from 'mongoose';
 import {
   DEFAULT_ACCESS_TOKEN_1,
   DEFAULT_REFRESH_TOKEN_1,
-} from '../../__mocks__/auth.constants';
+} from '../../__mocks__/constants/auth.constants';
+import { accessTokenModelMock } from '../../__mocks__/schema/access-token.schema.mock';
+import { refreshTokenModelMock } from '../../__mocks__/schema/refresh-token.schema.mock';
 
 import { AccessToken } from '../schema/access-token.schema';
 import { RefreshToken } from '../schema/refresh-token.schema';
 
 import { TokenService } from './token.service';
-
-const accessTokenModelMock = {
-  find: jest.fn(),
-  findOne: jest.fn(),
-  create: jest.fn(),
-  findByIdAndUpdate: jest.fn(),
-  findByIdAndDelete: jest.fn(),
-};
-
-const refreshTokenModelMock = {
-  find: jest.fn(),
-  findOne: jest.fn(),
-  create: jest.fn(),
-  findByIdAndUpdate: jest.fn(),
-  findByIdAndDelete: jest.fn(),
-};
 
 describe('TokenService', () => {
   let service: TokenService;

@@ -9,7 +9,7 @@ import {
   DEFAULT_TRIP_ITEM_1,
   DEFAULT_TRIP_ITEM_2,
 } from '../../__mocks__/constants/trips.constants';
-import { DEFAULT_USER_1 } from '../../__mocks__/user.constants';
+import { DEFAULT_USER_1 } from '../../__mocks__/constants/user.constants';
 import { tripModelMock } from '../../__mocks__/schema/trip.schema.mock';
 import { MockDate } from '../../__mocks__/date.mock';
 

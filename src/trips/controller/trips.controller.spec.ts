@@ -26,7 +26,7 @@ import { CreateTripItemDto } from '../dto/create-trip-item.dto';
 import { UpdateTripItemDto } from '../dto/update-trip-item.dto';
 
 import { TripsController } from './trips.controller';
-import { DEFAULT_USER_1 } from '../../__mocks__/user.constants';
+import { DEFAULT_USER_1 } from '../../__mocks__/constants/user.constants';
 
 describe('TripsController', () => {
   let tripsController: TripsController;
