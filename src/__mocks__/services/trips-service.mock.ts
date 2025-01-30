@@ -1,0 +1,18 @@
+export const tripsServiceMock = {
+  getTrips: jest.fn(),
+  getTrip: jest.fn(),
+  createTrip: jest.fn(),
+  updateTrip: jest.fn(),
+  deleteTrip: jest.fn(),
+  getTripsByUserId: jest.fn(),
+  getTripByUserId: jest.fn(),
+  createTripByUserId: jest.fn(),
+  updateTripByUserId: jest.fn(),
+  deleteTripByUserId: jest.fn(),
+  createTripItem: jest.fn(),
+  updateTripItem: jest.fn(),
+  deleteTripItem: jest.fn(),
+  createTripItemByUserId: jest.fn(),
+  updateTripItemByUserId: jest.fn(),
+  deleteTripItemByUserId: jest.fn(),
+};

@@ -1,5 +1,7 @@
 import { Types } from 'mongoose';
 
+import { DEFAULT_USER_1 } from '../user.constants';
+
 // trip
 
 export const DEFAULT_TRIP_1 = {
@@ -11,6 +13,9 @@ export const DEFAULT_TRIP_1 = {
   startDate: new Date(),
   endDate: new Date(),
   items: [],
+  user: DEFAULT_USER_1,
+  createdAt: new Date(1),
+  updatedAt: new Date(1),
 };
 
 export const DEFAULT_TRIP_2 = {
@@ -22,6 +27,9 @@ export const DEFAULT_TRIP_2 = {
   startDate: new Date(),
   endDate: new Date(),
   items: [],
+  user: DEFAULT_USER_1,
+  createdAt: new Date(1),
+  updatedAt: new Date(1),
 };
 
 // trip item
@@ -34,6 +42,9 @@ export const DEFAULT_TRIP_ITEM_1 = {
   type: 'Test Trip Item #1 - Type',
   size: 'Test Trip Item #1 - Size',
   color: 'Test Trip Item #1 - Color',
+  user: DEFAULT_USER_1,
+  createdAt: new Date(1),
+  updatedAt: new Date(1),
 };
 
 export const DEFAULT_TRIP_ITEM_2 = {
@@ -44,4 +55,7 @@ export const DEFAULT_TRIP_ITEM_2 = {
   type: 'Test Trip Item #2 - Type',
   size: 'Test Trip Item #2 - Size',
   color: 'Test Trip Item #2 - Color',
+  user: DEFAULT_USER_1,
+  createdAt: new Date(1),
+  updatedAt: new Date(1),
 };

@@ -23,6 +23,12 @@ export class TripItem {
 
   @Prop()
   color: string;
+
+  @Prop({ required: true })
+  createdAt: Date;
+
+  @Prop()
+  updatedAt: Date;
 }
 
 export const TripItemSchema = SchemaFactory.createForClass(TripItem);

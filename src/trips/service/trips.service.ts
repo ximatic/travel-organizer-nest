@@ -3,6 +3,8 @@ import { InjectModel } from '@nestjs/mongoose';
 
 import { Model } from 'mongoose';
 
+import { User } from '../../users/schema/user.schema';
+
 import { Trip } from '../schema/trip.schema';
 
 import { CreateTripDto } from '../dto/create-trip.dto';
@@ -19,25 +21,77 @@ export class TripsService {
   // trip
 
   async getTrips(): Promise<Trip[]> {
-    return this.tripModel.find().select('-items').exec();
+    return this.tripModel.find().select(['-items', '-user', '-__v']).exec();
   }
 
   async getTrip(id: string): Promise<Trip> {
-    return await this.tripModel.findOne({ _id: id }).exec();
+    return await this.tripModel
+      .findOne({ _id: id })
+      .select(['-user', '-__v'])
+      .exec();
   }
 
   async createTrip(createTripDto: CreateTripDto): Promise<Trip> {
-    return this.tripModel.create(createTripDto);
+    return this.tripModel.create({ ...createTripDto, createdAt: new Date() });
   }
 
   async updateTrip(id: string, updateTripDto: UpdateTripDto): Promise<Trip> {
     return this.tripModel
-      .findByIdAndUpdate({ _id: id }, updateTripDto, { new: true })
+      .findByIdAndUpdate(
+        { _id: id },
+        { ...updateTripDto, updatedAt: new Date() },
+        { new: true },
+      )
       .exec();
   }
 
   async deleteTrip(id: string): Promise<Trip> {
     return this.tripModel.findByIdAndDelete({ _id: id }).exec();
+  }
+
+  // trip - by User ID
+
+  async getTripsByUserId(user: User): Promise<Trip[]> {
+    return this.tripModel
+      .find({ user: user._id })
+      .select(['-items', '-user', '-__v'])
+      .exec();
+  }
+
+  async getTripByUserId(user: User, id: string): Promise<Trip> {
+    return await this.tripModel
+      .findOne({ _id: id, user: user._id })
+      .select(['-user', '-__v'])
+      .exec();
+  }
+
+  async createTripByUserId(
+    user: User,
+    createTripDto: CreateTripDto,
+  ): Promise<Trip> {
+    return this.tripModel.create({
+      ...createTripDto,
+      user: user._id,
+      createdAt: new Date(),
+    });
+  }
+
+  async updateTripByUserId(
+    user: User,
+    id: string,
+    updateTripDto: UpdateTripDto,
+  ): Promise<Trip> {
+    return this.tripModel
+      .findOneAndUpdate(
+        { _id: id, user: user._id },
+        { ...updateTripDto, updatedAt: new Date() },
+        { new: true },
+      )
+      .exec();
+  }
+
+  async deleteTripByUserId(user: User, id: string): Promise<Trip> {
+    return this.tripModel.findOneAndDelete({ _id: id, user: user._id }).exec();
   }
 
   // trip item
@@ -49,7 +103,7 @@ export class TripsService {
     return this.tripModel
       .findOneAndUpdate(
         { _id: tripId },
-        { $push: { items: createTripItemDto } },
+        { $push: { items: { ...createTripItemDto, createdAt: new Date() } } },
         { new: true },
       )
       .exec();
@@ -63,7 +117,9 @@ export class TripsService {
     return this.tripModel
       .findOneAndUpdate(
         { _id: tripId, items: { $elemMatch: { _id: tripItemId } } },
-        { $set: { 'items.$': updateTripItemDto } },
+        {
+          $set: { 'items.$': { ...updateTripItemDto, updatedAt: new Date() } },
+        },
         { new: true },
       )
       .exec();
@@ -73,6 +129,62 @@ export class TripsService {
     return this.tripModel
       .findOneAndUpdate(
         { _id: tripId },
+        { $pull: { items: { _id: tripItemId } } },
+        { new: true },
+      )
+      .exec();
+  }
+
+  async createTripItemByUserId(
+    user: User,
+    tripId: string,
+    createTripItemDto: CreateTripItemDto,
+  ): Promise<Trip> {
+    return this.tripModel
+      .findOneAndUpdate(
+        { _id: tripId, user: user._id },
+        {
+          $push: {
+            items: {
+              ...createTripItemDto,
+              createdAt: new Date(),
+            },
+          },
+        },
+        { new: true },
+      )
+      .exec();
+  }
+
+  async updateTripItemByUserId(
+    user: User,
+    tripId: string,
+    tripItemId: string,
+    updateTripItemDto: UpdateTripItemDto,
+  ): Promise<Trip> {
+    return this.tripModel
+      .findOneAndUpdate(
+        {
+          _id: tripId,
+          user: user._id,
+          items: { $elemMatch: { _id: tripItemId } },
+        },
+        {
+          $set: { 'items.$': { ...updateTripItemDto, updatedAt: new Date() } },
+        },
+        { new: true },
+      )
+      .exec();
+  }
+
+  async deleteTripItemByUserId(
+    user: User,
+    tripId: string,
+    tripItemId: string,
+  ): Promise<Trip> {
+    return this.tripModel
+      .findOneAndUpdate(
+        { _id: tripId, user: user._id },
         { $pull: { items: { _id: tripItemId } } },
         { new: true },
       )

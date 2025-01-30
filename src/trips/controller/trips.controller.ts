@@ -9,6 +9,7 @@ import {
   Param,
   Post,
   Put,
+  Req,
   UseGuards,
 } from '@nestjs/common';
 
@@ -33,15 +34,23 @@ export class TripsController {
   // trip
 
   @Get()
-  async getTrips(): Promise<Trip[]> {
-    return this.tripsService.getTrips();
+  @UseGuards(AuthGuard)
+  async getTrips(@Req() request: Request): Promise<Trip[]> {
+    return this.tripsService.getTripsByUserId(request['accessToken'].user);
   }
 
   @Get(':id')
-  async getTrip(@Param('id') id: string): Promise<Trip> {
+  @UseGuards(AuthGuard)
+  async getTrip(
+    @Req() request: Request,
+    @Param('id') id: string,
+  ): Promise<Trip> {
     try {
       if (Types.ObjectId.isValid(id)) {
-        const trip = await this.tripsService.getTrip(id);
+        const trip = await this.tripsService.getTripByUserId(
+          request['accessToken'].user,
+          id,
+        );
         if (trip) {
           return trip;
         } else {
@@ -56,18 +65,31 @@ export class TripsController {
   }
 
   @Post()
-  async createTrip(@Body() createTripDto: CreateTripDto): Promise<Trip> {
-    return this.tripsService.createTrip(createTripDto);
+  @UseGuards(AuthGuard)
+  async createTrip(
+    @Req() request: Request,
+    @Body() createTripDto: CreateTripDto,
+  ): Promise<Trip> {
+    return this.tripsService.createTripByUserId(
+      request['accessToken'].user,
+      createTripDto,
+    );
   }
 
   @Put(':id')
+  @UseGuards(AuthGuard)
   async updateTrip(
+    @Req() request: Request,
     @Param('id') id: string,
     @Body() updateTripDto: UpdateTripDto,
   ): Promise<Trip> {
     try {
       if (Types.ObjectId.isValid(id)) {
-        const trip = await this.tripsService.updateTrip(id, updateTripDto);
+        const trip = await this.tripsService.updateTripByUserId(
+          request['accessToken'].user,
+          id,
+          updateTripDto,
+        );
         if (trip) {
           return trip;
         } else {
@@ -82,10 +104,17 @@ export class TripsController {
   }
 
   @Delete(':id')
-  async deleteTrip(@Param('id') id: string): Promise<Trip> {
+  @UseGuards(AuthGuard)
+  async deleteTrip(
+    @Req() request: Request,
+    @Param('id') id: string,
+  ): Promise<Trip> {
     try {
       if (Types.ObjectId.isValid(id)) {
-        const trip = await this.tripsService.deleteTrip(id);
+        const trip = await this.tripsService.deleteTripByUserId(
+          request['accessToken'].user,
+          id,
+        );
         if (trip) {
           return trip;
         } else {
@@ -103,12 +132,14 @@ export class TripsController {
 
   @Post(':id/item')
   async createTripItem(
+    @Req() request: Request,
     @Param('id') id: string,
     @Body() createTripItemDto: CreateTripItemDto,
   ): Promise<Trip> {
     try {
       if (Types.ObjectId.isValid(id)) {
-        const trip = await this.tripsService.createTripItem(
+        const trip = await this.tripsService.createTripItemByUserId(
+          request['accessToken'].user,
           id,
           createTripItemDto,
         );
@@ -127,13 +158,15 @@ export class TripsController {
 
   @Put(':id/item/:itemId')
   async updateTripItem(
+    @Req() request: Request,
     @Param('id') id: string,
     @Param('itemId') itemId: string,
     @Body() updateTripItemDto: UpdateTripItemDto,
   ): Promise<Trip> {
     try {
       if (Types.ObjectId.isValid(id)) {
-        const trip = await this.tripsService.updateTripItem(
+        const trip = await this.tripsService.updateTripItemByUserId(
+          request['accessToken'].user,
           id,
           itemId,
           updateTripItemDto,
@@ -153,12 +186,17 @@ export class TripsController {
 
   @Delete(':id/item/:itemId')
   async deleteTripItem(
+    @Req() request: Request,
     @Param('id') id: string,
     @Param('itemId') itemId: string,
   ): Promise<Trip> {
     try {
       if (Types.ObjectId.isValid(id)) {
-        const trip = await this.tripsService.deleteTripItem(id, itemId);
+        const trip = await this.tripsService.deleteTripItemByUserId(
+          request['accessToken'].user,
+          id,
+          itemId,
+        );
         if (trip) {
           return trip;
         } else {
