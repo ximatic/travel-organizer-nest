@@ -6,7 +6,7 @@ import {
   SettingsDateFormat,
   SettingsTimeFormat,
   SettingsTheme,
-} from '../settings/model/settings.enum';
+} from '../users/model/user-settings.enum';
 
 // user
 

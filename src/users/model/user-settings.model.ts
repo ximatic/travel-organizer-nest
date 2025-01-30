@@ -3,7 +3,7 @@ import {
   SettingsDateFormat,
   SettingsTimeFormat,
   SettingsTheme,
-} from '../../settings/model/settings.enum';
+} from './user-settings.enum';
 
 export interface UserSettingsResponse {
   language: SettingsLanguage;

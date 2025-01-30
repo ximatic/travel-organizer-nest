@@ -15,7 +15,7 @@ import { AuthToken } from '../model/auth-token.model';
 import { User } from '../../users/schema/user.schema';
 import { AccessToken } from '../schema/access-token.schema';
 
-import { DEFAULT_SETTINGS } from '../../settings/constants/settings.constants';
+import { DEFAULT_SETTINGS } from '../../users/constants/user-settings.constants';
 
 import { UserInfoResponse } from '../../users/model/user-info.model';
 import { UserProfileResponse } from '../../users/model/user-profile.model';
