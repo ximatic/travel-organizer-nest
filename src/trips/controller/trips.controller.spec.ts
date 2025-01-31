@@ -7,10 +7,10 @@ import {
 import { Test, TestingModule } from '@nestjs/testing';
 
 import {
-  DEFAULT_TRIP_1,
-  DEFAULT_TRIP_2,
-  DEFAULT_TRIP_ITEM_1,
-  DEFAULT_TRIP_ITEM_2,
+  MOCK_TRIP_1,
+  MOCK_TRIP_2,
+  MOCK_TRIP_ITEM_1,
+  MOCK_TRIP_ITEM_2,
 } from '../../__mocks__/constants/trips.constants';
 import { authGuardMock } from '../../__mocks__/guards/auth.guard.mock';
 import { tripsServiceMock } from '../../__mocks__/services/trips-service.mock';
@@ -26,13 +26,13 @@ import { CreateTripItemDto } from '../dto/create-trip-item.dto';
 import { UpdateTripItemDto } from '../dto/update-trip-item.dto';
 
 import { TripsController } from './trips.controller';
-import { DEFAULT_USER_1 } from '../../__mocks__/constants/user.constants';
+import { MOCK_USER_1 } from '../../__mocks__/constants/user.constants';
 
 describe('TripsController', () => {
   let tripsController: TripsController;
   let tripsService: jest.Mocked<TripsService>;
 
-  const request = mockRequestAccessToken({ user: DEFAULT_USER_1 });
+  const request = mockRequestAccessToken({ user: MOCK_USER_1 });
 
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
@@ -70,7 +70,7 @@ describe('TripsController', () => {
     });
 
     it('returning all trips works', async () => {
-      const mockedData = [DEFAULT_TRIP_1, DEFAULT_TRIP_2];
+      const mockedData = [MOCK_TRIP_1, MOCK_TRIP_2];
       tripsService.getTripsByUserId.mockResolvedValueOnce(mockedData);
 
       const result = await tripsController.getTrips(request);
@@ -82,12 +82,12 @@ describe('TripsController', () => {
 
   describe('getTrip()', () => {
     it('requesting trip with exisiting ID works', async () => {
-      const mockedData = DEFAULT_TRIP_1;
+      const mockedData = MOCK_TRIP_1;
       tripsService.getTripByUserId.mockResolvedValueOnce(mockedData);
 
       const result = await tripsController.getTrip(
         request,
-        DEFAULT_TRIP_1._id.toString(),
+        MOCK_TRIP_1._id.toString(),
       );
 
       expect(result).toEqual(mockedData);
@@ -99,7 +99,7 @@ describe('TripsController', () => {
         throw new Error();
       });
 
-      const id = DEFAULT_TRIP_1._id.toString();
+      const id = MOCK_TRIP_1._id.toString();
       let hasThrown = false;
       try {
         await tripsController.getTrip(request, id);
@@ -114,7 +114,7 @@ describe('TripsController', () => {
     it('requesting non-exisiting trip throws NotFoundException error', async () => {
       tripsService.getTripByUserId.mockImplementation(null);
 
-      const id = DEFAULT_TRIP_1._id.toString();
+      const id = MOCK_TRIP_1._id.toString();
       let hasThrown = false;
       try {
         await tripsController.getTrip(request, id);
@@ -142,11 +142,11 @@ describe('TripsController', () => {
 
   describe('createTrip()', () => {
     it('creating trip works', async () => {
-      const mockedData = DEFAULT_TRIP_1;
+      const mockedData = MOCK_TRIP_1;
       tripsService.createTripByUserId.mockResolvedValueOnce(mockedData);
 
       const createTripDto: CreateTripDto = {
-        ...DEFAULT_TRIP_1,
+        ...MOCK_TRIP_1,
       };
       const result = await tripsController.createTrip(request, createTripDto);
 
@@ -157,15 +157,15 @@ describe('TripsController', () => {
 
   describe('updateTrip()', () => {
     it('updating trip with exisiting ID works', async () => {
-      const mockedData = DEFAULT_TRIP_1;
+      const mockedData = MOCK_TRIP_1;
       tripsService.updateTripByUserId.mockResolvedValueOnce(mockedData);
 
       const updateTripDto: UpdateTripDto = {
-        ...DEFAULT_TRIP_1,
+        ...MOCK_TRIP_1,
       };
       const result = await tripsController.updateTrip(
         request,
-        DEFAULT_TRIP_1._id.toString(),
+        MOCK_TRIP_1._id.toString(),
         updateTripDto,
       );
 
@@ -178,9 +178,9 @@ describe('TripsController', () => {
         throw new Error();
       });
 
-      const id = DEFAULT_TRIP_1._id.toString();
+      const id = MOCK_TRIP_1._id.toString();
       const updateTripDto: UpdateTripDto = {
-        ...DEFAULT_TRIP_1,
+        ...MOCK_TRIP_1,
       };
       let hasThrown = false;
       try {
@@ -196,9 +196,9 @@ describe('TripsController', () => {
     it('updating non-exisiting trip throws NotFoundException error', async () => {
       tripsService.updateTripByUserId.mockImplementation(null);
 
-      const id = DEFAULT_TRIP_1._id.toString();
+      const id = MOCK_TRIP_1._id.toString();
       const updateTripDto: UpdateTripDto = {
-        ...DEFAULT_TRIP_1,
+        ...MOCK_TRIP_1,
       };
 
       let hasThrown = false;
@@ -215,7 +215,7 @@ describe('TripsController', () => {
     it('updating trip with invalid ID throws BadRequestException error', async () => {
       const id = null;
       const updateTripDto: UpdateTripDto = {
-        ...DEFAULT_TRIP_1,
+        ...MOCK_TRIP_1,
       };
 
       let hasThrown = false;
@@ -232,12 +232,12 @@ describe('TripsController', () => {
 
   describe('deleteTrip()', () => {
     it('deleting trip with exisiting ID works', async () => {
-      const mockedData = DEFAULT_TRIP_1;
+      const mockedData = MOCK_TRIP_1;
       tripsService.deleteTripByUserId.mockResolvedValueOnce(mockedData);
 
       const result = await tripsController.deleteTrip(
         request,
-        DEFAULT_TRIP_1._id.toString(),
+        MOCK_TRIP_1._id.toString(),
       );
 
       expect(result).toEqual(mockedData);
@@ -249,7 +249,7 @@ describe('TripsController', () => {
         throw new Error();
       });
 
-      const id = DEFAULT_TRIP_1._id.toString();
+      const id = MOCK_TRIP_1._id.toString();
       let hasThrown = false;
       try {
         await tripsController.deleteTrip(request, id);
@@ -264,7 +264,7 @@ describe('TripsController', () => {
     it('deleting non-exisiting trip throws NotFoundException error', async () => {
       tripsService.deleteTripByUserId.mockImplementation(null);
 
-      const id = DEFAULT_TRIP_1._id.toString();
+      const id = MOCK_TRIP_1._id.toString();
       let hasThrown = false;
       try {
         await tripsController.deleteTrip(request, id);
@@ -294,15 +294,15 @@ describe('TripsController', () => {
 
   describe('createTripItem()', () => {
     it('creating trip item for a trip with exisiting ID works', async () => {
-      const mockedData = { ...DEFAULT_TRIP_1, items: [DEFAULT_TRIP_ITEM_1] };
+      const mockedData = { ...MOCK_TRIP_1, items: [MOCK_TRIP_ITEM_1] };
       tripsService.createTripItemByUserId.mockResolvedValueOnce(mockedData);
 
       const createTripItemDto: CreateTripItemDto = {
-        ...DEFAULT_TRIP_ITEM_1,
+        ...MOCK_TRIP_ITEM_1,
       };
       const result = await tripsController.createTripItem(
         request,
-        DEFAULT_TRIP_1._id.toString(),
+        MOCK_TRIP_1._id.toString(),
         createTripItemDto,
       );
 
@@ -315,9 +315,9 @@ describe('TripsController', () => {
         throw new Error();
       });
 
-      const id = DEFAULT_TRIP_1._id.toString();
+      const id = MOCK_TRIP_1._id.toString();
       const createTripItemDto: CreateTripItemDto = {
-        ...DEFAULT_TRIP_ITEM_1,
+        ...MOCK_TRIP_ITEM_1,
       };
       let hasThrown = false;
       try {
@@ -333,9 +333,9 @@ describe('TripsController', () => {
     it('creating trip item for a non-exisiting trip throws NotFoundException error', async () => {
       tripsService.createTripItemByUserId.mockImplementation(null);
 
-      const id = DEFAULT_TRIP_1._id.toString();
+      const id = MOCK_TRIP_1._id.toString();
       const createTripItemDto: CreateTripItemDto = {
-        ...DEFAULT_TRIP_ITEM_1,
+        ...MOCK_TRIP_ITEM_1,
       };
       let hasThrown = false;
       try {
@@ -351,7 +351,7 @@ describe('TripsController', () => {
     it('creating trip item for a trip with invalid ID throws BadRequestException error', async () => {
       const id = null;
       const createTripItemDto: CreateTripItemDto = {
-        ...DEFAULT_TRIP_ITEM_1,
+        ...MOCK_TRIP_ITEM_1,
       };
       let hasThrown = false;
       try {
@@ -367,13 +367,13 @@ describe('TripsController', () => {
 
   describe('updateTripItem()', () => {
     it('updating trip item for a trip with exisiting ID works', async () => {
-      const mockedData = { ...DEFAULT_TRIP_1, items: [DEFAULT_TRIP_ITEM_2] };
+      const mockedData = { ...MOCK_TRIP_1, items: [MOCK_TRIP_ITEM_2] };
       tripsService.updateTripItemByUserId.mockResolvedValueOnce(mockedData);
 
-      const tripId = DEFAULT_TRIP_1._id.toString();
-      const tripItemId = DEFAULT_TRIP_1._id.toString();
+      const tripId = MOCK_TRIP_1._id.toString();
+      const tripItemId = MOCK_TRIP_1._id.toString();
       const updateTripItemDto: UpdateTripItemDto = {
-        ...DEFAULT_TRIP_ITEM_2,
+        ...MOCK_TRIP_ITEM_2,
       };
       const result = await tripsController.updateTripItem(
         request,
@@ -391,10 +391,10 @@ describe('TripsController', () => {
         throw new Error();
       });
 
-      const tripId = DEFAULT_TRIP_1._id.toString();
-      const tripItemId = DEFAULT_TRIP_1._id.toString();
+      const tripId = MOCK_TRIP_1._id.toString();
+      const tripItemId = MOCK_TRIP_1._id.toString();
       const updateTripItemDto: UpdateTripItemDto = {
-        ...DEFAULT_TRIP_ITEM_2,
+        ...MOCK_TRIP_ITEM_2,
       };
       let hasThrown = false;
       try {
@@ -415,10 +415,10 @@ describe('TripsController', () => {
     it('updating trip item for a non-exisiting trip throws NotFoundException error', async () => {
       tripsService.updateTripItemByUserId.mockImplementation(null);
 
-      const tripId = DEFAULT_TRIP_1._id.toString();
-      const tripItemId = DEFAULT_TRIP_1._id.toString();
+      const tripId = MOCK_TRIP_1._id.toString();
+      const tripItemId = MOCK_TRIP_1._id.toString();
       const updateTripItemDto: UpdateTripItemDto = {
-        ...DEFAULT_TRIP_ITEM_2,
+        ...MOCK_TRIP_ITEM_2,
       };
       let hasThrown = false;
       try {
@@ -440,7 +440,7 @@ describe('TripsController', () => {
       const tripId = null;
       const tripItemId = null;
       const updateTripItemDto: UpdateTripItemDto = {
-        ...DEFAULT_TRIP_ITEM_2,
+        ...MOCK_TRIP_ITEM_2,
       };
       let hasThrown = false;
       try {
@@ -461,11 +461,11 @@ describe('TripsController', () => {
 
   describe('deleteTripItem()', () => {
     it('deleting trip item for a trip with exisiting ID works', async () => {
-      const mockedData = { ...DEFAULT_TRIP_1 };
+      const mockedData = { ...MOCK_TRIP_1 };
       tripsService.deleteTripItemByUserId.mockResolvedValueOnce(mockedData);
 
-      const tripId = DEFAULT_TRIP_1._id.toString();
-      const tripItemId = DEFAULT_TRIP_1._id.toString();
+      const tripId = MOCK_TRIP_1._id.toString();
+      const tripItemId = MOCK_TRIP_1._id.toString();
       const result = await tripsController.deleteTripItem(
         request,
         tripId,
@@ -481,8 +481,8 @@ describe('TripsController', () => {
         throw new Error();
       });
 
-      const tripId = DEFAULT_TRIP_1._id.toString();
-      const tripItemId = DEFAULT_TRIP_1._id.toString();
+      const tripId = MOCK_TRIP_1._id.toString();
+      const tripItemId = MOCK_TRIP_1._id.toString();
       let hasThrown = false;
       try {
         await tripsController.deleteTripItem(request, tripId, tripItemId);
@@ -497,8 +497,8 @@ describe('TripsController', () => {
     it('deleting trip item for a non-exisiting trip throws NotFoundException error', async () => {
       tripsService.deleteTripItemByUserId.mockImplementation(null);
 
-      const tripId = DEFAULT_TRIP_1._id.toString();
-      const tripItemId = DEFAULT_TRIP_1._id.toString();
+      const tripId = MOCK_TRIP_1._id.toString();
+      const tripItemId = MOCK_TRIP_1._id.toString();
       let hasThrown = false;
       try {
         await tripsController.deleteTripItem(request, tripId, tripItemId);

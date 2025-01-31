@@ -4,8 +4,8 @@ import { getModelToken } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
 import {
-  DEFAULT_ACCESS_TOKEN_1,
-  DEFAULT_REFRESH_TOKEN_1,
+  MOCK_ACCESS_TOKEN_1,
+  MOCK_REFRESH_TOKEN_1,
 } from '../../__mocks__/constants/auth.constants';
 import { accessTokenModelMock } from '../../__mocks__/schema/access-token.schema.mock';
 import { refreshTokenModelMock } from '../../__mocks__/schema/refresh-token.schema.mock';
@@ -48,13 +48,13 @@ describe('TokenService', () => {
 
   describe('getAccessTokenByUserId()', () => {
     it('returning access token by User ID works', async () => {
-      const mockData = DEFAULT_ACCESS_TOKEN_1;
+      const mockData = MOCK_ACCESS_TOKEN_1;
       accessTokenModel.findOne.mockReturnValueOnce({
         exec: jest.fn().mockResolvedValueOnce(mockData),
       } as any);
 
       const result = await service.getAccessTokenByUserId(
-        DEFAULT_ACCESS_TOKEN_1.user,
+        MOCK_ACCESS_TOKEN_1.user,
       );
 
       expect(result).toEqual(mockData);
@@ -66,13 +66,13 @@ describe('TokenService', () => {
 
   describe('getRefreshTokenByUserId()', () => {
     it('returning refresh token by User ID works', async () => {
-      const mockData = DEFAULT_REFRESH_TOKEN_1;
+      const mockData = MOCK_REFRESH_TOKEN_1;
       refreshTokenModel.findOne.mockReturnValueOnce({
         exec: jest.fn().mockResolvedValueOnce(mockData),
       } as any);
 
       const result = await service.getRefreshTokenByUserId(
-        DEFAULT_REFRESH_TOKEN_1.user,
+        MOCK_REFRESH_TOKEN_1.user,
       );
 
       expect(result).toEqual(mockData);

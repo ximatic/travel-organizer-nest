@@ -4,9 +4,9 @@ import { getModelToken } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
 import {
-  DEFAULT_USER_1,
-  DEFAULT_USER_PROFILE_1,
-  DEFAULT_USER_PROFILE_2,
+  MOCK_USER_1,
+  MOCK_USER_PROFILE_1,
+  MOCK_USER_PROFILE_2,
 } from '../../__mocks__/constants/user.constants';
 import { userProfileModelMock } from '../../__mocks__/schema/user-profile.schema.mock';
 
@@ -44,7 +44,7 @@ describe('UserProfileService', () => {
 
   describe('getUserProfiles()', () => {
     it('returning all user profiles works', async () => {
-      const mockData = [DEFAULT_USER_PROFILE_1, DEFAULT_USER_PROFILE_2];
+      const mockData = [MOCK_USER_PROFILE_1, MOCK_USER_PROFILE_2];
       userProfileModel.find.mockReturnValueOnce({
         exec: jest.fn().mockResolvedValueOnce(mockData),
       } as any);
@@ -58,13 +58,13 @@ describe('UserProfileService', () => {
 
   describe('getUserProfileById()', () => {
     it('returning single user profile by id works', async () => {
-      const mockData = DEFAULT_USER_PROFILE_1;
+      const mockData = MOCK_USER_PROFILE_1;
       userProfileModel.findOne.mockReturnValueOnce({
         exec: jest.fn().mockResolvedValueOnce(mockData),
       } as any);
 
       const result = await service.getUserProfileById(
-        DEFAULT_USER_PROFILE_1._id.toString(),
+        MOCK_USER_PROFILE_1._id.toString(),
       );
 
       expect(result).toEqual(mockData);
@@ -74,13 +74,13 @@ describe('UserProfileService', () => {
 
   describe('createUserProfile()', () => {
     it('creating a new user profile works', async () => {
-      const mockData = DEFAULT_USER_PROFILE_1;
+      const mockData = MOCK_USER_PROFILE_1;
       userProfileModel.create.mockResolvedValueOnce(mockData as any);
 
       const createUserProfileDto: CreateUserProfileDto = {
-        firstname: DEFAULT_USER_PROFILE_1.firstname,
-        lastname: DEFAULT_USER_PROFILE_1.lastname,
-        user: DEFAULT_USER_1._id,
+        firstname: MOCK_USER_PROFILE_1.firstname,
+        lastname: MOCK_USER_PROFILE_1.lastname,
+        user: MOCK_USER_1._id,
       };
       const result = await service.createUserProfile(createUserProfileDto);
 
@@ -91,17 +91,17 @@ describe('UserProfileService', () => {
 
   describe('updateUserProfile()', () => {
     it('updating an existing user profile works', async () => {
-      const mockData = DEFAULT_USER_PROFILE_1;
+      const mockData = MOCK_USER_PROFILE_1;
       userProfileModel.findByIdAndUpdate.mockReturnValueOnce({
         exec: jest.fn().mockResolvedValueOnce(mockData),
       } as any);
 
       const updateUserProfileDto: UpdateUserProfileDto = {
-        firstname: DEFAULT_USER_PROFILE_1.firstname,
-        lastname: DEFAULT_USER_PROFILE_1.lastname,
+        firstname: MOCK_USER_PROFILE_1.firstname,
+        lastname: MOCK_USER_PROFILE_1.lastname,
       };
       const result = await service.updateUserProfile(
-        DEFAULT_USER_PROFILE_1._id.toString(),
+        MOCK_USER_PROFILE_1._id.toString(),
         updateUserProfileDto,
       );
 
@@ -112,13 +112,13 @@ describe('UserProfileService', () => {
 
   describe('deleteUserProfile()', () => {
     it('deleting an existing user profile works', async () => {
-      const mockData = DEFAULT_USER_PROFILE_1;
+      const mockData = MOCK_USER_PROFILE_1;
       userProfileModel.findByIdAndDelete.mockReturnValueOnce({
         exec: jest.fn().mockResolvedValueOnce(mockData),
       } as any);
 
       const result = await service.deleteUserProfile(
-        DEFAULT_USER_PROFILE_1._id.toString(),
+        MOCK_USER_PROFILE_1._id.toString(),
       );
 
       expect(result).toEqual(mockData);
@@ -130,13 +130,13 @@ describe('UserProfileService', () => {
 
   describe('getUserProfileByUserId()', () => {
     it('returning single user profile by user id works', async () => {
-      const mockData = DEFAULT_USER_PROFILE_1;
+      const mockData = MOCK_USER_PROFILE_1;
       userProfileModel.findOne.mockReturnValueOnce({
         exec: jest.fn().mockResolvedValueOnce(mockData),
       } as any);
 
       const result = await service.getUserProfileByUserId(
-        DEFAULT_USER_PROFILE_1.user._id,
+        MOCK_USER_PROFILE_1.user._id,
       );
 
       expect(result).toEqual(mockData);
@@ -146,17 +146,17 @@ describe('UserProfileService', () => {
 
   describe('updateUserProfileByUserId()', () => {
     it('updating an existing user profile by user id works', async () => {
-      const mockData = DEFAULT_USER_PROFILE_1;
+      const mockData = MOCK_USER_PROFILE_1;
       userProfileModel.findOneAndUpdate.mockReturnValueOnce({
         exec: jest.fn().mockResolvedValueOnce(mockData),
       } as any);
 
       const updateUserProfileDto: UpdateUserProfileDto = {
-        firstname: DEFAULT_USER_PROFILE_1.firstname,
-        lastname: DEFAULT_USER_PROFILE_1.lastname,
+        firstname: MOCK_USER_PROFILE_1.firstname,
+        lastname: MOCK_USER_PROFILE_1.lastname,
       };
       const result = await service.updateUserProfileByUserId(
-        DEFAULT_USER_1._id,
+        MOCK_USER_1._id,
         updateUserProfileDto,
       );
 
@@ -167,14 +167,12 @@ describe('UserProfileService', () => {
 
   describe('deleteUserProfileByUserId()', () => {
     it('deleting an existing user profile by user id works', async () => {
-      const mockData = DEFAULT_USER_PROFILE_1;
+      const mockData = MOCK_USER_PROFILE_1;
       userProfileModel.findOneAndDelete.mockReturnValueOnce({
         exec: jest.fn().mockResolvedValueOnce(mockData),
       } as any);
 
-      const result = await service.deleteUserProfileByUserId(
-        DEFAULT_USER_1._id,
-      );
+      const result = await service.deleteUserProfileByUserId(MOCK_USER_1._id);
 
       expect(result).toEqual(mockData);
       expect(userProfileModel.findOneAndDelete).toHaveBeenCalled();

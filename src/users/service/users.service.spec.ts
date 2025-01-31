@@ -4,10 +4,10 @@ import { getModelToken } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
 import {
-  DEFAULT_USER_1,
-  DEFAULT_USER_2,
-  DEFAULT_USER_PROFILE_1,
-  DEFAULT_USER_SETTINGS_1,
+  MOCK_USER_1,
+  MOCK_USER_2,
+  MOCK_USER_PROFILE_1,
+  MOCK_USER_SETTINGS_1,
 } from '../../__mocks__/constants/user.constants';
 import { userProfileServiceMock } from '../../__mocks__/services/user-profile.service.mock';
 import { userSettingsServiceMock } from '../../__mocks__/services/user-settings.service.mock';
@@ -63,7 +63,7 @@ describe('UsersService', () => {
   describe('users', () => {
     describe('getUsers()', () => {
       it('returning all users works', async () => {
-        const mockData = [DEFAULT_USER_1, DEFAULT_USER_2];
+        const mockData = [MOCK_USER_1, MOCK_USER_2];
         userModel.find.mockReturnValueOnce({
           exec: jest.fn().mockResolvedValueOnce(mockData),
         } as any);
@@ -77,12 +77,12 @@ describe('UsersService', () => {
 
     describe('getUserById()', () => {
       it('returning single user by id works', async () => {
-        const mockData = DEFAULT_USER_1;
+        const mockData = MOCK_USER_1;
         userModel.findOne.mockReturnValueOnce({
           exec: jest.fn().mockResolvedValueOnce(mockData),
         } as any);
 
-        const result = await service.getUserById(DEFAULT_USER_1._id.toString());
+        const result = await service.getUserById(MOCK_USER_1._id.toString());
 
         expect(result).toEqual(mockData);
         expect(userModel.findOne).toHaveBeenCalled();
@@ -91,12 +91,12 @@ describe('UsersService', () => {
 
     describe('getUserByEmail()', () => {
       it('returning single user by email works', async () => {
-        const mockData = DEFAULT_USER_1;
+        const mockData = MOCK_USER_1;
         userModel.findOne.mockReturnValueOnce({
           exec: jest.fn().mockResolvedValueOnce(mockData),
         } as any);
 
-        const result = await service.getUserByEmail(DEFAULT_USER_1.email);
+        const result = await service.getUserByEmail(MOCK_USER_1.email);
 
         expect(result).toEqual(mockData);
         expect(userModel.findOne).toHaveBeenCalled();
@@ -105,14 +105,14 @@ describe('UsersService', () => {
 
     describe('getUserByEmailAndPassword()', () => {
       it('returning single user by email and password works', async () => {
-        const mockData = DEFAULT_USER_1;
+        const mockData = MOCK_USER_1;
         userModel.findOne.mockReturnValueOnce({
           exec: jest.fn().mockResolvedValueOnce(mockData),
         } as any);
 
         const result = await service.getUserByEmailAndPassword(
-          DEFAULT_USER_1.email,
-          DEFAULT_USER_1.password,
+          MOCK_USER_1.email,
+          MOCK_USER_1.password,
         );
 
         expect(result).toEqual(mockData);
@@ -122,12 +122,12 @@ describe('UsersService', () => {
 
     describe('createUser()', () => {
       it('creating a new user works', async () => {
-        const mockData = DEFAULT_USER_1;
+        const mockData = MOCK_USER_1;
         userModel.create.mockResolvedValueOnce(mockData as any);
 
         const createUserDto: CreateUserDto = {
-          email: DEFAULT_USER_1.email,
-          password: DEFAULT_USER_1.password,
+          email: MOCK_USER_1.email,
+          password: MOCK_USER_1.password,
         };
         const result = await service.createUser(createUserDto);
 
@@ -138,18 +138,18 @@ describe('UsersService', () => {
 
     describe('updateUser()', () => {
       it('updating an existing user works', async () => {
-        const mockData = DEFAULT_USER_1;
+        const mockData = MOCK_USER_1;
         userModel.findByIdAndUpdate.mockReturnValueOnce({
           exec: jest.fn().mockResolvedValueOnce(mockData),
         } as any);
 
         const updateUserDto: UpdateUserDto = {
-          email: DEFAULT_USER_1.email,
-          password: DEFAULT_USER_1.password,
-          passwordRepeat: DEFAULT_USER_1.password,
+          email: MOCK_USER_1.email,
+          password: MOCK_USER_1.password,
+          passwordRepeat: MOCK_USER_1.password,
         };
         const result = await service.updateUser(
-          DEFAULT_USER_1._id.toString(),
+          MOCK_USER_1._id.toString(),
           updateUserDto,
         );
 
@@ -160,12 +160,12 @@ describe('UsersService', () => {
 
     describe('deleteUser()', () => {
       it('deleting an existing user works', async () => {
-        const mockData = DEFAULT_USER_1;
+        const mockData = MOCK_USER_1;
         userModel.findByIdAndDelete.mockReturnValueOnce({
           exec: jest.fn().mockResolvedValueOnce(mockData),
         } as any);
 
-        const result = await service.deleteUser(DEFAULT_USER_1._id.toString());
+        const result = await service.deleteUser(MOCK_USER_1._id.toString());
 
         expect(result).toEqual(mockData);
         expect(userModel.findByIdAndDelete).toHaveBeenCalled();
@@ -181,34 +181,34 @@ describe('UsersService', () => {
     describe('getUserInfo()', () => {
       it('returning all user profiles works', async () => {
         const expectedResult = {
-          email: DEFAULT_USER_1.email,
+          email: MOCK_USER_1.email,
           profile: {
-            firstname: DEFAULT_USER_PROFILE_1.firstname,
-            lastname: DEFAULT_USER_PROFILE_1.lastname,
+            firstname: MOCK_USER_PROFILE_1.firstname,
+            lastname: MOCK_USER_PROFILE_1.lastname,
           },
           settings: {
-            language: DEFAULT_USER_SETTINGS_1.language,
-            dateFormat: DEFAULT_USER_SETTINGS_1.dateFormat,
-            timeFormat: DEFAULT_USER_SETTINGS_1.timeFormat,
-            theme: DEFAULT_USER_SETTINGS_1.theme,
+            language: MOCK_USER_SETTINGS_1.language,
+            dateFormat: MOCK_USER_SETTINGS_1.dateFormat,
+            timeFormat: MOCK_USER_SETTINGS_1.timeFormat,
+            theme: MOCK_USER_SETTINGS_1.theme,
           },
         };
         userProfileService.getUserProfileByUserId.mockResolvedValueOnce(
-          DEFAULT_USER_PROFILE_1,
+          MOCK_USER_PROFILE_1,
         );
         userSettingsService.getUserSettingsByUserId.mockResolvedValueOnce(
-          DEFAULT_USER_SETTINGS_1,
+          MOCK_USER_SETTINGS_1,
         );
 
-        const result = await service.getUserInfo(DEFAULT_USER_1);
+        const result = await service.getUserInfo(MOCK_USER_1);
 
         expect(result).toEqual(expectedResult);
         expect(userProfileService.getUserProfileByUserId).toHaveBeenCalledWith(
-          DEFAULT_USER_1._id,
+          MOCK_USER_1._id,
         );
         expect(
           userSettingsService.getUserSettingsByUserId,
-        ).toHaveBeenCalledWith(DEFAULT_USER_1._id);
+        ).toHaveBeenCalledWith(MOCK_USER_1._id);
       });
     });
   });
@@ -219,18 +219,18 @@ describe('UsersService', () => {
     describe('getUserProfiles()', () => {
       it('returning user profile works', async () => {
         const expectedResult = {
-          firstname: DEFAULT_USER_PROFILE_1.firstname,
-          lastname: DEFAULT_USER_PROFILE_1.lastname,
+          firstname: MOCK_USER_PROFILE_1.firstname,
+          lastname: MOCK_USER_PROFILE_1.lastname,
         };
         userProfileService.getUserProfileByUserId.mockResolvedValueOnce(
-          DEFAULT_USER_PROFILE_1,
+          MOCK_USER_PROFILE_1,
         );
 
-        const result = await service.getUserProfile(DEFAULT_USER_1);
+        const result = await service.getUserProfile(MOCK_USER_1);
 
         expect(result).toEqual(expectedResult);
         expect(userProfileService.getUserProfileByUserId).toHaveBeenCalledWith(
-          DEFAULT_USER_1._id,
+          MOCK_USER_1._id,
         );
       });
     });
@@ -244,21 +244,21 @@ describe('UsersService', () => {
     describe('getUserSettings()', () => {
       it('returning user settings works', async () => {
         const expectedResult = {
-          language: DEFAULT_USER_SETTINGS_1.language,
-          dateFormat: DEFAULT_USER_SETTINGS_1.dateFormat,
-          timeFormat: DEFAULT_USER_SETTINGS_1.timeFormat,
-          theme: DEFAULT_USER_SETTINGS_1.theme,
+          language: MOCK_USER_SETTINGS_1.language,
+          dateFormat: MOCK_USER_SETTINGS_1.dateFormat,
+          timeFormat: MOCK_USER_SETTINGS_1.timeFormat,
+          theme: MOCK_USER_SETTINGS_1.theme,
         };
         userSettingsService.getUserSettingsByUserId.mockResolvedValueOnce(
-          DEFAULT_USER_SETTINGS_1,
+          MOCK_USER_SETTINGS_1,
         );
 
-        const result = await service.getUserSettings(DEFAULT_USER_1);
+        const result = await service.getUserSettings(MOCK_USER_1);
 
         expect(result).toEqual(expectedResult);
         expect(
           userSettingsService.getUserSettingsByUserId,
-        ).toHaveBeenCalledWith(DEFAULT_USER_1._id);
+        ).toHaveBeenCalledWith(MOCK_USER_1._id);
       });
     });
 

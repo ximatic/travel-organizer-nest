@@ -4,12 +4,12 @@ import { getModelToken } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
 import {
-  DEFAULT_TRIP_1,
-  DEFAULT_TRIP_2,
-  DEFAULT_TRIP_ITEM_1,
-  DEFAULT_TRIP_ITEM_2,
+  MOCK_TRIP_1,
+  MOCK_TRIP_2,
+  MOCK_TRIP_ITEM_1,
+  MOCK_TRIP_ITEM_2,
 } from '../../__mocks__/constants/trips.constants';
-import { DEFAULT_USER_1 } from '../../__mocks__/constants/user.constants';
+import { MOCK_USER_1 } from '../../__mocks__/constants/user.constants';
 import { tripModelMock } from '../../__mocks__/schema/trip.schema.mock';
 import { MockDate } from '../../__mocks__/date.mock';
 
@@ -71,7 +71,7 @@ describe('TripsService', () => {
     });
 
     it('returning all trips works', async () => {
-      const mockData = [DEFAULT_TRIP_1, DEFAULT_TRIP_2];
+      const mockData = [MOCK_TRIP_1, MOCK_TRIP_2];
       tripModel.find.mockReturnValueOnce({
         select: jest.fn().mockReturnThis(),
         exec: jest.fn().mockResolvedValueOnce(mockData),
@@ -86,13 +86,13 @@ describe('TripsService', () => {
 
   describe('getTrip()', () => {
     it('returning trip with exisiting ID works', async () => {
-      const mockData = DEFAULT_TRIP_1;
+      const mockData = MOCK_TRIP_1;
       tripModel.findOne.mockReturnValueOnce({
         select: jest.fn().mockReturnThis(),
         exec: jest.fn().mockResolvedValueOnce(mockData),
       } as any);
 
-      const id = DEFAULT_TRIP_1._id.toString();
+      const id = MOCK_TRIP_1._id.toString();
       const result = await tripsService.getTrip(id);
 
       expect(result).toEqual(mockData);
@@ -102,11 +102,11 @@ describe('TripsService', () => {
 
   describe('createTrip()', () => {
     it('inserting a new trip works', async () => {
-      const mockData = DEFAULT_TRIP_1;
+      const mockData = MOCK_TRIP_1;
       tripModel.create.mockResolvedValueOnce(mockData as any);
 
       const createTripDto: CreateTripDto = {
-        ...DEFAULT_TRIP_1,
+        ...MOCK_TRIP_1,
       };
       const result = await tripsService.createTrip(createTripDto);
 
@@ -120,14 +120,14 @@ describe('TripsService', () => {
 
   describe('updateTrip()', () => {
     it('updating an exisiting trip works', async () => {
-      const mockData = DEFAULT_TRIP_1;
+      const mockData = MOCK_TRIP_1;
       tripModel.findByIdAndUpdate.mockReturnValueOnce({
         exec: jest.fn().mockResolvedValueOnce(mockData),
       } as any);
 
-      const id = DEFAULT_TRIP_1._id.toString();
+      const id = MOCK_TRIP_1._id.toString();
       const updateTripDto: UpdateTripDto = {
-        ...DEFAULT_TRIP_1,
+        ...MOCK_TRIP_1,
       };
       const result = await tripsService.updateTrip(id, updateTripDto);
 
@@ -142,12 +142,12 @@ describe('TripsService', () => {
 
   describe('deleteTrip()', () => {
     it('deleting a trip works', async () => {
-      const mockData = DEFAULT_TRIP_1;
+      const mockData = MOCK_TRIP_1;
       tripModel.findByIdAndDelete.mockReturnValueOnce({
         exec: jest.fn().mockResolvedValueOnce(mockData),
       } as any);
 
-      const id = DEFAULT_TRIP_1._id.toString();
+      const id = MOCK_TRIP_1._id.toString();
       const result = await tripsService.deleteTrip(id);
 
       expect(result).toEqual(mockData);
@@ -165,62 +165,62 @@ describe('TripsService', () => {
         exec: jest.fn().mockResolvedValueOnce(mockData),
       } as any);
 
-      const result = await tripsService.getTripsByUserId(DEFAULT_USER_1);
+      const result = await tripsService.getTripsByUserId(MOCK_USER_1);
 
       expect(result).toEqual(mockData);
-      expect(tripModel.find).toHaveBeenCalledWith({ user: DEFAULT_USER_1._id });
+      expect(tripModel.find).toHaveBeenCalledWith({ user: MOCK_USER_1._id });
     });
 
     it('returning all trips works', async () => {
-      const mockData = [DEFAULT_TRIP_1, DEFAULT_TRIP_2];
+      const mockData = [MOCK_TRIP_1, MOCK_TRIP_2];
       tripModel.find.mockReturnValueOnce({
         select: jest.fn().mockReturnThis(),
         exec: jest.fn().mockResolvedValueOnce(mockData),
       } as any);
 
-      const result = await tripsService.getTripsByUserId(DEFAULT_USER_1);
+      const result = await tripsService.getTripsByUserId(MOCK_USER_1);
 
       expect(result).toEqual(mockData);
-      expect(tripModel.find).toHaveBeenCalledWith({ user: DEFAULT_USER_1._id });
+      expect(tripModel.find).toHaveBeenCalledWith({ user: MOCK_USER_1._id });
     });
   });
 
   describe('getTripByUserId()', () => {
     it('returning trip with exisiting ID works', async () => {
-      const mockData = DEFAULT_TRIP_1;
+      const mockData = MOCK_TRIP_1;
       tripModel.findOne.mockReturnValueOnce({
         select: jest.fn().mockReturnThis(),
         exec: jest.fn().mockResolvedValueOnce(mockData),
       } as any);
 
-      const id = DEFAULT_TRIP_1._id.toString();
-      const result = await tripsService.getTripByUserId(DEFAULT_USER_1, id);
+      const id = MOCK_TRIP_1._id.toString();
+      const result = await tripsService.getTripByUserId(MOCK_USER_1, id);
 
       expect(result).toEqual(mockData);
       expect(tripModel.findOne).toHaveBeenCalledWith({
         _id: id,
-        user: DEFAULT_USER_1._id,
+        user: MOCK_USER_1._id,
       });
     });
   });
 
   describe('createTripByUserId()', () => {
     it('inserting a new trip works', async () => {
-      const mockData = DEFAULT_TRIP_1;
+      const mockData = MOCK_TRIP_1;
       tripModel.create.mockResolvedValueOnce(mockData as any);
 
       const createTripDto: CreateTripDto = {
-        ...DEFAULT_TRIP_1,
+        ...MOCK_TRIP_1,
       };
       const result = await tripsService.createTripByUserId(
-        DEFAULT_USER_1,
+        MOCK_USER_1,
         createTripDto,
       );
 
       expect(result).toEqual(mockData);
       expect(tripModel.create).toHaveBeenCalledWith({
         ...createTripDto,
-        user: DEFAULT_USER_1._id,
+        user: MOCK_USER_1._id,
         createdAt: new Date(),
       });
     });
@@ -228,24 +228,24 @@ describe('TripsService', () => {
 
   describe('updateTripByUserId()', () => {
     it('updating an exisiting trip works', async () => {
-      const mockData = DEFAULT_TRIP_1;
+      const mockData = MOCK_TRIP_1;
       tripModel.findOneAndUpdate.mockReturnValueOnce({
         exec: jest.fn().mockResolvedValueOnce(mockData),
       } as any);
 
-      const id = DEFAULT_TRIP_1._id.toString();
+      const id = MOCK_TRIP_1._id.toString();
       const updateTripDto: UpdateTripDto = {
-        ...DEFAULT_TRIP_1,
+        ...MOCK_TRIP_1,
       };
       const result = await tripsService.updateTripByUserId(
-        DEFAULT_USER_1,
+        MOCK_USER_1,
         id,
         updateTripDto,
       );
 
       expect(result).toEqual(mockData);
       expect(tripModel.findOneAndUpdate).toHaveBeenCalledWith(
-        { _id: id, user: DEFAULT_USER_1._id },
+        { _id: id, user: MOCK_USER_1._id },
         { ...updateTripDto, updatedAt: new Date() },
         { new: true },
       );
@@ -254,18 +254,18 @@ describe('TripsService', () => {
 
   describe('deleteTripByUserId()', () => {
     it('deleting a trip works', async () => {
-      const mockData = DEFAULT_TRIP_1;
+      const mockData = MOCK_TRIP_1;
       tripModel.findOneAndDelete.mockReturnValueOnce({
         exec: jest.fn().mockResolvedValueOnce(mockData),
       } as any);
 
-      const id = DEFAULT_TRIP_1._id.toString();
-      const result = await tripsService.deleteTripByUserId(DEFAULT_USER_1, id);
+      const id = MOCK_TRIP_1._id.toString();
+      const result = await tripsService.deleteTripByUserId(MOCK_USER_1, id);
 
       expect(result).toEqual(mockData);
       expect(tripModel.findOneAndDelete).toHaveBeenCalledWith({
         _id: id,
-        user: DEFAULT_USER_1._id,
+        user: MOCK_USER_1._id,
       });
     });
   });
@@ -274,14 +274,14 @@ describe('TripsService', () => {
 
   describe('createTripItem()', () => {
     it('creating a new trip item works', async () => {
-      const mockData = { ...DEFAULT_TRIP_1, items: [DEFAULT_TRIP_ITEM_1] };
+      const mockData = { ...MOCK_TRIP_1, items: [MOCK_TRIP_ITEM_1] };
       tripModel.findOneAndUpdate.mockReturnValueOnce({
         exec: jest.fn().mockResolvedValueOnce(mockData),
       } as any);
 
-      const id = DEFAULT_TRIP_1._id.toString();
+      const id = MOCK_TRIP_1._id.toString();
       const createTripItemDto: CreateTripItemDto = {
-        ...DEFAULT_TRIP_ITEM_1,
+        ...MOCK_TRIP_ITEM_1,
       };
       const result = await tripsService.createTripItem(id, createTripItemDto);
 
@@ -296,15 +296,15 @@ describe('TripsService', () => {
 
   describe('updateTripItem()', () => {
     it('updating an exisiting trip item works', async () => {
-      const mockData = { ...DEFAULT_TRIP_1, items: [DEFAULT_TRIP_ITEM_2] };
+      const mockData = { ...MOCK_TRIP_1, items: [MOCK_TRIP_ITEM_2] };
       tripModel.findOneAndUpdate.mockReturnValueOnce({
         exec: jest.fn().mockResolvedValueOnce(mockData),
       } as any);
 
-      const tripId = DEFAULT_TRIP_1._id.toString();
-      const tripItemId = DEFAULT_TRIP_ITEM_2._id.toString();
+      const tripId = MOCK_TRIP_1._id.toString();
+      const tripItemId = MOCK_TRIP_ITEM_2._id.toString();
       const updateTripItemDto: UpdateTripItemDto = {
-        ...DEFAULT_TRIP_ITEM_2,
+        ...MOCK_TRIP_ITEM_2,
       };
       const result = await tripsService.updateTripItem(
         tripId,
@@ -325,13 +325,13 @@ describe('TripsService', () => {
 
   describe('deleteTripItem()', () => {
     it('deleting a trip item works', async () => {
-      const mockData = { ...DEFAULT_TRIP_1 };
+      const mockData = { ...MOCK_TRIP_1 };
       tripModel.findOneAndUpdate.mockReturnValueOnce({
         exec: jest.fn().mockResolvedValueOnce(mockData),
       } as any);
 
-      const tripId = DEFAULT_TRIP_1._id.toString();
-      const tripItemId = DEFAULT_TRIP_ITEM_2._id.toString();
+      const tripId = MOCK_TRIP_1._id.toString();
+      const tripItemId = MOCK_TRIP_ITEM_2._id.toString();
       const result = await tripsService.deleteTripItem(tripId, tripItemId);
 
       expect(result).toEqual(mockData);
@@ -347,24 +347,24 @@ describe('TripsService', () => {
 
   describe('createTripItemByUserId()', () => {
     it('creating a new trip item works', async () => {
-      const mockData = { ...DEFAULT_TRIP_1, items: [DEFAULT_TRIP_ITEM_1] };
+      const mockData = { ...MOCK_TRIP_1, items: [MOCK_TRIP_ITEM_1] };
       tripModel.findOneAndUpdate.mockReturnValueOnce({
         exec: jest.fn().mockResolvedValueOnce(mockData),
       } as any);
 
-      const id = DEFAULT_TRIP_1._id.toString();
+      const id = MOCK_TRIP_1._id.toString();
       const createTripItemDto: CreateTripItemDto = {
-        ...DEFAULT_TRIP_ITEM_1,
+        ...MOCK_TRIP_ITEM_1,
       };
       const result = await tripsService.createTripItemByUserId(
-        DEFAULT_USER_1,
+        MOCK_USER_1,
         id,
         createTripItemDto,
       );
 
       expect(result).toEqual(mockData);
       expect(tripModel.findOneAndUpdate).toHaveBeenCalledWith(
-        { _id: id, user: DEFAULT_USER_1._id },
+        { _id: id, user: MOCK_USER_1._id },
         { $push: { items: { ...createTripItemDto, createdAt: new Date() } } },
         { new: true },
       );
@@ -373,18 +373,18 @@ describe('TripsService', () => {
 
   describe('updateTripItemByUserId()', () => {
     it('updating an exisiting trip item works', async () => {
-      const mockData = { ...DEFAULT_TRIP_1, items: [DEFAULT_TRIP_ITEM_2] };
+      const mockData = { ...MOCK_TRIP_1, items: [MOCK_TRIP_ITEM_2] };
       tripModel.findOneAndUpdate.mockReturnValueOnce({
         exec: jest.fn().mockResolvedValueOnce(mockData),
       } as any);
 
-      const tripId = DEFAULT_TRIP_1._id.toString();
-      const tripItemId = DEFAULT_TRIP_ITEM_2._id.toString();
+      const tripId = MOCK_TRIP_1._id.toString();
+      const tripItemId = MOCK_TRIP_ITEM_2._id.toString();
       const updateTripItemDto: UpdateTripItemDto = {
-        ...DEFAULT_TRIP_ITEM_2,
+        ...MOCK_TRIP_ITEM_2,
       };
       const result = await tripsService.updateTripItemByUserId(
-        DEFAULT_USER_1,
+        MOCK_USER_1,
         tripId,
         tripItemId,
         updateTripItemDto,
@@ -394,7 +394,7 @@ describe('TripsService', () => {
       expect(tripModel.findOneAndUpdate).toHaveBeenCalledWith(
         {
           _id: tripId,
-          user: DEFAULT_USER_1._id,
+          user: MOCK_USER_1._id,
           items: { $elemMatch: { _id: tripItemId } },
         },
         {
@@ -407,22 +407,22 @@ describe('TripsService', () => {
 
   describe('deleteTripItemByUserId()', () => {
     it('deleting a trip item works', async () => {
-      const mockData = { ...DEFAULT_TRIP_1 };
+      const mockData = { ...MOCK_TRIP_1 };
       tripModel.findOneAndUpdate.mockReturnValueOnce({
         exec: jest.fn().mockResolvedValueOnce(mockData),
       } as any);
 
-      const tripId = DEFAULT_TRIP_1._id.toString();
-      const tripItemId = DEFAULT_TRIP_ITEM_2._id.toString();
+      const tripId = MOCK_TRIP_1._id.toString();
+      const tripItemId = MOCK_TRIP_ITEM_2._id.toString();
       const result = await tripsService.deleteTripItemByUserId(
-        DEFAULT_USER_1,
+        MOCK_USER_1,
         tripId,
         tripItemId,
       );
 
       expect(result).toEqual(mockData);
       expect(tripModel.findOneAndUpdate).toHaveBeenCalledWith(
-        { _id: tripId, user: DEFAULT_USER_1._id },
+        { _id: tripId, user: MOCK_USER_1._id },
         { $pull: { items: { _id: tripItemId } } },
         { new: true },
       );

@@ -12,19 +12,19 @@ import { createMock } from '@golevelup/ts-jest';
 import { authGuardMock } from '../../__mocks__/guards/auth.guard.mock';
 import { authServiceMock } from '../../__mocks__/services/auth.service.mock';
 import {
-  DEFAULT_EMAIL_1,
-  DEFAULT_PASSWORD_1,
-  DEFAULT_PASSWORD_2,
-  DEFAULT_FIRSTNAME_1,
-  DEFAULT_LASTNAME_1,
+  MOCK_EMAIL_1,
+  MOCK_PASSWORD_1,
+  MOCK_PASSWORD_2,
+  MOCK_FIRSTNAME_1,
+  MOCK_LASTNAME_1,
 } from '../../__mocks__/constants/common.constants';
 import {
-  DEFAULT_ACCESS_TOKEN_1,
-  DEFAULT_AUTH_TOKEN_1,
+  MOCK_ACCESS_TOKEN_1,
+  MOCK_AUTH_TOKEN_1,
 } from '../../__mocks__/constants/auth.constants';
 import {
-  DEFAULT_USER_PROFILE_RESPONSE_1,
-  DEFAULT_USER_SETTINGS_RESPONSE_1,
+  MOCK_USER_PROFILE_RESPONSE_1,
+  MOCK_USER_SETTINGS_RESPONSE_1,
 } from '../../__mocks__/constants/user.constants';
 
 import { AuthGuard } from '../guards/auth.guard';
@@ -70,7 +70,7 @@ describe('AuthController', () => {
 
   describe('login()', () => {
     it('login works', async () => {
-      const mockedData = DEFAULT_AUTH_TOKEN_1;
+      const mockedData = MOCK_AUTH_TOKEN_1;
       service.login.mockResolvedValueOnce(
         new Promise((resolve) => {
           resolve(mockedData);
@@ -78,8 +78,8 @@ describe('AuthController', () => {
       );
 
       const payload = {
-        email: DEFAULT_EMAIL_1,
-        password: DEFAULT_PASSWORD_1,
+        email: MOCK_EMAIL_1,
+        password: MOCK_PASSWORD_1,
       };
       const result = await controller.login(payload);
 
@@ -94,7 +94,7 @@ describe('AuthController', () => {
         throw new Error();
       });
 
-      const mockContext = getExecutionContextMock(DEFAULT_ACCESS_TOKEN_1.token);
+      const mockContext = getExecutionContextMock(MOCK_ACCESS_TOKEN_1.token);
 
       let hasThrown = false;
       try {
@@ -113,11 +113,11 @@ describe('AuthController', () => {
     it('logout works', async () => {
       service.logout.mockResolvedValueOnce(
         new Promise((resolve) => {
-          resolve(DEFAULT_AUTH_TOKEN_1);
+          resolve(MOCK_AUTH_TOKEN_1);
         }),
       );
 
-      const mockContext = getExecutionContextMock(DEFAULT_ACCESS_TOKEN_1.token);
+      const mockContext = getExecutionContextMock(MOCK_ACCESS_TOKEN_1.token);
 
       let hasThrown = false;
       try {
@@ -135,14 +135,14 @@ describe('AuthController', () => {
 
   describe('verify()', () => {
     it('veryfing token works', async () => {
-      const mockedData = DEFAULT_AUTH_TOKEN_1;
+      const mockedData = MOCK_AUTH_TOKEN_1;
       service.verifyToken.mockResolvedValueOnce(
         new Promise((resolve) => {
           resolve(mockedData);
         }),
       );
 
-      const mockContext = getExecutionContextMock(DEFAULT_ACCESS_TOKEN_1.token);
+      const mockContext = getExecutionContextMock(MOCK_ACCESS_TOKEN_1.token);
 
       const result = await controller.verifyToken(
         mockContext.switchToHttp().getRequest() as Request,
@@ -157,11 +157,11 @@ describe('AuthController', () => {
     it('signing up does not work if passwords are different', async () => {
       const signupSpy = jest.spyOn(service, 'signup');
       const payload = {
-        email: DEFAULT_EMAIL_1,
-        password: DEFAULT_PASSWORD_1,
-        passwordRepeat: DEFAULT_PASSWORD_2,
-        firstname: DEFAULT_FIRSTNAME_1,
-        lastname: DEFAULT_LASTNAME_1,
+        email: MOCK_EMAIL_1,
+        password: MOCK_PASSWORD_1,
+        passwordRepeat: MOCK_PASSWORD_2,
+        firstname: MOCK_FIRSTNAME_1,
+        lastname: MOCK_LASTNAME_1,
       };
 
       let hasThrown = false;
@@ -177,7 +177,7 @@ describe('AuthController', () => {
     });
 
     it('signing up works if passwords are the same', async () => {
-      const mockedData = DEFAULT_AUTH_TOKEN_1;
+      const mockedData = MOCK_AUTH_TOKEN_1;
       const signupSpy = jest.spyOn(service, 'signup').mockResolvedValueOnce(
         new Promise((resolve) => {
           resolve(mockedData);
@@ -185,11 +185,11 @@ describe('AuthController', () => {
       );
 
       const payload = {
-        email: DEFAULT_EMAIL_1,
-        password: DEFAULT_PASSWORD_1,
-        passwordRepeat: DEFAULT_PASSWORD_1,
-        firstname: DEFAULT_FIRSTNAME_1,
-        lastname: DEFAULT_LASTNAME_1,
+        email: MOCK_EMAIL_1,
+        password: MOCK_PASSWORD_1,
+        passwordRepeat: MOCK_PASSWORD_1,
+        firstname: MOCK_FIRSTNAME_1,
+        lastname: MOCK_LASTNAME_1,
       };
 
       const result = await controller.signup(payload);
@@ -201,14 +201,14 @@ describe('AuthController', () => {
 
   describe('getUserProfile()', () => {
     it('getting user profile works', async () => {
-      const mockedData = DEFAULT_USER_PROFILE_RESPONSE_1;
+      const mockedData = MOCK_USER_PROFILE_RESPONSE_1;
       service.getUserProfile.mockResolvedValueOnce(
         new Promise((resolve) => {
           resolve(mockedData);
         }),
       );
 
-      const mockContext = getExecutionContextMock(DEFAULT_ACCESS_TOKEN_1.token);
+      const mockContext = getExecutionContextMock(MOCK_ACCESS_TOKEN_1.token);
 
       const result = await controller.getUserProfile(
         mockContext.switchToHttp().getRequest() as Request,
@@ -221,14 +221,14 @@ describe('AuthController', () => {
 
   describe('getUserSettings()', () => {
     it('getting user settings works', async () => {
-      const mockedData = DEFAULT_USER_SETTINGS_RESPONSE_1;
+      const mockedData = MOCK_USER_SETTINGS_RESPONSE_1;
       service.getUserSettings.mockResolvedValueOnce(
         new Promise((resolve) => {
           resolve(mockedData);
         }),
       );
 
-      const mockContext = getExecutionContextMock(DEFAULT_ACCESS_TOKEN_1.token);
+      const mockContext = getExecutionContextMock(MOCK_ACCESS_TOKEN_1.token);
 
       const result = await controller.getUserSettings(
         mockContext.switchToHttp().getRequest() as Request,
