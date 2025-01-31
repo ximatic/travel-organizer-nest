@@ -4,10 +4,10 @@ import * as mongoose from 'mongoose';
 
 import { User } from './user.schema';
 import {
-  SettingsLanguage,
-  SettingsDateFormat,
-  SettingsTimeFormat,
-  SettingsTheme,
+  UserSettingsLanguage,
+  UserSettingsDateFormat,
+  UserSettingsTimeFormat,
+  UserSettingsTheme,
 } from '../model/user-settings.enum';
 
 export type UserSettingsDocument = mongoose.HydratedDocument<UserSettings>;
@@ -19,16 +19,16 @@ export class UserSettings {
   _id: mongoose.Types.ObjectId;
 
   @Prop({ required: true })
-  language: SettingsLanguage;
+  language: UserSettingsLanguage;
 
   @Prop({ required: true })
-  dateFormat: SettingsDateFormat;
+  dateFormat: UserSettingsDateFormat;
 
   @Prop({ required: true })
-  timeFormat: SettingsTimeFormat;
+  timeFormat: UserSettingsTimeFormat;
 
   @Prop({ required: true })
-  theme: SettingsTheme;
+  theme: UserSettingsTheme;
 
   @Prop({
     required: true,

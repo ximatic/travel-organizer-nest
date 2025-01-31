@@ -3,28 +3,28 @@ import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 import { Types } from 'mongoose';
 
 import {
-  SettingsLanguage,
-  SettingsDateFormat,
-  SettingsTimeFormat,
-  SettingsTheme,
+  UserSettingsLanguage,
+  UserSettingsDateFormat,
+  UserSettingsTimeFormat,
+  UserSettingsTheme,
 } from '../model/user-settings.enum';
 
 export class CreateUserSettingsDto {
   @IsOptional()
-  @Transform(() => SettingsLanguage)
+  @Transform(() => UserSettingsLanguage)
   language: string;
 
   @IsOptional()
-  @Transform(() => SettingsDateFormat)
-  dateFormat: SettingsDateFormat;
+  @Transform(() => UserSettingsDateFormat)
+  dateFormat: UserSettingsDateFormat;
 
   @IsOptional()
-  @Transform(() => SettingsTimeFormat)
-  timeFormat: SettingsTimeFormat;
+  @Transform(() => UserSettingsTimeFormat)
+  timeFormat: UserSettingsTimeFormat;
 
   @IsOptional()
-  @Transform(() => SettingsTheme)
-  theme: SettingsTheme;
+  @Transform(() => UserSettingsTheme)
+  theme: UserSettingsTheme;
 
   @IsNotEmpty()
   @IsString()

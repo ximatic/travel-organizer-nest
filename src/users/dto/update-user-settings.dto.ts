@@ -2,26 +2,26 @@ import { Transform } from 'class-transformer';
 import { IsOptional } from 'class-validator';
 
 import {
-  SettingsLanguage,
-  SettingsDateFormat,
-  SettingsTimeFormat,
-  SettingsTheme,
+  UserSettingsLanguage,
+  UserSettingsDateFormat,
+  UserSettingsTimeFormat,
+  UserSettingsTheme,
 } from '../model/user-settings.enum';
 
 export class UpdateUserSettingsDto {
   @IsOptional()
-  @Transform(() => SettingsLanguage)
-  language: SettingsLanguage;
+  @Transform(() => UserSettingsLanguage)
+  language: UserSettingsLanguage;
 
   @IsOptional()
-  @Transform(() => SettingsDateFormat)
-  dateFormat: SettingsDateFormat;
+  @Transform(() => UserSettingsDateFormat)
+  dateFormat: UserSettingsDateFormat;
 
   @IsOptional()
-  @Transform(() => SettingsTimeFormat)
-  timeFormat: SettingsTimeFormat;
+  @Transform(() => UserSettingsTimeFormat)
+  timeFormat: UserSettingsTimeFormat;
 
   @IsOptional()
-  @Transform(() => SettingsTheme)
-  theme: SettingsTheme;
+  @Transform(() => UserSettingsTheme)
+  theme: UserSettingsTheme;
 }

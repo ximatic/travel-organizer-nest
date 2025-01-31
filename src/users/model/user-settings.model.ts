@@ -1,13 +1,13 @@
 import {
-  SettingsLanguage,
-  SettingsDateFormat,
-  SettingsTimeFormat,
-  SettingsTheme,
+  UserSettingsLanguage,
+  UserSettingsDateFormat,
+  UserSettingsTimeFormat,
+  UserSettingsTheme,
 } from './user-settings.enum';
 
 export interface UserSettingsResponse {
-  language: SettingsLanguage;
-  dateFormat: SettingsDateFormat;
-  timeFormat: SettingsTimeFormat;
-  theme: SettingsTheme;
+  language: UserSettingsLanguage;
+  dateFormat: UserSettingsDateFormat;
+  timeFormat: UserSettingsTimeFormat;
+  theme: UserSettingsTheme;
 }

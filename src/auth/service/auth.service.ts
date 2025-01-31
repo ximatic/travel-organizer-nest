@@ -15,7 +15,7 @@ import { AuthToken } from '../model/auth-token.model';
 import { User } from '../../users/schema/user.schema';
 import { AccessToken } from '../schema/access-token.schema';
 
-import { DEFAULT_SETTINGS } from '../../users/constants/user-settings.constants';
+import { DEFAULT_USER_SETTINGS } from '../../users/constants/user-settings.constants';
 
 import { UserInfoResponse } from '../../users/model/user-info.model';
 import { UserProfileResponse } from '../../users/model/user-profile.model';
@@ -107,7 +107,7 @@ export class AuthService {
     }
 
     const userSettings = await this.usersService.createUserSettings({
-      ...DEFAULT_SETTINGS,
+      ...DEFAULT_USER_SETTINGS,
       user: user._id,
     });
     if (!userSettings) {
