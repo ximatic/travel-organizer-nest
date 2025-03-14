@@ -26,6 +26,9 @@ import { UpdateUserDto } from '../../users/dto/update-user.dto';
 import { UpdateUserInfoDto } from '../../users/dto/update-user-info.dto';
 import { UpdateUserProfileDto } from '../../users/dto/update-user-profile.dto';
 import { UpdateUserSettingsDto } from '../../users/dto/update-user-settings.dto';
+import { UpdateUserPasswordDto } from '../../users/dto/update-user-password.dto';
+import { UpdateUserDataDto } from '../../users/dto/update-user-data.dto';
+import { UserDataResponse } from '../../users/model/user-data.model';
 
 @Injectable()
 export class AuthService {
@@ -168,6 +171,58 @@ export class AuthService {
   //     updateUserInfoDto,
   //   );
   // }
+
+  // user data
+
+  async updateUserData(
+    accessToken: AccessToken,
+    updateUserDataDto: UpdateUserDataDto,
+  ): Promise<UserDataResponse> {
+    return this.usersService.updateUserData(
+      accessToken.user,
+      updateUserDataDto,
+    );
+  }
+
+  // user password
+
+  async updateUserPassword(
+    accessToken: AccessToken,
+    updateUserPasswordDto: UpdateUserPasswordDto,
+  ): Promise<void> {
+    const isMatch = await bcrypt.compare(
+      updateUserPasswordDto.currentPassword,
+      accessToken.user?.password,
+    );
+    if (!isMatch) {
+      throw new UnauthorizedException();
+    }
+
+    if (
+      !this.isValidPassword(
+        updateUserPasswordDto.newPassword,
+        updateUserPasswordDto.newPasswordRepeat,
+      )
+    ) {
+      throw new InternalServerErrorException(
+        `Passwords are invalid. Please try again later.`,
+      );
+    }
+
+    const hashPasssword = await this.hashPassword(
+      updateUserPasswordDto.newPassword,
+    );
+    try {
+      this.usersService.updateUserPassword(
+        accessToken.user._id.toString(),
+        hashPasssword,
+      );
+    } catch {
+      throw new InternalServerErrorException(
+        `Can't process request and create a settings. Please try again later.`,
+      );
+    }
+  }
 
   // user profile
 

@@ -28,6 +28,9 @@ import { UpdateUserInfoDto } from '../../users/dto/update-user-info.dto';
 import { UpdateUserProfileDto } from '../../users/dto/update-user-profile.dto';
 import { UpdateUserDto } from '../../users/dto/update-user.dto';
 import { UpdateUserSettingsDto } from '../../users/dto/update-user-settings.dto';
+import { UpdateUserDataDto } from '../../users/dto/update-user-data.dto';
+import { UpdateUserPasswordDto } from '../../users/dto/update-user-password.dto';
+import { UserDataResponse } from '../../users/model/user-data.model';
 
 @Controller('auth')
 export class AuthController {
@@ -110,6 +113,43 @@ export class AuthController {
   //     updateUserInfoDto,
   //   );
   // }
+
+  // user data (profile + email)
+
+  @Put('user/data')
+  @UseGuards(AuthGuard)
+  async updateUserData(
+    @Req() request: Request,
+    @Body() updateUserDataDto: UpdateUserDataDto,
+  ): Promise<UserDataResponse> {
+    return this.authService.updateUserData(
+      request['accessToken'],
+      updateUserDataDto,
+    );
+  }
+
+  // user password
+
+  @Put('user/password')
+  @UseGuards(AuthGuard)
+  async updateUserPassword(
+    @Req() request: Request,
+    @Body() updateUserPasswordDto: UpdateUserPasswordDto,
+  ): Promise<void> {
+    if (
+      updateUserPasswordDto.newPassword !==
+      updateUserPasswordDto.newPasswordRepeat
+    ) {
+      throw new BadRequestException(
+        `Provided passwords are not the same. Please try again later.`,
+      );
+    }
+
+    return this.authService.updateUserPassword(
+      request['accessToken'],
+      updateUserPasswordDto,
+    );
+  }
 
   // user profile
 

@@ -20,6 +20,9 @@ import { CreateUserSettingsDto } from '../dto/create-user-settings.dto';
 import { UpdateUserSettingsDto } from '../dto/update-user-settings.dto';
 import { UserProfileService } from './user-profile.service';
 import { UserSettingsService } from './user-settings.service';
+import { UpdateUserPasswordDto } from '../dto/update-user-password.dto';
+import { UpdateUserDataDto } from '../dto/update-user-data.dto';
+import { UserDataResponse } from '../model/user-data.model';
 
 @Injectable()
 export class UsersService {
@@ -113,6 +116,44 @@ export class UsersService {
 
   //   return this.createUserInfoResponse(user, userProfile, userSettings);
   // }
+
+  // user data
+
+  async updateUserData(
+    user: User,
+    updateUserDataDto: UpdateUserDataDto,
+  ): Promise<UserDataResponse> {
+    // update user's email
+    let email = user.email;
+    if (updateUserDataDto.email) {
+      email = (await this.updateUser(user._id.toString(), { email })).email;
+    }
+
+    // update user's profile
+    let profile;
+    if (updateUserDataDto.profile) {
+      profile = await this.updateUserProfile(user, updateUserDataDto.profile);
+    } else {
+      profile = await this.getUserProfile(user);
+    }
+
+    return {
+      email,
+      profile,
+    } as UserDataResponse;
+  }
+
+  // user password
+
+  async updateUserPassword(id: string, password: string): Promise<User> {
+    return this.userModel
+      .findByIdAndUpdate(
+        { _id: id },
+        { password, updatedAt: new Date() },
+        { new: true },
+      )
+      .exec();
+  }
 
   // user profile
 

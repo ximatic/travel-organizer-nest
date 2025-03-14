@@ -213,6 +213,12 @@ describe('UsersService', () => {
     });
   });
 
+  // user data
+  // TODO #2 - add tests for updateUserData
+
+  // user password
+  // TODO #3 - add tests for updateUserPassword
+
   // user profile
 
   describe('user profile', () => {
@@ -235,7 +241,7 @@ describe('UsersService', () => {
       });
     });
 
-    // TODO #2 - add tests for createUserProfile and updateUserProfile
+    // TODO #4 - add tests for createUserProfile and updateUserProfile
   });
 
   // user settings
@@ -262,6 +268,6 @@ describe('UsersService', () => {
       });
     });
 
-    // TODO #3 - add tests for createUserSettings and updateUserSettings
+    // TODO #5 - add tests for createUserSettings and updateUserSettings
   });
 });
