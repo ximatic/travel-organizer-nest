@@ -23,7 +23,6 @@ import { UserSettingsResponse } from '../../users/model/user-settings.model';
 
 import { SignUpDto } from '../dto/sign-up.dto';
 import { UpdateUserDto } from '../../users/dto/update-user.dto';
-import { UpdateUserInfoDto } from '../../users/dto/update-user-info.dto';
 import { UpdateUserProfileDto } from '../../users/dto/update-user-profile.dto';
 import { UpdateUserSettingsDto } from '../../users/dto/update-user-settings.dto';
 import { UpdateUserPasswordDto } from '../../users/dto/update-user-password.dto';

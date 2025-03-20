@@ -13,14 +13,12 @@ import { UserSettingsResponse } from '../model/user-settings.model';
 
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
-import { UpdateUserInfoDto } from '../dto/update-user-info.dto';
 import { CreateUserProfileDto } from '../dto/create-user-profile.dto';
 import { UpdateUserProfileDto } from '../dto/update-user-profile.dto';
 import { CreateUserSettingsDto } from '../dto/create-user-settings.dto';
 import { UpdateUserSettingsDto } from '../dto/update-user-settings.dto';
 import { UserProfileService } from './user-profile.service';
 import { UserSettingsService } from './user-settings.service';
-import { UpdateUserPasswordDto } from '../dto/update-user-password.dto';
 import { UpdateUserDataDto } from '../dto/update-user-data.dto';
 import { UserDataResponse } from '../model/user-data.model';
 

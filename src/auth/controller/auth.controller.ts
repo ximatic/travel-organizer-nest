@@ -24,7 +24,6 @@ import { UserSettingsResponse } from 'src/users/model/user-settings.model';
 
 import { LoginDto } from '../dto/login.dto';
 import { SignUpDto } from '../dto/sign-up.dto';
-import { UpdateUserInfoDto } from '../../users/dto/update-user-info.dto';
 import { UpdateUserProfileDto } from '../../users/dto/update-user-profile.dto';
 import { UpdateUserDto } from '../../users/dto/update-user.dto';
 import { UpdateUserSettingsDto } from '../../users/dto/update-user-settings.dto';
