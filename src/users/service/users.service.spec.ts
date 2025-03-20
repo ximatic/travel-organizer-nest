@@ -3,6 +3,7 @@ import { getModelToken } from '@nestjs/mongoose';
 
 import { Model } from 'mongoose';
 
+import { MOCK_PASSWORD_1 } from '../../__mocks__/constants/common.constants';
 import {
   MOCK_USER_1,
   MOCK_USER_2,
@@ -214,15 +215,118 @@ describe('UsersService', () => {
   });
 
   // user data
-  // TODO #2 - add tests for updateUserData
+  describe('user data', () => {
+    describe('updateUserData()', () => {
+      it('updating user data without email works', async () => {
+        const updateUserSpy = jest.spyOn(service, 'updateUser');
+        const mockData = {
+          profile: {
+            firstname: MOCK_USER_PROFILE_1.firstname,
+            lastname: MOCK_USER_PROFILE_1.lastname,
+          },
+        };
+        const expectedData = {
+          email: MOCK_USER_1.email,
+          profile: {
+            firstname: MOCK_USER_PROFILE_1.firstname,
+            lastname: MOCK_USER_PROFILE_1.lastname,
+          },
+        };
+        userProfileService.updateUserProfileByUserId.mockResolvedValueOnce(
+          MOCK_USER_PROFILE_1,
+        );
+
+        const result = await service.updateUserData(MOCK_USER_1, mockData);
+
+        expect(result).toEqual(expectedData);
+        expect(updateUserSpy).toHaveBeenCalledTimes(0);
+      });
+
+      it('updating user data with profile works', async () => {
+        const mockData = {
+          email: MOCK_USER_1.email,
+          profile: {
+            firstname: MOCK_USER_PROFILE_1.firstname,
+            lastname: MOCK_USER_PROFILE_1.lastname,
+          },
+        };
+        const expectedData = {
+          email: MOCK_USER_1.email,
+          profile: {
+            firstname: MOCK_USER_PROFILE_1.firstname,
+            lastname: MOCK_USER_PROFILE_1.lastname,
+          },
+        };
+        userModel.findByIdAndUpdate.mockReturnValueOnce({
+          exec: jest.fn().mockResolvedValueOnce(MOCK_USER_1),
+        } as any);
+        userProfileService.updateUserProfileByUserId.mockResolvedValueOnce(
+          MOCK_USER_PROFILE_1,
+        );
+
+        const result = await service.updateUserData(MOCK_USER_1, mockData);
+
+        expect(result).toEqual(expectedData);
+        expect(userModel.findByIdAndUpdate).toHaveBeenCalled();
+        expect(
+          userProfileService.updateUserProfileByUserId,
+        ).toHaveBeenCalledWith(MOCK_USER_1._id, mockData.profile);
+      });
+
+      it('updating user data without profile works', async () => {
+        const mockData = {
+          email: MOCK_USER_1.email,
+        };
+        const expectedData = {
+          email: MOCK_USER_1.email,
+          profile: {
+            firstname: MOCK_USER_PROFILE_1.firstname,
+            lastname: MOCK_USER_PROFILE_1.lastname,
+          },
+        };
+        userModel.findByIdAndUpdate.mockReturnValueOnce({
+          exec: jest.fn().mockResolvedValueOnce(MOCK_USER_1),
+        } as any);
+        userProfileService.getUserProfileByUserId.mockResolvedValueOnce(
+          MOCK_USER_PROFILE_1,
+        );
+
+        const result = await service.updateUserData(MOCK_USER_1, mockData);
+
+        expect(result).toEqual(expectedData);
+        expect(userModel.findByIdAndUpdate).toHaveBeenCalled();
+        expect(userProfileService.getUserProfileByUserId).toHaveBeenCalledWith(
+          MOCK_USER_1._id,
+        );
+      });
+    });
+  });
 
   // user password
-  // TODO #3 - add tests for updateUserPassword
+
+  describe('user password', () => {
+    describe('updateUserPassword()', () => {
+      it('updating an existing user password works', async () => {
+        const mockData = MOCK_USER_1;
+        userModel.findByIdAndUpdate.mockReturnValueOnce({
+          exec: jest.fn().mockResolvedValueOnce(mockData),
+        } as any);
+
+        const result = await service.updateUserPassword(
+          MOCK_USER_1._id.toString(),
+          MOCK_PASSWORD_1,
+        );
+
+        expect(result).toEqual(mockData);
+        expect(userModel.findByIdAndUpdate).toHaveBeenCalled();
+      });
+    });
+  });
 
   // user profile
 
   describe('user profile', () => {
-    describe('getUserProfiles()', () => {
+    describe('getUserProfile()', () => {
       it('returning user profile works', async () => {
         const expectedResult = {
           firstname: MOCK_USER_PROFILE_1.firstname,
@@ -241,7 +345,51 @@ describe('UsersService', () => {
       });
     });
 
-    // TODO #4 - add tests for createUserProfile and updateUserProfile
+    describe('createUserProfile()', () => {
+      it('creating a new user profile works', async () => {
+        const mockData = {
+          firstname: MOCK_USER_PROFILE_1.firstname,
+          lastname: MOCK_USER_PROFILE_1.lastname,
+          user: MOCK_USER_1._id,
+        };
+        const expectedResult = {
+          firstname: MOCK_USER_PROFILE_1.firstname,
+          lastname: MOCK_USER_PROFILE_1.lastname,
+        };
+        userProfileService.createUserProfile.mockResolvedValueOnce(
+          MOCK_USER_PROFILE_1,
+        );
+
+        const result = await service.createUserProfile(mockData);
+
+        expect(result).toEqual(expectedResult);
+        expect(userProfileService.createUserProfile).toHaveBeenCalledWith(
+          mockData,
+        );
+      });
+    });
+
+    describe('updateUserProfile()', () => {
+      it('updating an existing user profile works', async () => {
+        const expectedResult = {
+          firstname: MOCK_USER_PROFILE_1.firstname,
+          lastname: MOCK_USER_PROFILE_1.lastname,
+        };
+        userProfileService.updateUserProfileByUserId.mockResolvedValueOnce(
+          MOCK_USER_PROFILE_1,
+        );
+
+        const result = await service.updateUserProfile(
+          MOCK_USER_1,
+          MOCK_USER_PROFILE_1,
+        );
+
+        expect(result).toEqual(expectedResult);
+        expect(
+          userProfileService.updateUserProfileByUserId,
+        ).toHaveBeenCalledWith(MOCK_USER_1._id, MOCK_USER_PROFILE_1);
+      });
+    });
   });
 
   // user settings
@@ -268,6 +416,50 @@ describe('UsersService', () => {
       });
     });
 
-    // TODO #5 - add tests for createUserSettings and updateUserSettings
+    describe('createUserSettings()', () => {
+      it('creating a new user settings works', async () => {
+        const mockData = { ...MOCK_USER_SETTINGS_1, user: MOCK_USER_1._id };
+        const expectedResult = {
+          language: MOCK_USER_SETTINGS_1.language,
+          dateFormat: MOCK_USER_SETTINGS_1.dateFormat,
+          timeFormat: MOCK_USER_SETTINGS_1.timeFormat,
+          theme: MOCK_USER_SETTINGS_1.theme,
+        };
+        userSettingsService.createUserSettings.mockResolvedValueOnce(
+          MOCK_USER_SETTINGS_1,
+        );
+
+        const result = await service.createUserSettings(mockData);
+
+        expect(result).toEqual(expectedResult);
+        expect(userSettingsService.createUserSettings).toHaveBeenCalledWith(
+          mockData,
+        );
+      });
+    });
+
+    describe('updateUserSettings()', () => {
+      it('updating an existing user settings works', async () => {
+        const expectedResult = {
+          language: MOCK_USER_SETTINGS_1.language,
+          dateFormat: MOCK_USER_SETTINGS_1.dateFormat,
+          timeFormat: MOCK_USER_SETTINGS_1.timeFormat,
+          theme: MOCK_USER_SETTINGS_1.theme,
+        };
+        userSettingsService.updateUserSettingsByUserId.mockResolvedValueOnce(
+          MOCK_USER_SETTINGS_1,
+        );
+
+        const result = await service.updateUserSettings(
+          MOCK_USER_1,
+          MOCK_USER_SETTINGS_1,
+        );
+
+        expect(result).toEqual(expectedResult);
+        expect(
+          userSettingsService.updateUserSettingsByUserId,
+        ).toHaveBeenCalledWith(MOCK_USER_1._id, MOCK_USER_SETTINGS_1);
+      });
+    });
   });
 });
