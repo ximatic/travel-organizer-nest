@@ -5,7 +5,7 @@ import { tokenServiceMock } from '../../__mocks__/services/token.service.mock';
 import { userServiceMock } from '../../__mocks__/services/user.service.mock';
 
 import { UsersService } from '../../users/service/users.service';
-import { TokenService } from './token.service';
+import { TokenService } from '../../token/services/token.service';
 
 import { AuthService } from './auth.service';
 

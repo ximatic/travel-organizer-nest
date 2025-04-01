@@ -15,7 +15,7 @@ import {
 
 import { Types } from 'mongoose';
 
-import { AuthGuard } from '../../auth/guards/auth.guard';
+import { TokenGuard } from '../../token/guards/token.guard';
 
 import { TripsService } from '../service/trips.service';
 
@@ -27,20 +27,20 @@ import { CreateTripItemDto } from '../dto/create-trip-item.dto';
 import { UpdateTripItemDto } from '../dto/update-trip-item.dto';
 
 @Controller('trips')
-@UseGuards(AuthGuard)
+@UseGuards(TokenGuard)
 export class TripsController {
   constructor(private readonly tripsService: TripsService) {}
 
   // trip
 
   @Get()
-  @UseGuards(AuthGuard)
+  @UseGuards(TokenGuard)
   async getTrips(@Req() request: Request): Promise<Trip[]> {
     return this.tripsService.getTripsByUserId(request['accessToken'].user);
   }
 
   @Get(':id')
-  @UseGuards(AuthGuard)
+  @UseGuards(TokenGuard)
   async getTrip(
     @Req() request: Request,
     @Param('id') id: string,
@@ -65,7 +65,7 @@ export class TripsController {
   }
 
   @Post()
-  @UseGuards(AuthGuard)
+  @UseGuards(TokenGuard)
   async createTrip(
     @Req() request: Request,
     @Body() createTripDto: CreateTripDto,
@@ -77,7 +77,7 @@ export class TripsController {
   }
 
   @Put(':id')
-  @UseGuards(AuthGuard)
+  @UseGuards(TokenGuard)
   async updateTrip(
     @Req() request: Request,
     @Param('id') id: string,
@@ -104,7 +104,7 @@ export class TripsController {
   }
 
   @Delete(':id')
-  @UseGuards(AuthGuard)
+  @UseGuards(TokenGuard)
   async deleteTrip(
     @Req() request: Request,
     @Param('id') id: string,

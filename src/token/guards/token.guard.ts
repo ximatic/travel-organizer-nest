@@ -8,12 +8,12 @@ import { JwtService } from '@nestjs/jwt';
 
 import { Request } from 'express';
 
-import { TokenService } from '../service/token.service';
+import { TokenService } from '../services/token.service';
 
-import { jwt } from '../constants/auth.constants';
+import { jwt } from '../../auth/constants/auth.constants';
 
 @Injectable()
-export class AuthGuard implements CanActivate {
+export class TokenGuard implements CanActivate {
   constructor(
     private jwtService: JwtService,
     private tokenService: TokenService,

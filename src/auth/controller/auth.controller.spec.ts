@@ -9,7 +9,7 @@ import { Request } from 'express';
 
 import { createMock } from '@golevelup/ts-jest';
 
-import { authGuardMock } from '../../__mocks__/guards/auth.guard.mock';
+import { tokenGuardMock } from '../../__mocks__/guards/token.guard.mock';
 import { authServiceMock } from '../../__mocks__/services/auth.service.mock';
 import {
   MOCK_EMAIL_1,
@@ -27,7 +27,7 @@ import {
   MOCK_USER_SETTINGS_RESPONSE_1,
 } from '../../__mocks__/constants/user.constants';
 
-import { AuthGuard } from '../guards/auth.guard';
+import { TokenGuard } from '../../token/guards/token.guard';
 
 import { AuthService } from '../service/auth.service';
 
@@ -56,8 +56,8 @@ describe('AuthController', () => {
         },
       ],
     })
-      .overrideGuard(AuthGuard)
-      .useValue(authGuardMock)
+      .overrideGuard(TokenGuard)
+      .useValue(tokenGuardMock)
       .compile();
 
     controller = module.get<AuthController>(AuthController);

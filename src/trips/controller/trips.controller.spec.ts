@@ -12,11 +12,11 @@ import {
   MOCK_TRIP_ITEM_1,
   MOCK_TRIP_ITEM_2,
 } from '../../__mocks__/constants/trips.constants';
-import { authGuardMock } from '../../__mocks__/guards/auth.guard.mock';
+import { tokenGuardMock } from '../../__mocks__/guards/token.guard.mock';
 import { tripsServiceMock } from '../../__mocks__/services/trips-service.mock';
 import { mockRequestAccessToken } from '../../__mocks__/request.mock';
 
-import { AuthGuard } from '../../auth/guards/auth.guard';
+import { TokenGuard } from '../../token/guards/token.guard';
 
 import { TripsService } from '../service/trips.service';
 
@@ -44,8 +44,8 @@ describe('TripsController', () => {
         },
       ],
     })
-      .overrideGuard(AuthGuard)
-      .useValue(authGuardMock)
+      .overrideGuard(TokenGuard)
+      .useValue(tokenGuardMock)
       .compile();
 
     tripsController = app.get<TripsController>(TripsController);

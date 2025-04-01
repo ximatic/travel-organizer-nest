@@ -8,12 +8,12 @@ import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 
 import { UsersService } from '../../users/service/users.service';
-import { TokenService } from './token.service';
+import { TokenService } from '../../token/services/token.service';
 
 import { AuthToken } from '../model/auth-token.model';
 
 import { User } from '../../users/schema/user.schema';
-import { AccessToken } from '../schema/access-token.schema';
+import { AccessToken } from '../../token/schema/access-token.schema';
 
 import { DEFAULT_USER_SETTINGS } from '../../users/constants/user-settings.constants';
 

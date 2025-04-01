@@ -4,13 +4,13 @@ import { JwtService } from '@nestjs/jwt';
 
 import { createMock } from '@golevelup/ts-jest';
 
-import { TokenService } from '../service/token.service';
+import { TokenService } from '../services/token.service';
 
 import { MOCK_ACCESS_TOKEN_1 } from '../../__mocks__/constants/auth.constants';
 
-import { jwt } from '../constants/auth.constants';
+import { jwt } from '../../auth/constants/auth.constants';
 
-import { AuthGuard } from './auth.guard';
+import { TokenGuard } from './token.guard';
 
 const getExecutionContextMock = (headers: any): ExecutionContext => {
   const mockContext = createMock<ExecutionContext>();
@@ -29,8 +29,8 @@ const tokenServiceMock = {
   getAccessToken: jest.fn(),
 };
 
-describe('AuthGuard', () => {
-  let guard: AuthGuard;
+describe('TokenGuard', () => {
+  let guard: TokenGuard;
 
   let jwtService;
   let tokenService;
@@ -40,11 +40,11 @@ describe('AuthGuard', () => {
       providers: [
         { provide: JwtService, useValue: jwtServiceMock },
         { provide: TokenService, useValue: tokenServiceMock },
-        AuthGuard,
+        TokenGuard,
       ],
     }).compile();
 
-    guard = module.get<AuthGuard>(AuthGuard);
+    guard = module.get<TokenGuard>(TokenGuard);
 
     jwtService = module.get<JwtService>(JwtService);
     tokenService = module.get<TokenService>(TokenService);

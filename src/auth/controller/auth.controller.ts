@@ -14,7 +14,7 @@ import {
 
 import { Request } from 'express';
 
-import { AuthGuard } from '../guards/auth.guard';
+import { TokenGuard } from '../../token/guards/token.guard';
 import { AuthService } from '../service/auth.service';
 
 import { AuthToken } from '../model/auth-token.model';
@@ -42,7 +42,7 @@ export class AuthController {
 
   @Get('logout')
   @HttpCode(HttpStatus.OK)
-  @UseGuards(AuthGuard)
+  @UseGuards(TokenGuard)
   logout(@Req() request: Request): void {
     try {
       this.authService.logout(request['accessToken']);
@@ -55,7 +55,7 @@ export class AuthController {
 
   @Get('verify')
   @HttpCode(HttpStatus.OK)
-  @UseGuards(AuthGuard)
+  @UseGuards(TokenGuard)
   async verifyToken(@Req() request: Request): Promise<AuthToken> {
     return this.authService.verifyToken(request['accessToken']);
   }
@@ -79,7 +79,7 @@ export class AuthController {
   // user
 
   @Put('user')
-  @UseGuards(AuthGuard)
+  @UseGuards(TokenGuard)
   updateUser(
     @Req() request: Request,
     @Body() updateUserDto: UpdateUserDto,
@@ -96,13 +96,13 @@ export class AuthController {
   // user info
 
   @Get('user/info')
-  @UseGuards(AuthGuard)
+  @UseGuards(TokenGuard)
   async getUserInfo(@Req() request: Request): Promise<UserInfoResponse> {
     return this.authService.getUserInfo(request['accessToken']);
   }
 
   // @Put('user/info')
-  // @UseGuards(AuthGuard)
+  // @UseGuards(TokenGuard)
   // async updateUserInfo(
   //   @Req() request: Request,
   //   @Body() updateUserInfoDto: UpdateUserInfoDto,
@@ -116,7 +116,7 @@ export class AuthController {
   // user data (profile + email)
 
   @Put('user/data')
-  @UseGuards(AuthGuard)
+  @UseGuards(TokenGuard)
   async updateUserData(
     @Req() request: Request,
     @Body() updateUserDataDto: UpdateUserDataDto,
@@ -130,7 +130,7 @@ export class AuthController {
   // user password
 
   @Put('user/password')
-  @UseGuards(AuthGuard)
+  @UseGuards(TokenGuard)
   async updateUserPassword(
     @Req() request: Request,
     @Body() updateUserPasswordDto: UpdateUserPasswordDto,
@@ -153,13 +153,13 @@ export class AuthController {
   // user profile
 
   @Get('user/profile')
-  @UseGuards(AuthGuard)
+  @UseGuards(TokenGuard)
   async getUserProfile(@Req() request: Request): Promise<UserProfileResponse> {
     return this.authService.getUserProfile(request['accessToken']);
   }
 
   @Put('user/profile')
-  @UseGuards(AuthGuard)
+  @UseGuards(TokenGuard)
   async updateUserProfile(
     @Req() request: Request,
     @Body() updateProfileDto: UpdateUserProfileDto,
@@ -173,7 +173,7 @@ export class AuthController {
   // user settings
 
   @Get('user/settings')
-  @UseGuards(AuthGuard)
+  @UseGuards(TokenGuard)
   async getUserSettings(
     @Req() request: Request,
   ): Promise<UserSettingsResponse> {
@@ -181,7 +181,7 @@ export class AuthController {
   }
 
   @Put('user/settings')
-  @UseGuards(AuthGuard)
+  @UseGuards(TokenGuard)
   updateUserSettings(
     @Req() request: Request,
     @Body() updateUserSettingsDto: UpdateUserSettingsDto,
