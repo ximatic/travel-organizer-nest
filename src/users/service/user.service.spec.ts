@@ -22,10 +22,10 @@ import { User } from '../schema/user.schema';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
 
-import { UsersService } from './users.service';
+import { UserService } from './user.service';
 
-describe('UsersService', () => {
-  let service: UsersService;
+describe('UserService', () => {
+  let service: UserService;
   let userProfileService: jest.Mocked<UserProfileService>;
   let userSettingsService: jest.Mocked<UserSettingsService>;
   let userModel: jest.Mocked<Model<User>>;
@@ -45,11 +45,11 @@ describe('UsersService', () => {
           provide: UserSettingsService,
           useValue: userSettingsServiceMock,
         },
-        UsersService,
+        UserService,
       ],
     }).compile();
 
-    service = module.get<UsersService>(UsersService);
+    service = module.get<UserService>(UserService);
     userProfileService = module.get(UserProfileService);
     userSettingsService = module.get(UserSettingsService);
     userModel = module.get(getModelToken(User.name));

@@ -7,7 +7,7 @@ import { JwtService } from '@nestjs/jwt';
 
 import * as bcrypt from 'bcrypt';
 
-import { UsersService } from '../../users/service/users.service';
+import { UserService } from '../../users/service/user.service';
 import { TokenService } from '../../token/services/token.service';
 
 import { AuthToken } from '../model/auth-token.model';
@@ -35,12 +35,12 @@ export class AuthService {
 
   constructor(
     private jwtService: JwtService,
-    private usersService: UsersService,
+    private userService: UserService,
     private tokenService: TokenService,
   ) {}
 
   async login(email: string, password: string): Promise<AuthToken> {
-    const user = await this.usersService.getUserByEmail(email);
+    const user = await this.userService.getUserByEmail(email);
     if (!user) {
       throw new UnauthorizedException();
     }
@@ -86,7 +86,7 @@ export class AuthService {
     }
 
     const hashPasssword = await this.hashPassword(signUpDto.password);
-    const user = await this.usersService.createUser({
+    const user = await this.userService.createUser({
       email: signUpDto.email,
       password: hashPasssword,
     });
@@ -97,7 +97,7 @@ export class AuthService {
       );
     }
 
-    const userProfile = await this.usersService.createUserProfile({
+    const userProfile = await this.userService.createUserProfile({
       firstname: signUpDto.firstname,
       lastname: signUpDto.lastname,
       user: user._id,
@@ -108,7 +108,7 @@ export class AuthService {
       );
     }
 
-    const userSettings = await this.usersService.createUserSettings({
+    const userSettings = await this.userService.createUserSettings({
       ...DEFAULT_USER_SETTINGS,
       user: user._id,
     });
@@ -148,7 +148,7 @@ export class AuthService {
       );
     }
 
-    return this.usersService.updateUser(
+    return this.userService.updateUser(
       accessToken.user._id.toString(),
       updateUserDto,
     );
@@ -157,7 +157,7 @@ export class AuthService {
   // user info
 
   async getUserInfo(accessToken: AccessToken): Promise<UserInfoResponse> {
-    return this.usersService.getUserInfo(accessToken.user);
+    return this.userService.getUserInfo(accessToken.user);
   }
 
   // TODO - remove?
@@ -165,7 +165,7 @@ export class AuthService {
   //   accessToken: AccessToken,
   //   updateUserInfoDto: UpdateUserInfoDto,
   // ): Promise<UserInfoResponse> {
-  //   return this.usersService.updateUserInfo(
+  //   return this.userService.updateUserInfo(
   //     accessToken.user,
   //     updateUserInfoDto,
   //   );
@@ -177,10 +177,7 @@ export class AuthService {
     accessToken: AccessToken,
     updateUserDataDto: UpdateUserDataDto,
   ): Promise<UserDataResponse> {
-    return this.usersService.updateUserData(
-      accessToken.user,
-      updateUserDataDto,
-    );
+    return this.userService.updateUserData(accessToken.user, updateUserDataDto);
   }
 
   // user password
@@ -212,7 +209,7 @@ export class AuthService {
       updateUserPasswordDto.newPassword,
     );
     try {
-      this.usersService.updateUserPassword(
+      this.userService.updateUserPassword(
         accessToken.user._id.toString(),
         hashPasssword,
       );
@@ -226,14 +223,14 @@ export class AuthService {
   // user profile
 
   async getUserProfile(accessToken: AccessToken): Promise<UserProfileResponse> {
-    return this.usersService.getUserProfile(accessToken.user);
+    return this.userService.getUserProfile(accessToken.user);
   }
 
   async updateUserProfile(
     accessToken: AccessToken,
     updateUserProfileDto: UpdateUserProfileDto,
   ): Promise<UserProfileResponse> {
-    return this.usersService.updateUserProfile(
+    return this.userService.updateUserProfile(
       accessToken.user,
       updateUserProfileDto,
     );
@@ -244,14 +241,14 @@ export class AuthService {
   async getUserSettings(
     accessToken: AccessToken,
   ): Promise<UserSettingsResponse> {
-    return this.usersService.getUserSettings(accessToken.user);
+    return this.userService.getUserSettings(accessToken.user);
   }
 
   async updateUserSettings(
     accessToken: AccessToken,
     updateUserSettingsDto: UpdateUserSettingsDto,
   ): Promise<UserSettingsResponse> {
-    return this.usersService.updateUserSettings(
+    return this.userService.updateUserSettings(
       accessToken.user,
       updateUserSettingsDto,
     );

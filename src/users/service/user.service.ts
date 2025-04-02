@@ -23,7 +23,7 @@ import { UpdateUserDataDto } from '../dto/update-user-data.dto';
 import { UserDataResponse } from '../model/user-data.model';
 
 @Injectable()
-export class UsersService {
+export class UserService {
   constructor(
     @InjectModel(User.name) private readonly userModel: Model<User>,
     private userProfileService: UserProfileService,

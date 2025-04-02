@@ -4,7 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 import { tokenServiceMock } from '../../__mocks__/services/token.service.mock';
 import { userServiceMock } from '../../__mocks__/services/user.service.mock';
 
-import { UsersService } from '../../users/service/users.service';
+import { UserService } from '../../users/service/user.service';
 import { TokenService } from '../../token/services/token.service';
 
 import { AuthService } from './auth.service';
@@ -16,7 +16,7 @@ describe('AuthService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         JwtService,
-        { provide: UsersService, useValue: userServiceMock },
+        { provide: UserService, useValue: userServiceMock },
         { provide: TokenService, useValue: tokenServiceMock },
         AuthService,
       ],
