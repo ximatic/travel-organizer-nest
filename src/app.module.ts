@@ -7,9 +7,6 @@ import { TokenModule } from './token/token.module';
 import { TripsModule } from './trips/trips.module';
 import { UsersModule } from './users/users.module';
 
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-
 @Module({
   imports: [
     // 3rd party imports
@@ -20,7 +17,5 @@ import { AppService } from './app.service';
     TripsModule,
     UsersModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}
