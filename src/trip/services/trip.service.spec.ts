@@ -8,29 +8,29 @@ import {
   MOCK_TRIP_2,
   MOCK_TRIP_ITEM_1,
   MOCK_TRIP_ITEM_2,
-} from '../../__mocks__/constants/trips.constants';
+} from '../../__mocks__/constants/trip.constants';
 import { MOCK_USER_1 } from '../../__mocks__/constants/user.constants';
 import { tripModelMock } from '../../__mocks__/schema/trip.schema.mock';
 import { MockDate } from '../../__mocks__/date.mock';
 
-import { Trip } from '../schema/trip.schema';
+import { Trip } from '../schemas/trip.schema';
 
 import { CreateTripDto } from '../dto/create-trip.dto';
 import { UpdateTripDto } from '../dto/update-trip.dto';
 import { CreateTripItemDto } from '../dto/create-trip-item.dto';
 import { UpdateTripItemDto } from '../dto/update-trip-item.dto';
 
-import { TripsService } from './trips.service';
+import { TripService } from './trip.service';
 
-describe('TripsService', () => {
-  let tripsService: TripsService;
+describe('TripService', () => {
+  let tripService: TripService;
   let tripModel: jest.Mocked<Model<Trip>>;
 
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
       controllers: [],
       providers: [
-        TripsService,
+        TripService,
         {
           provide: getModelToken('Trip'),
           useValue: tripModelMock,
@@ -38,7 +38,7 @@ describe('TripsService', () => {
       ],
     }).compile();
 
-    tripsService = app.get<TripsService>(TripsService);
+    tripService = app.get<TripService>(TripService);
     tripModel = app.get(getModelToken('Trip'));
   });
 
@@ -51,7 +51,7 @@ describe('TripsService', () => {
   });
 
   it('should be created', () => {
-    expect(tripsService).toBeTruthy();
+    expect(tripService).toBeTruthy();
   });
 
   // trip
@@ -64,7 +64,7 @@ describe('TripsService', () => {
         exec: jest.fn().mockResolvedValueOnce(mockData),
       } as any);
 
-      const result = await tripsService.getTrips();
+      const result = await tripService.getTrips();
 
       expect(result).toEqual(mockData);
       expect(tripModel.find).toHaveBeenCalled();
@@ -77,7 +77,7 @@ describe('TripsService', () => {
         exec: jest.fn().mockResolvedValueOnce(mockData),
       } as any);
 
-      const result = await tripsService.getTrips();
+      const result = await tripService.getTrips();
 
       expect(result).toEqual(mockData);
       expect(tripModel.find).toHaveBeenCalled();
@@ -93,7 +93,7 @@ describe('TripsService', () => {
       } as any);
 
       const id = MOCK_TRIP_1._id.toString();
-      const result = await tripsService.getTrip(id);
+      const result = await tripService.getTrip(id);
 
       expect(result).toEqual(mockData);
       expect(tripModel.findOne).toHaveBeenCalledWith({ _id: id });
@@ -108,7 +108,7 @@ describe('TripsService', () => {
       const createTripDto: CreateTripDto = {
         ...MOCK_TRIP_1,
       };
-      const result = await tripsService.createTrip(createTripDto);
+      const result = await tripService.createTrip(createTripDto);
 
       expect(result).toEqual(mockData);
       expect(tripModel.create).toHaveBeenCalledWith({
@@ -129,7 +129,7 @@ describe('TripsService', () => {
       const updateTripDto: UpdateTripDto = {
         ...MOCK_TRIP_1,
       };
-      const result = await tripsService.updateTrip(id, updateTripDto);
+      const result = await tripService.updateTrip(id, updateTripDto);
 
       expect(result).toEqual(mockData);
       expect(tripModel.findByIdAndUpdate).toHaveBeenCalledWith(
@@ -148,7 +148,7 @@ describe('TripsService', () => {
       } as any);
 
       const id = MOCK_TRIP_1._id.toString();
-      const result = await tripsService.deleteTrip(id);
+      const result = await tripService.deleteTrip(id);
 
       expect(result).toEqual(mockData);
       expect(tripModel.findByIdAndDelete).toHaveBeenCalledWith({ _id: id });
@@ -165,7 +165,7 @@ describe('TripsService', () => {
         exec: jest.fn().mockResolvedValueOnce(mockData),
       } as any);
 
-      const result = await tripsService.getTripsByUserId(MOCK_USER_1);
+      const result = await tripService.getTripsByUserId(MOCK_USER_1);
 
       expect(result).toEqual(mockData);
       expect(tripModel.find).toHaveBeenCalledWith({ user: MOCK_USER_1._id });
@@ -178,7 +178,7 @@ describe('TripsService', () => {
         exec: jest.fn().mockResolvedValueOnce(mockData),
       } as any);
 
-      const result = await tripsService.getTripsByUserId(MOCK_USER_1);
+      const result = await tripService.getTripsByUserId(MOCK_USER_1);
 
       expect(result).toEqual(mockData);
       expect(tripModel.find).toHaveBeenCalledWith({ user: MOCK_USER_1._id });
@@ -194,7 +194,7 @@ describe('TripsService', () => {
       } as any);
 
       const id = MOCK_TRIP_1._id.toString();
-      const result = await tripsService.getTripByUserId(MOCK_USER_1, id);
+      const result = await tripService.getTripByUserId(MOCK_USER_1, id);
 
       expect(result).toEqual(mockData);
       expect(tripModel.findOne).toHaveBeenCalledWith({
@@ -212,7 +212,7 @@ describe('TripsService', () => {
       const createTripDto: CreateTripDto = {
         ...MOCK_TRIP_1,
       };
-      const result = await tripsService.createTripByUserId(
+      const result = await tripService.createTripByUserId(
         MOCK_USER_1,
         createTripDto,
       );
@@ -237,7 +237,7 @@ describe('TripsService', () => {
       const updateTripDto: UpdateTripDto = {
         ...MOCK_TRIP_1,
       };
-      const result = await tripsService.updateTripByUserId(
+      const result = await tripService.updateTripByUserId(
         MOCK_USER_1,
         id,
         updateTripDto,
@@ -260,7 +260,7 @@ describe('TripsService', () => {
       } as any);
 
       const id = MOCK_TRIP_1._id.toString();
-      const result = await tripsService.deleteTripByUserId(MOCK_USER_1, id);
+      const result = await tripService.deleteTripByUserId(MOCK_USER_1, id);
 
       expect(result).toEqual(mockData);
       expect(tripModel.findOneAndDelete).toHaveBeenCalledWith({
@@ -283,7 +283,7 @@ describe('TripsService', () => {
       const createTripItemDto: CreateTripItemDto = {
         ...MOCK_TRIP_ITEM_1,
       };
-      const result = await tripsService.createTripItem(id, createTripItemDto);
+      const result = await tripService.createTripItem(id, createTripItemDto);
 
       expect(result).toEqual(mockData);
       expect(tripModel.findOneAndUpdate).toHaveBeenCalledWith(
@@ -306,7 +306,7 @@ describe('TripsService', () => {
       const updateTripItemDto: UpdateTripItemDto = {
         ...MOCK_TRIP_ITEM_2,
       };
-      const result = await tripsService.updateTripItem(
+      const result = await tripService.updateTripItem(
         tripId,
         tripItemId,
         updateTripItemDto,
@@ -332,7 +332,7 @@ describe('TripsService', () => {
 
       const tripId = MOCK_TRIP_1._id.toString();
       const tripItemId = MOCK_TRIP_ITEM_2._id.toString();
-      const result = await tripsService.deleteTripItem(tripId, tripItemId);
+      const result = await tripService.deleteTripItem(tripId, tripItemId);
 
       expect(result).toEqual(mockData);
       expect(tripModel.findOneAndUpdate).toHaveBeenCalledWith(
@@ -356,7 +356,7 @@ describe('TripsService', () => {
       const createTripItemDto: CreateTripItemDto = {
         ...MOCK_TRIP_ITEM_1,
       };
-      const result = await tripsService.createTripItemByUserId(
+      const result = await tripService.createTripItemByUserId(
         MOCK_USER_1,
         id,
         createTripItemDto,
@@ -383,7 +383,7 @@ describe('TripsService', () => {
       const updateTripItemDto: UpdateTripItemDto = {
         ...MOCK_TRIP_ITEM_2,
       };
-      const result = await tripsService.updateTripItemByUserId(
+      const result = await tripService.updateTripItemByUserId(
         MOCK_USER_1,
         tripId,
         tripItemId,
@@ -414,7 +414,7 @@ describe('TripsService', () => {
 
       const tripId = MOCK_TRIP_1._id.toString();
       const tripItemId = MOCK_TRIP_ITEM_2._id.toString();
-      const result = await tripsService.deleteTripItemByUserId(
+      const result = await tripService.deleteTripItemByUserId(
         MOCK_USER_1,
         tripId,
         tripItemId,

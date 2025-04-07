@@ -17,9 +17,9 @@ import { Types } from 'mongoose';
 
 import { TokenGuard } from '../../token/guards/token.guard';
 
-import { TripsService } from '../service/trips.service';
+import { TripService } from '../services/trip.service';
 
-import { Trip } from '../schema/trip.schema';
+import { Trip } from '../schemas/trip.schema';
 
 import { CreateTripDto } from '../dto/create-trip.dto';
 import { UpdateTripDto } from '../dto/update-trip.dto';
@@ -28,15 +28,15 @@ import { UpdateTripItemDto } from '../dto/update-trip-item.dto';
 
 @Controller('trips')
 @UseGuards(TokenGuard)
-export class TripsController {
-  constructor(private readonly tripsService: TripsService) {}
+export class TripController {
+  constructor(private readonly tripService: TripService) {}
 
   // trip
 
   @Get()
   @UseGuards(TokenGuard)
   async getTrips(@Req() request: Request): Promise<Trip[]> {
-    return this.tripsService.getTripsByUserId(request['accessToken'].user);
+    return this.tripService.getTripsByUserId(request['accessToken'].user);
   }
 
   @Get(':id')
@@ -47,7 +47,7 @@ export class TripsController {
   ): Promise<Trip> {
     try {
       if (Types.ObjectId.isValid(id)) {
-        const trip = await this.tripsService.getTripByUserId(
+        const trip = await this.tripService.getTripByUserId(
           request['accessToken'].user,
           id,
         );
@@ -70,7 +70,7 @@ export class TripsController {
     @Req() request: Request,
     @Body() createTripDto: CreateTripDto,
   ): Promise<Trip> {
-    return this.tripsService.createTripByUserId(
+    return this.tripService.createTripByUserId(
       request['accessToken'].user,
       createTripDto,
     );
@@ -85,7 +85,7 @@ export class TripsController {
   ): Promise<Trip> {
     try {
       if (Types.ObjectId.isValid(id)) {
-        const trip = await this.tripsService.updateTripByUserId(
+        const trip = await this.tripService.updateTripByUserId(
           request['accessToken'].user,
           id,
           updateTripDto,
@@ -111,7 +111,7 @@ export class TripsController {
   ): Promise<Trip> {
     try {
       if (Types.ObjectId.isValid(id)) {
-        const trip = await this.tripsService.deleteTripByUserId(
+        const trip = await this.tripService.deleteTripByUserId(
           request['accessToken'].user,
           id,
         );
@@ -138,7 +138,7 @@ export class TripsController {
   ): Promise<Trip> {
     try {
       if (Types.ObjectId.isValid(id)) {
-        const trip = await this.tripsService.createTripItemByUserId(
+        const trip = await this.tripService.createTripItemByUserId(
           request['accessToken'].user,
           id,
           createTripItemDto,
@@ -165,7 +165,7 @@ export class TripsController {
   ): Promise<Trip> {
     try {
       if (Types.ObjectId.isValid(id)) {
-        const trip = await this.tripsService.updateTripItemByUserId(
+        const trip = await this.tripService.updateTripItemByUserId(
           request['accessToken'].user,
           id,
           itemId,
@@ -192,7 +192,7 @@ export class TripsController {
   ): Promise<Trip> {
     try {
       if (Types.ObjectId.isValid(id)) {
-        const trip = await this.tripsService.deleteTripItemByUserId(
+        const trip = await this.tripService.deleteTripItemByUserId(
           request['accessToken'].user,
           id,
           itemId,

@@ -4,10 +4,10 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from '../auth/auth.module';
 import { TokenModule } from 'src/token/token.module';
 
-import { TripsController } from './controller/trips.controller';
-import { TripsService } from './service/trips.service';
+import { TripController } from './controllers/trip.controller';
+import { TripService } from './services/trip.service';
 
-import { Trip, TripSchema } from './schema/trip.schema';
+import { Trip, TripSchema } from './schemas/trip.schema';
 
 @Module({
   imports: [
@@ -17,7 +17,7 @@ import { Trip, TripSchema } from './schema/trip.schema';
     AuthModule,
     TokenModule,
   ],
-  controllers: [TripsController],
-  providers: [TripsService],
+  controllers: [TripController],
+  providers: [TripService],
 })
-export class TripsModule {}
+export class TripModule {}

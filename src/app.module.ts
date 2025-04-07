@@ -4,7 +4,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 
 import { AuthModule } from './auth/auth.module';
 import { TokenModule } from './token/token.module';
-import { TripsModule } from './trips/trips.module';
+import { TripModule } from './trip/trip.module';
 import { UserModule } from './user/user.module';
 
 @Module({
@@ -14,7 +14,7 @@ import { UserModule } from './user/user.module';
     // local imports
     AuthModule,
     TokenModule,
-    TripsModule,
+    TripModule,
     UserModule,
   ],
 })

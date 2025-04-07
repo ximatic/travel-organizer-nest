@@ -1,4 +1,4 @@
-export const tripsServiceMock = {
+export const tripServiceMock = {
   getTrips: jest.fn(),
   getTrip: jest.fn(),
   createTrip: jest.fn(),

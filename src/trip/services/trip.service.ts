@@ -5,7 +5,7 @@ import { Model } from 'mongoose';
 
 import { User } from '../../user/schemas/user.schema';
 
-import { Trip } from '../schema/trip.schema';
+import { Trip } from '../schemas/trip.schema';
 
 import { CreateTripDto } from '../dto/create-trip.dto';
 import { UpdateTripDto } from '../dto/update-trip.dto';
@@ -13,7 +13,7 @@ import { CreateTripItemDto } from '../dto/create-trip-item.dto';
 import { UpdateTripItemDto } from '../dto/update-trip-item.dto';
 
 @Injectable()
-export class TripsService {
+export class TripService {
   constructor(
     @InjectModel(Trip.name) private readonly tripModel: Model<Trip>,
   ) {}
