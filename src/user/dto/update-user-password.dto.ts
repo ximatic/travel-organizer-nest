@@ -1,12 +1,8 @@
 import { IsString } from 'class-validator';
 
-export class UpdateUserPasswordDto {
+import { PasswordSetupDto } from '../../common/dto/password-setup.dto';
+
+export class UpdateUserPasswordDto extends PasswordSetupDto {
   @IsString()
   readonly currentPassword: string;
-
-  @IsString()
-  readonly newPassword: string;
-
-  @IsString()
-  readonly newPasswordRepeat: string;
 }

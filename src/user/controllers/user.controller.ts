@@ -1,5 +1,4 @@
 import {
-  BadRequestException,
   Body,
   Controller,
   Get,
@@ -8,6 +7,7 @@ import {
   Req,
   UnauthorizedException,
   UseGuards,
+  UsePipes,
 } from '@nestjs/common';
 
 import { Request } from 'express';
@@ -17,6 +17,8 @@ import { TokenGuard } from '../../token/guards/token.guard';
 import { UserService } from '../services/user.service';
 
 import { PasswordHelper } from '../../common/helpers/pasword.helper';
+
+import { PasswordValidationPipe } from '../../common/pipes/password-validation.pipe';
 
 import { UserInfoResponse } from '../models/user-info.model';
 import { UserProfileResponse } from '../models/user-profile.model';
@@ -37,21 +39,11 @@ export class UserController {
 
   @Put('')
   @UseGuards(TokenGuard)
+  @UsePipes(new PasswordValidationPipe())
   updateUser(
     @Req() request: Request,
     @Body() updateUserDto: UpdateUserDto,
   ): void {
-    if (
-      !PasswordHelper.isValidPassword(
-        updateUserDto.password,
-        updateUserDto.passwordRepeat,
-      )
-    ) {
-      throw new InternalServerErrorException(
-        `Provided passwords are not the same. Please try again later.`,
-      );
-    }
-
     try {
       this.userService.updateUser(
         request['accessToken'].user._id.toString(),
@@ -102,22 +94,12 @@ export class UserController {
 
   @Put('password')
   @UseGuards(TokenGuard)
+  @UsePipes(new PasswordValidationPipe())
   async updateUserPassword(
     @Req() request: Request,
     @Body() updateUserPasswordDto: UpdateUserPasswordDto,
   ): Promise<void> {
     const user = request['accessToken'].user;
-    if (
-      !PasswordHelper.isValidPassword(
-        updateUserPasswordDto.newPassword,
-        updateUserPasswordDto.newPasswordRepeat,
-      )
-    ) {
-      // TODO provide unified error codes for frontend and backend
-      throw new BadRequestException(
-        `Provided passwords are not the same. Please try again later.`,
-      );
-    }
 
     if (
       !(await PasswordHelper.passwordsMatch(
@@ -129,7 +111,7 @@ export class UserController {
     }
 
     const hashPasssword = await PasswordHelper.hashPassword(
-      updateUserPasswordDto.newPassword,
+      updateUserPasswordDto.password,
     );
     try {
       this.userService.updateUserPassword(user._id.toString(), hashPasssword);

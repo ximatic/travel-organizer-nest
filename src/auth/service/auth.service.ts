@@ -196,8 +196,8 @@ export class AuthService {
 
     if (
       !this.isValidPassword(
-        updateUserPasswordDto.newPassword,
-        updateUserPasswordDto.newPasswordRepeat,
+        updateUserPasswordDto.password,
+        updateUserPasswordDto.passwordRepeat,
       )
     ) {
       throw new InternalServerErrorException(
@@ -206,7 +206,7 @@ export class AuthService {
     }
 
     const hashPasssword = await this.hashPassword(
-      updateUserPasswordDto.newPassword,
+      updateUserPasswordDto.password,
     );
     try {
       this.userService.updateUserPassword(

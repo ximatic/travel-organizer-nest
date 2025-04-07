@@ -136,8 +136,7 @@ export class AuthController {
     @Body() updateUserPasswordDto: UpdateUserPasswordDto,
   ): Promise<void> {
     if (
-      updateUserPasswordDto.newPassword !==
-      updateUserPasswordDto.newPasswordRepeat
+      updateUserPasswordDto.password !== updateUserPasswordDto.passwordRepeat
     ) {
       throw new BadRequestException(
         `Provided passwords are not the same. Please try again later.`,
