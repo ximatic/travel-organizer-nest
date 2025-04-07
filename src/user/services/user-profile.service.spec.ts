@@ -10,7 +10,7 @@ import {
 } from '../../__mocks__/constants/user.constants';
 import { userProfileModelMock } from '../../__mocks__/schema/user-profile.schema.mock';
 
-import { UserProfile } from '../schema/user-profile.schema';
+import { UserProfile } from '../schemas/user-profile.schema';
 
 import { CreateUserProfileDto } from '../dto/create-user-profile.dto';
 import { UpdateUserProfileDto } from '../dto/update-user-profile.dto';

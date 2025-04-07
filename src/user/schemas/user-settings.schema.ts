@@ -8,7 +8,7 @@ import {
   UserSettingsDateFormat,
   UserSettingsTimeFormat,
   UserSettingsTheme,
-} from '../model/user-settings.enum';
+} from '../models/user-settings.enum';
 
 export type UserSettingsDocument = mongoose.HydratedDocument<UserSettings>;
 

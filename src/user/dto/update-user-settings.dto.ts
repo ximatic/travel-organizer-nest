@@ -1,18 +1,17 @@
 import { Transform } from 'class-transformer';
-import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
-import { Types } from 'mongoose';
+import { IsOptional } from 'class-validator';
 
 import {
   UserSettingsLanguage,
   UserSettingsDateFormat,
   UserSettingsTimeFormat,
   UserSettingsTheme,
-} from '../model/user-settings.enum';
+} from '../models/user-settings.enum';
 
-export class CreateUserSettingsDto {
+export class UpdateUserSettingsDto {
   @IsOptional()
   @Transform(() => UserSettingsLanguage)
-  language: string;
+  language: UserSettingsLanguage;
 
   @IsOptional()
   @Transform(() => UserSettingsDateFormat)
@@ -25,8 +24,4 @@ export class CreateUserSettingsDto {
   @IsOptional()
   @Transform(() => UserSettingsTheme)
   theme: UserSettingsTheme;
-
-  @IsNotEmpty()
-  @IsString()
-  readonly user: Types.ObjectId;
 }

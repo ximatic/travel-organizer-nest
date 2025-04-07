@@ -7,27 +7,27 @@ import { JwtService } from '@nestjs/jwt';
 
 import * as bcrypt from 'bcrypt';
 
-import { UserService } from '../../users/service/user.service';
+import { UserService } from '../../user/services/user.service';
 import { TokenService } from '../../token/services/token.service';
 
 import { AuthToken } from '../model/auth-token.model';
 
-import { User } from '../../users/schema/user.schema';
+import { User } from '../../user/schemas/user.schema';
 import { AccessToken } from '../../token/schema/access-token.schema';
 
-import { DEFAULT_USER_SETTINGS } from '../../users/constants/user-settings.constants';
+import { DEFAULT_USER_SETTINGS } from '../../user/constants/user-settings.constants';
 
-import { UserInfoResponse } from '../../users/model/user-info.model';
-import { UserProfileResponse } from '../../users/model/user-profile.model';
-import { UserSettingsResponse } from '../../users/model/user-settings.model';
+import { UserInfoResponse } from '../../user/models/user-info.model';
+import { UserProfileResponse } from '../../user/models/user-profile.model';
+import { UserSettingsResponse } from '../../user/models/user-settings.model';
 
 import { SignUpDto } from '../dto/sign-up.dto';
-import { UpdateUserDto } from '../../users/dto/update-user.dto';
-import { UpdateUserProfileDto } from '../../users/dto/update-user-profile.dto';
-import { UpdateUserSettingsDto } from '../../users/dto/update-user-settings.dto';
-import { UpdateUserPasswordDto } from '../../users/dto/update-user-password.dto';
-import { UpdateUserDataDto } from '../../users/dto/update-user-data.dto';
-import { UserDataResponse } from '../../users/model/user-data.model';
+import { UpdateUserDto } from '../../user/dto/update-user.dto';
+import { UpdateUserProfileDto } from '../../user/dto/update-user-profile.dto';
+import { UpdateUserSettingsDto } from '../../user/dto/update-user-settings.dto';
+import { UpdateUserPasswordDto } from '../../user/dto/update-user-password.dto';
+import { UpdateUserDataDto } from '../../user/dto/update-user-data.dto';
+import { UserDataResponse } from '../../user/models/user-data.model';
 
 @Injectable()
 export class AuthService {

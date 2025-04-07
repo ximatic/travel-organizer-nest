@@ -3,7 +3,7 @@ import {
   UserSettingsDateFormat,
   UserSettingsTimeFormat,
   UserSettingsTheme,
-} from '../model/user-settings.enum';
+} from '../models/user-settings.enum';
 
 export const DEFAULT_USER_LANGUAGE = UserSettingsLanguage.English;
 export const DEFAULT_USER_DATE_FORMAT = UserSettingsDateFormat.DMY;

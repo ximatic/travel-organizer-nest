@@ -3,13 +3,13 @@ import { InjectModel } from '@nestjs/mongoose';
 
 import { Model } from 'mongoose';
 
-import { User } from '../schema/user.schema';
-import { UserProfile } from '../schema/user-profile.schema';
-import { UserSettings } from '../schema/user-settings.schema';
+import { User } from '../schemas/user.schema';
+import { UserProfile } from '../schemas/user-profile.schema';
+import { UserSettings } from '../schemas/user-settings.schema';
 
-import { UserInfoResponse } from '../model/user-info.model';
-import { UserProfileResponse } from '../model/user-profile.model';
-import { UserSettingsResponse } from '../model/user-settings.model';
+import { UserInfoResponse } from '../models/user-info.model';
+import { UserProfileResponse } from '../models/user-profile.model';
+import { UserSettingsResponse } from '../models/user-settings.model';
 
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
@@ -20,7 +20,7 @@ import { UpdateUserSettingsDto } from '../dto/update-user-settings.dto';
 import { UserProfileService } from './user-profile.service';
 import { UserSettingsService } from './user-settings.service';
 import { UpdateUserDataDto } from '../dto/update-user-data.dto';
-import { UserDataResponse } from '../model/user-data.model';
+import { UserDataResponse } from '../models/user-data.model';
 
 @Injectable()
 export class UserService {

@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 
 import { Model, Types } from 'mongoose';
 
-import { UserSettings } from '../schema/user-settings.schema';
+import { UserSettings } from '../schemas/user-settings.schema';
 
 import { CreateUserSettingsDto } from '../dto/create-user-settings.dto';
 import { UpdateUserSettingsDto } from '../dto/update-user-settings.dto';

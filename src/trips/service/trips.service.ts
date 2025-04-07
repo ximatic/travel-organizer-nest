@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 
 import { Model } from 'mongoose';
 
-import { User } from '../../users/schema/user.schema';
+import { User } from '../../user/schemas/user.schema';
 
 import { Trip } from '../schema/trip.schema';
 

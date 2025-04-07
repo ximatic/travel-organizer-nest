@@ -15,7 +15,7 @@ import {
 
 import { TokenGuard } from '../../token/guards/token.guard';
 
-import { UserService } from '../service/user.service';
+import { UserService } from '../services/user.service';
 
 import { UserController } from './user.controller';
 

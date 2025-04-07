@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 import * as mongoose from 'mongoose';
 
-import { User } from '../../users/schema/user.schema';
+import { User } from '../../user/schemas/user.schema';
 
 import { TripItem, TripItemSchema } from './trip-item.schema';
 

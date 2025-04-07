@@ -3,16 +3,16 @@ import { MongooseModule } from '@nestjs/mongoose';
 
 import { UserController } from './controllers/user.controller';
 
-import { UserService } from './service/user.service';
-import { UserProfileService } from './service/user-profile.service';
-import { UserSettingsService } from './service/user-settings.service';
+import { UserService } from './services/user.service';
+import { UserProfileService } from './services/user-profile.service';
+import { UserSettingsService } from './services/user-settings.service';
 
-import { User, UserSchema } from './schema/user.schema';
-import { UserProfile, UserProfileSchema } from './schema/user-profile.schema';
+import { User, UserSchema } from './schemas/user.schema';
+import { UserProfile, UserProfileSchema } from './schemas/user-profile.schema';
 import {
   UserSettings,
   UserSettingsSchema,
-} from './schema/user-settings.schema';
+} from './schemas/user-settings.schema';
 import { TokenModule } from 'src/token/token.module';
 
 @Module({
@@ -30,4 +30,4 @@ import { TokenModule } from 'src/token/token.module';
   providers: [UserService, UserProfileService, UserSettingsService],
   exports: [UserService],
 })
-export class UsersModule {}
+export class UserModule {}

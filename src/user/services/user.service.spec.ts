@@ -17,7 +17,7 @@ import { userModelMock } from '../../__mocks__/schema/user.schema.mock';
 import { UserProfileService } from './user-profile.service';
 import { UserSettingsService } from './user-settings.service';
 
-import { User } from '../schema/user.schema';
+import { User } from '../schemas/user.schema';
 
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';

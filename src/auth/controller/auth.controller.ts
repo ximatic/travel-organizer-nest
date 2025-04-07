@@ -18,18 +18,18 @@ import { TokenGuard } from '../../token/guards/token.guard';
 import { AuthService } from '../service/auth.service';
 
 import { AuthToken } from '../model/auth-token.model';
-import { UserInfoResponse } from 'src/users/model/user-info.model';
-import { UserProfileResponse } from '../../users/model/user-profile.model';
-import { UserSettingsResponse } from 'src/users/model/user-settings.model';
+import { UserInfoResponse } from '../../user/models/user-info.model';
+import { UserProfileResponse } from '../../user/models/user-profile.model';
+import { UserSettingsResponse } from '../../user/models/user-settings.model';
 
 import { LoginDto } from '../dto/login.dto';
 import { SignUpDto } from '../dto/sign-up.dto';
-import { UpdateUserProfileDto } from '../../users/dto/update-user-profile.dto';
-import { UpdateUserDto } from '../../users/dto/update-user.dto';
-import { UpdateUserSettingsDto } from '../../users/dto/update-user-settings.dto';
-import { UpdateUserDataDto } from '../../users/dto/update-user-data.dto';
-import { UpdateUserPasswordDto } from '../../users/dto/update-user-password.dto';
-import { UserDataResponse } from '../../users/model/user-data.model';
+import { UpdateUserProfileDto } from '../../user/dto/update-user-profile.dto';
+import { UpdateUserDto } from '../../user/dto/update-user.dto';
+import { UpdateUserSettingsDto } from '../../user/dto/update-user-settings.dto';
+import { UpdateUserDataDto } from '../../user/dto/update-user-data.dto';
+import { UpdateUserPasswordDto } from '../../user/dto/update-user-password.dto';
+import { UserDataResponse } from '../../user/models/user-data.model';
 
 @Controller('auth')
 export class AuthController {

@@ -10,7 +10,7 @@ import {
 } from '../../__mocks__/constants/user.constants';
 import { userSettingsModelMock } from '../../__mocks__/schema/user-settings.schema.mock';
 
-import { UserSettings } from '../schema/user-settings.schema';
+import { UserSettings } from '../schemas/user-settings.schema';
 
 import { CreateUserSettingsDto } from '../dto/create-user-settings.dto';
 import { UpdateUserSettingsDto } from '../dto/update-user-settings.dto';

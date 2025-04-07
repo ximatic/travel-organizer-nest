@@ -14,20 +14,20 @@ import { Request } from 'express';
 
 import { TokenGuard } from '../../token/guards/token.guard';
 
-import { UserService } from '../service/user.service';
+import { UserService } from '../services/user.service';
 
 import { PasswordHelper } from '../../common/helpers/pasword.helper';
 
-import { UserInfoResponse } from '../model/user-info.model';
-import { UserProfileResponse } from '../model/user-profile.model';
-import { UserSettingsResponse } from '../model/user-settings.model';
+import { UserInfoResponse } from '../models/user-info.model';
+import { UserProfileResponse } from '../models/user-profile.model';
+import { UserSettingsResponse } from '../models/user-settings.model';
 
 import { UpdateUserProfileDto } from '../dto/update-user-profile.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
 import { UpdateUserSettingsDto } from '../dto/update-user-settings.dto';
 import { UpdateUserDataDto } from '../dto/update-user-data.dto';
 import { UpdateUserPasswordDto } from '../dto/update-user-password.dto';
-import { UserDataResponse } from '../model/user-data.model';
+import { UserDataResponse } from '../models/user-data.model';
 
 @Controller('user')
 export class UserController {

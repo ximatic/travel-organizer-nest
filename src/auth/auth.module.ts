@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 
-import { TokenModule } from 'src/token/token.module';
-import { UsersModule } from '../users/users.module';
+import { TokenModule } from '../token/token.module';
+import { UserModule } from '../user/user.module';
 
 import { jwt } from './constants/auth.constants';
 
@@ -19,7 +19,7 @@ import { AuthService } from './service/auth.service';
     }),
     // internal modules
     TokenModule,
-    UsersModule,
+    UserModule,
   ],
   controllers: [AuthController],
   providers: [AuthService],
