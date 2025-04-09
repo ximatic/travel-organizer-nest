@@ -29,7 +29,7 @@ import {
 
 import { TokenGuard } from '../../token/guards/token.guard';
 
-import { AuthService } from '../service/auth.service';
+import { AuthService } from '../services/auth.service';
 
 import { AuthController } from './auth.controller';
 

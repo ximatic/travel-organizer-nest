@@ -6,8 +6,8 @@ import { UserModule } from '../user/user.module';
 
 import { jwt } from './constants/auth.constants';
 
-import { AuthController } from './controller/auth.controller';
-import { AuthService } from './service/auth.service';
+import { AuthController } from './controllers/auth.controller';
+import { AuthService } from './services/auth.service';
 
 @Module({
   imports: [

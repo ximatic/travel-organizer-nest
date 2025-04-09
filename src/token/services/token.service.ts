@@ -3,8 +3,8 @@ import { InjectModel } from '@nestjs/mongoose';
 
 import { Model, Types } from 'mongoose';
 
-import { AccessToken } from '../schema/access-token.schema';
-import { RefreshToken } from '../schema/refresh-token.schema';
+import { AccessToken } from '../schemas/access-token.schema';
+import { RefreshToken } from '../schemas/refresh-token.schema';
 
 @Injectable()
 export class TokenService {

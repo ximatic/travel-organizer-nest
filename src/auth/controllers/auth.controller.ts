@@ -15,9 +15,9 @@ import {
 import { Request } from 'express';
 
 import { TokenGuard } from '../../token/guards/token.guard';
-import { AuthService } from '../service/auth.service';
+import { AuthService } from '../services/auth.service';
 
-import { AuthToken } from '../model/auth-token.model';
+import { AuthToken } from '../models/auth-token.model';
 import { UserInfoResponse } from '../../user/models/user-info.model';
 import { UserProfileResponse } from '../../user/models/user-profile.model';
 import { UserSettingsResponse } from '../../user/models/user-settings.model';

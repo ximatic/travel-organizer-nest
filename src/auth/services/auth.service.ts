@@ -10,10 +10,10 @@ import * as bcrypt from 'bcrypt';
 import { UserService } from '../../user/services/user.service';
 import { TokenService } from '../../token/services/token.service';
 
-import { AuthToken } from '../model/auth-token.model';
+import { AuthToken } from '../models/auth-token.model';
 
 import { User } from '../../user/schemas/user.schema';
-import { AccessToken } from '../../token/schema/access-token.schema';
+import { AccessToken } from '../../token/schemas/access-token.schema';
 
 import { DEFAULT_USER_SETTINGS } from '../../user/constants/user-settings.constants';
 

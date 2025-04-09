@@ -10,8 +10,8 @@ import {
 import { accessTokenModelMock } from '../../__mocks__/schema/access-token.schema.mock';
 import { refreshTokenModelMock } from '../../__mocks__/schema/refresh-token.schema.mock';
 
-import { AccessToken } from '../schema/access-token.schema';
-import { RefreshToken } from '../schema/refresh-token.schema';
+import { AccessToken } from '../schemas/access-token.schema';
+import { RefreshToken } from '../schemas/refresh-token.schema';
 
 import { TokenService } from './token.service';
 

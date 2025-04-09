@@ -8,11 +8,11 @@ import { TokenGuard } from './guards/token.guard';
 
 import { TokenService } from './services/token.service';
 
-import { AccessToken, AccessTokenSchema } from './schema/access-token.schema';
+import { AccessToken, AccessTokenSchema } from './schemas/access-token.schema';
 import {
   RefreshToken,
   RefreshTokenSchema,
-} from './schema/refresh-token.schema';
+} from './schemas/refresh-token.schema';
 
 @Module({
   imports: [
