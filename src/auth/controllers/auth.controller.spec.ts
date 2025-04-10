@@ -22,10 +22,6 @@ import {
   MOCK_ACCESS_TOKEN_1,
   MOCK_AUTH_TOKEN_1,
 } from '../../__mocks__/constants/auth.constants';
-import {
-  MOCK_USER_PROFILE_RESPONSE_1,
-  MOCK_USER_SETTINGS_RESPONSE_1,
-} from '../../__mocks__/constants/user.constants';
 
 import { TokenGuard } from '../../token/guards/token.guard';
 
@@ -196,46 +192,6 @@ describe('AuthController', () => {
 
       expect(result).toEqual(mockedData);
       expect(signupSpy).toHaveBeenCalled();
-    });
-  });
-
-  describe('getUserProfile()', () => {
-    it('getting user profile works', async () => {
-      const mockedData = MOCK_USER_PROFILE_RESPONSE_1;
-      service.getUserProfile.mockResolvedValueOnce(
-        new Promise((resolve) => {
-          resolve(mockedData);
-        }),
-      );
-
-      const mockContext = getExecutionContextMock(MOCK_ACCESS_TOKEN_1.token);
-
-      const result = await controller.getUserProfile(
-        mockContext.switchToHttp().getRequest() as Request,
-      );
-
-      expect(result).toEqual(mockedData);
-      expect(service.getUserProfile).toHaveBeenCalled();
-    });
-  });
-
-  describe('getUserSettings()', () => {
-    it('getting user settings works', async () => {
-      const mockedData = MOCK_USER_SETTINGS_RESPONSE_1;
-      service.getUserSettings.mockResolvedValueOnce(
-        new Promise((resolve) => {
-          resolve(mockedData);
-        }),
-      );
-
-      const mockContext = getExecutionContextMock(MOCK_ACCESS_TOKEN_1.token);
-
-      const result = await controller.getUserSettings(
-        mockContext.switchToHttp().getRequest() as Request,
-      );
-
-      expect(result).toEqual(mockedData);
-      expect(service.getUserSettings).toHaveBeenCalled();
     });
   });
 });

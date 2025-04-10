@@ -17,17 +17,7 @@ import { AccessToken } from '../../token/schemas/access-token.schema';
 
 import { DEFAULT_USER_SETTINGS } from '../../user/constants/user-settings.constants';
 
-import { UserInfoResponse } from '../../user/models/user-info.model';
-import { UserProfileResponse } from '../../user/models/user-profile.model';
-import { UserSettingsResponse } from '../../user/models/user-settings.model';
-
 import { SignUpDto } from '../dto/sign-up.dto';
-import { UpdateUserDto } from '../../user/dto/update-user.dto';
-import { UpdateUserProfileDto } from '../../user/dto/update-user-profile.dto';
-import { UpdateUserSettingsDto } from '../../user/dto/update-user-settings.dto';
-import { UpdateUserPasswordDto } from '../../user/dto/update-user-password.dto';
-import { UpdateUserDataDto } from '../../user/dto/update-user-data.dto';
-import { UserDataResponse } from '../../user/models/user-data.model';
 
 @Injectable()
 export class AuthService {
@@ -129,129 +119,6 @@ export class AuthService {
     }
 
     return this.createTokenResponse(accessToken.token);
-  }
-
-  // user
-
-  async updateUser(
-    accessToken: AccessToken,
-    updateUserDto: UpdateUserDto,
-  ): Promise<User> {
-    if (
-      !this.isValidPassword(
-        updateUserDto.password,
-        updateUserDto.passwordRepeat,
-      )
-    ) {
-      throw new InternalServerErrorException(
-        `Password is invalid. Please try again later.`,
-      );
-    }
-
-    return this.userService.updateUser(
-      accessToken.user._id.toString(),
-      updateUserDto,
-    );
-  }
-
-  // user info
-
-  async getUserInfo(accessToken: AccessToken): Promise<UserInfoResponse> {
-    return this.userService.getUserInfo(accessToken.user);
-  }
-
-  // TODO - remove?
-  // async updateUserInfo(
-  //   accessToken: AccessToken,
-  //   updateUserInfoDto: UpdateUserInfoDto,
-  // ): Promise<UserInfoResponse> {
-  //   return this.userService.updateUserInfo(
-  //     accessToken.user,
-  //     updateUserInfoDto,
-  //   );
-  // }
-
-  // user data
-
-  async updateUserData(
-    accessToken: AccessToken,
-    updateUserDataDto: UpdateUserDataDto,
-  ): Promise<UserDataResponse> {
-    return this.userService.updateUserData(accessToken.user, updateUserDataDto);
-  }
-
-  // user password
-
-  async updateUserPassword(
-    accessToken: AccessToken,
-    updateUserPasswordDto: UpdateUserPasswordDto,
-  ): Promise<void> {
-    const isMatch = await bcrypt.compare(
-      updateUserPasswordDto.currentPassword,
-      accessToken.user?.password,
-    );
-    if (!isMatch) {
-      throw new UnauthorizedException();
-    }
-
-    if (
-      !this.isValidPassword(
-        updateUserPasswordDto.password,
-        updateUserPasswordDto.passwordRepeat,
-      )
-    ) {
-      throw new InternalServerErrorException(
-        `Passwords are invalid. Please try again later.`,
-      );
-    }
-
-    const hashPasssword = await this.hashPassword(
-      updateUserPasswordDto.password,
-    );
-    try {
-      this.userService.updateUserPassword(
-        accessToken.user._id.toString(),
-        hashPasssword,
-      );
-    } catch {
-      throw new InternalServerErrorException(
-        `Can't process request and create a settings. Please try again later.`,
-      );
-    }
-  }
-
-  // user profile
-
-  async getUserProfile(accessToken: AccessToken): Promise<UserProfileResponse> {
-    return this.userService.getUserProfile(accessToken.user);
-  }
-
-  async updateUserProfile(
-    accessToken: AccessToken,
-    updateUserProfileDto: UpdateUserProfileDto,
-  ): Promise<UserProfileResponse> {
-    return this.userService.updateUserProfile(
-      accessToken.user,
-      updateUserProfileDto,
-    );
-  }
-
-  // user settings
-
-  async getUserSettings(
-    accessToken: AccessToken,
-  ): Promise<UserSettingsResponse> {
-    return this.userService.getUserSettings(accessToken.user);
-  }
-
-  async updateUserSettings(
-    accessToken: AccessToken,
-    updateUserSettingsDto: UpdateUserSettingsDto,
-  ): Promise<UserSettingsResponse> {
-    return this.userService.updateUserSettings(
-      accessToken.user,
-      updateUserSettingsDto,
-    );
   }
 
   // other

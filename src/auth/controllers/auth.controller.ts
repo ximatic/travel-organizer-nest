@@ -7,7 +7,6 @@ import {
   HttpStatus,
   InternalServerErrorException,
   Post,
-  Put,
   Req,
   UseGuards,
 } from '@nestjs/common';
@@ -18,18 +17,9 @@ import { TokenGuard } from '../../token/guards/token.guard';
 import { AuthService } from '../services/auth.service';
 
 import { AuthToken } from '../models/auth-token.model';
-import { UserInfoResponse } from '../../user/models/user-info.model';
-import { UserProfileResponse } from '../../user/models/user-profile.model';
-import { UserSettingsResponse } from '../../user/models/user-settings.model';
 
 import { LoginDto } from '../dto/login.dto';
 import { SignUpDto } from '../dto/sign-up.dto';
-import { UpdateUserProfileDto } from '../../user/dto/update-user-profile.dto';
-import { UpdateUserDto } from '../../user/dto/update-user.dto';
-import { UpdateUserSettingsDto } from '../../user/dto/update-user-settings.dto';
-import { UpdateUserDataDto } from '../../user/dto/update-user-data.dto';
-import { UpdateUserPasswordDto } from '../../user/dto/update-user-password.dto';
-import { UserDataResponse } from '../../user/models/user-data.model';
 
 @Controller('auth')
 export class AuthController {
@@ -74,120 +64,5 @@ export class AuthController {
     }
 
     return this.authService.signup(signUpDto);
-  }
-
-  // user
-
-  @Put('user')
-  @UseGuards(TokenGuard)
-  updateUser(
-    @Req() request: Request,
-    @Body() updateUserDto: UpdateUserDto,
-  ): void {
-    try {
-      this.authService.updateUser(request['accessToken'], updateUserDto);
-    } catch {
-      throw new InternalServerErrorException(
-        `Can't process request. Try again later.`,
-      );
-    }
-  }
-
-  // user info
-
-  @Get('user/info')
-  @UseGuards(TokenGuard)
-  async getUserInfo(@Req() request: Request): Promise<UserInfoResponse> {
-    return this.authService.getUserInfo(request['accessToken']);
-  }
-
-  // @Put('user/info')
-  // @UseGuards(TokenGuard)
-  // async updateUserInfo(
-  //   @Req() request: Request,
-  //   @Body() updateUserInfoDto: UpdateUserInfoDto,
-  // ): Promise<UserInfoResponse> {
-  //   return this.authService.updateUserInfo(
-  //     request['accessToken'],
-  //     updateUserInfoDto,
-  //   );
-  // }
-
-  // user data (profile + email)
-
-  @Put('user/data')
-  @UseGuards(TokenGuard)
-  async updateUserData(
-    @Req() request: Request,
-    @Body() updateUserDataDto: UpdateUserDataDto,
-  ): Promise<UserDataResponse> {
-    return this.authService.updateUserData(
-      request['accessToken'],
-      updateUserDataDto,
-    );
-  }
-
-  // user password
-
-  @Put('user/password')
-  @UseGuards(TokenGuard)
-  async updateUserPassword(
-    @Req() request: Request,
-    @Body() updateUserPasswordDto: UpdateUserPasswordDto,
-  ): Promise<void> {
-    if (
-      updateUserPasswordDto.password !== updateUserPasswordDto.passwordRepeat
-    ) {
-      throw new BadRequestException(
-        `Provided passwords are not the same. Please try again later.`,
-      );
-    }
-
-    return this.authService.updateUserPassword(
-      request['accessToken'],
-      updateUserPasswordDto,
-    );
-  }
-
-  // user profile
-
-  @Get('user/profile')
-  @UseGuards(TokenGuard)
-  async getUserProfile(@Req() request: Request): Promise<UserProfileResponse> {
-    return this.authService.getUserProfile(request['accessToken']);
-  }
-
-  @Put('user/profile')
-  @UseGuards(TokenGuard)
-  async updateUserProfile(
-    @Req() request: Request,
-    @Body() updateProfileDto: UpdateUserProfileDto,
-  ): Promise<UserProfileResponse> {
-    return this.authService.updateUserProfile(
-      request['accessToken'],
-      updateProfileDto,
-    );
-  }
-
-  // user settings
-
-  @Get('user/settings')
-  @UseGuards(TokenGuard)
-  async getUserSettings(
-    @Req() request: Request,
-  ): Promise<UserSettingsResponse> {
-    return this.authService.getUserSettings(request['accessToken']);
-  }
-
-  @Put('user/settings')
-  @UseGuards(TokenGuard)
-  updateUserSettings(
-    @Req() request: Request,
-    @Body() updateUserSettingsDto: UpdateUserSettingsDto,
-  ): Promise<UserSettingsResponse> {
-    return this.authService.updateUserSettings(
-      request['accessToken'],
-      updateUserSettingsDto,
-    );
   }
 }
