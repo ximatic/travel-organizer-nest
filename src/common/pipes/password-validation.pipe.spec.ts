@@ -53,7 +53,7 @@ describe('PasswordValidationPipe', () => {
       let hasThrown = false;
       try {
         result = pipe.transform(passwordSetupDto);
-      } catch (error: any) {
+      } catch {
         hasThrown = true;
       }
 
