@@ -10,6 +10,8 @@ export type AccessTokenDocument = mongoose.HydratedDocument<AccessToken>;
   collection: 'access-tokens',
 })
 export class AccessToken {
+  _id: mongoose.Types.ObjectId;
+
   @Prop({ required: true })
   token: string;
 

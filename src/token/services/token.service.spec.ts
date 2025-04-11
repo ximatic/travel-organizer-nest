@@ -54,7 +54,7 @@ describe('TokenService', () => {
       } as any);
 
       const result = await service.getAccessTokenByUserId(
-        MOCK_ACCESS_TOKEN_1.user,
+        MOCK_ACCESS_TOKEN_1.user._id,
       );
 
       expect(result).toEqual(mockData);
@@ -72,7 +72,7 @@ describe('TokenService', () => {
       } as any);
 
       const result = await service.getRefreshTokenByUserId(
-        MOCK_REFRESH_TOKEN_1.user,
+        MOCK_REFRESH_TOKEN_1.user._id,
       );
 
       expect(result).toEqual(mockData);

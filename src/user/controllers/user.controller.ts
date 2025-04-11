@@ -39,13 +39,13 @@ export class UserController {
 
   @Put('')
   @UseGuards(TokenGuard)
-  @UsePipes(new PasswordValidationPipe())
-  updateUser(
+  @UsePipes(PasswordValidationPipe)
+  async updateUser(
     @Req() request: Request,
     @Body() updateUserDto: UpdateUserDto,
-  ): void {
+  ): Promise<void> {
     try {
-      this.userService.updateUser(
+      await this.userService.updateUser(
         request['accessToken'].user._id.toString(),
         updateUserDto,
       );
@@ -84,17 +84,23 @@ export class UserController {
     @Req() request: Request,
     @Body() updateUserDataDto: UpdateUserDataDto,
   ): Promise<UserDataResponse> {
-    return this.userService.updateUserData(
-      request['accessToken'].user,
-      updateUserDataDto,
-    );
+    try {
+      return this.userService.updateUserData(
+        request['accessToken'].user,
+        updateUserDataDto,
+      );
+    } catch {
+      throw new InternalServerErrorException(
+        `Can't process request. Try again later.`,
+      );
+    }
   }
 
   // user password
 
   @Put('password')
   @UseGuards(TokenGuard)
-  @UsePipes(new PasswordValidationPipe())
+  @UsePipes(PasswordValidationPipe)
   async updateUserPassword(
     @Req() request: Request,
     @Body() updateUserPasswordDto: UpdateUserPasswordDto,

@@ -10,6 +10,8 @@ export type RefreshTokenDocument = mongoose.HydratedDocument<RefreshToken>;
   collection: 'refresh-tokens',
 })
 export class RefreshToken {
+  _id: mongoose.Types.ObjectId;
+
   @Prop({ required: true })
   token: string;
 

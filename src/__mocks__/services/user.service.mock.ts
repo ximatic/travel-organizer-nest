@@ -8,6 +8,8 @@ export const userServiceMock = {
   deleteUser: jest.fn(),
   getUserInfo: jest.fn(),
   //updateUserInfo: jest.fn(),
+  updateUserData: jest.fn(),
+  updateUserPassword: jest.fn(),
   getUserProfile: jest.fn(),
   createUserProfile: jest.fn(),
   updateUserProfile: jest.fn(),
