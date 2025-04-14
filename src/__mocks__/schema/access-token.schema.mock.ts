@@ -4,4 +4,5 @@ export const accessTokenModelMock = {
   create: jest.fn(),
   findByIdAndUpdate: jest.fn(),
   findByIdAndDelete: jest.fn(),
+  findOneAndDelete: jest.fn(),
 };

@@ -4,4 +4,5 @@ export const refreshTokenModelMock = {
   create: jest.fn(),
   findByIdAndUpdate: jest.fn(),
   findByIdAndDelete: jest.fn(),
+  findOneAndDelete: jest.fn(),
 };
