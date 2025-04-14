@@ -186,7 +186,4 @@ describe('TokenService', () => {
       expect(refreshTokenModel.findOneAndDelete).toHaveBeenCalled();
     });
   });
-
-  // TODO #1 - add more tests for Access Token
-  // TODO #2 - add more tests for User Profile
 });

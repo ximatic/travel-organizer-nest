@@ -107,11 +107,7 @@ describe('AuthController', () => {
     });
 
     it('logout works', async () => {
-      service.logout.mockResolvedValueOnce(
-        new Promise((resolve) => {
-          resolve(MOCK_AUTH_TOKEN_1);
-        }),
-      );
+      service.logout.mockResolvedValueOnce(MOCK_ACCESS_TOKEN_1);
 
       const mockContext = getExecutionContextMock(MOCK_ACCESS_TOKEN_1.token);
 

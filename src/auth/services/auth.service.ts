@@ -53,7 +53,7 @@ export class AuthService {
     return this.createTokenResponse(accessToken.token);
   }
 
-  async logout(accessToken: AccessToken): Promise<any> {
+  async logout(accessToken: AccessToken): Promise<AccessToken> {
     // TODO - delete refresh token too
     return this.tokenService.deleteAccessToken(accessToken.token);
   }
