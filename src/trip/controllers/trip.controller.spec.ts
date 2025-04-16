@@ -7,11 +7,16 @@ import {
 import { Test, TestingModule } from '@nestjs/testing';
 
 import {
+  MOCK_CREATE_TRIP_1,
+  MOCK_CREATE_TRIP_ITEM_1,
   MOCK_TRIP_1,
   MOCK_TRIP_2,
   MOCK_TRIP_ITEM_1,
   MOCK_TRIP_ITEM_2,
+  MOCK_UPDATE_TRIP_1,
+  MOCK_UPDATE_TRIP_ITEM_1,
 } from '../../__mocks__/constants/trip.constants';
+import { MOCK_USER_1 } from '../../__mocks__/constants/user.constants';
 import { tokenGuardMock } from '../../__mocks__/guards/token.guard.mock';
 import { tripServiceMock } from '../../__mocks__/services/trip.service.mock';
 import { mockRequestAccessToken } from '../../__mocks__/request.mock';
@@ -26,7 +31,6 @@ import { CreateTripItemDto } from '../dto/create-trip-item.dto';
 import { UpdateTripItemDto } from '../dto/update-trip-item.dto';
 
 import { TripController } from './trip.controller';
-import { MOCK_USER_1 } from '../../__mocks__/constants/user.constants';
 
 describe('TripController', () => {
   let tripController: TripController;
@@ -145,9 +149,7 @@ describe('TripController', () => {
       const mockedData = MOCK_TRIP_1;
       tripService.createTripByUserId.mockResolvedValueOnce(mockedData);
 
-      const createTripDto: CreateTripDto = {
-        ...MOCK_TRIP_1,
-      };
+      const createTripDto: CreateTripDto = MOCK_CREATE_TRIP_1;
       const result = await tripController.createTrip(request, createTripDto);
 
       expect(result).toEqual(mockedData);
@@ -160,9 +162,7 @@ describe('TripController', () => {
       const mockedData = MOCK_TRIP_1;
       tripService.updateTripByUserId.mockResolvedValueOnce(mockedData);
 
-      const updateTripDto: UpdateTripDto = {
-        ...MOCK_TRIP_1,
-      };
+      const updateTripDto: UpdateTripDto = MOCK_UPDATE_TRIP_1;
       const result = await tripController.updateTrip(
         request,
         MOCK_TRIP_1._id.toString(),
@@ -179,9 +179,8 @@ describe('TripController', () => {
       });
 
       const id = MOCK_TRIP_1._id.toString();
-      const updateTripDto: UpdateTripDto = {
-        ...MOCK_TRIP_1,
-      };
+      const updateTripDto: UpdateTripDto = MOCK_UPDATE_TRIP_1;
+
       let hasThrown = false;
       try {
         await tripController.updateTrip(request, id, updateTripDto);
@@ -197,9 +196,7 @@ describe('TripController', () => {
       tripService.updateTripByUserId.mockImplementation(null);
 
       const id = MOCK_TRIP_1._id.toString();
-      const updateTripDto: UpdateTripDto = {
-        ...MOCK_TRIP_1,
-      };
+      const updateTripDto: UpdateTripDto = MOCK_UPDATE_TRIP_1;
 
       let hasThrown = false;
       try {
@@ -214,9 +211,7 @@ describe('TripController', () => {
 
     it('updating trip with invalid ID throws BadRequestException error', async () => {
       const id = null;
-      const updateTripDto: UpdateTripDto = {
-        ...MOCK_TRIP_1,
-      };
+      const updateTripDto: UpdateTripDto = MOCK_UPDATE_TRIP_1;
 
       let hasThrown = false;
       try {
@@ -297,9 +292,7 @@ describe('TripController', () => {
       const mockedData = { ...MOCK_TRIP_1, items: [MOCK_TRIP_ITEM_1] };
       tripService.createTripItemByUserId.mockResolvedValueOnce(mockedData);
 
-      const createTripItemDto: CreateTripItemDto = {
-        ...MOCK_TRIP_ITEM_1,
-      };
+      const createTripItemDto: CreateTripItemDto = MOCK_CREATE_TRIP_ITEM_1;
       const result = await tripController.createTripItem(
         request,
         MOCK_TRIP_1._id.toString(),
@@ -316,9 +309,7 @@ describe('TripController', () => {
       });
 
       const id = MOCK_TRIP_1._id.toString();
-      const createTripItemDto: CreateTripItemDto = {
-        ...MOCK_TRIP_ITEM_1,
-      };
+      const createTripItemDto: CreateTripItemDto = MOCK_CREATE_TRIP_ITEM_1;
       let hasThrown = false;
       try {
         await tripController.createTripItem(request, id, createTripItemDto);
@@ -334,9 +325,7 @@ describe('TripController', () => {
       tripService.createTripItemByUserId.mockImplementation(null);
 
       const id = MOCK_TRIP_1._id.toString();
-      const createTripItemDto: CreateTripItemDto = {
-        ...MOCK_TRIP_ITEM_1,
-      };
+      const createTripItemDto: CreateTripItemDto = MOCK_CREATE_TRIP_ITEM_1;
       let hasThrown = false;
       try {
         await tripController.createTripItem(request, id, createTripItemDto);
@@ -350,9 +339,7 @@ describe('TripController', () => {
 
     it('creating trip item for a trip with invalid ID throws BadRequestException error', async () => {
       const id = null;
-      const createTripItemDto: CreateTripItemDto = {
-        ...MOCK_TRIP_ITEM_1,
-      };
+      const createTripItemDto: CreateTripItemDto = MOCK_CREATE_TRIP_ITEM_1;
       let hasThrown = false;
       try {
         await tripController.createTripItem(request, id, createTripItemDto);
@@ -372,9 +359,7 @@ describe('TripController', () => {
 
       const tripId = MOCK_TRIP_1._id.toString();
       const tripItemId = MOCK_TRIP_1._id.toString();
-      const updateTripItemDto: UpdateTripItemDto = {
-        ...MOCK_TRIP_ITEM_2,
-      };
+      const updateTripItemDto: UpdateTripItemDto = MOCK_UPDATE_TRIP_ITEM_1;
       const result = await tripController.updateTripItem(
         request,
         tripId,
@@ -393,9 +378,7 @@ describe('TripController', () => {
 
       const tripId = MOCK_TRIP_1._id.toString();
       const tripItemId = MOCK_TRIP_1._id.toString();
-      const updateTripItemDto: UpdateTripItemDto = {
-        ...MOCK_TRIP_ITEM_2,
-      };
+      const updateTripItemDto: UpdateTripItemDto = MOCK_UPDATE_TRIP_ITEM_1;
       let hasThrown = false;
       try {
         await tripController.updateTripItem(
@@ -417,9 +400,7 @@ describe('TripController', () => {
 
       const tripId = MOCK_TRIP_1._id.toString();
       const tripItemId = MOCK_TRIP_1._id.toString();
-      const updateTripItemDto: UpdateTripItemDto = {
-        ...MOCK_TRIP_ITEM_2,
-      };
+      const updateTripItemDto: UpdateTripItemDto = MOCK_UPDATE_TRIP_ITEM_1;
       let hasThrown = false;
       try {
         await tripController.updateTripItem(
@@ -439,9 +420,7 @@ describe('TripController', () => {
     it('updating trip item for a trip with invalid ID throws BadRequestException error', async () => {
       const tripId = null;
       const tripItemId = null;
-      const updateTripItemDto: UpdateTripItemDto = {
-        ...MOCK_TRIP_ITEM_2,
-      };
+      const updateTripItemDto: UpdateTripItemDto = MOCK_UPDATE_TRIP_ITEM_1;
       let hasThrown = false;
       try {
         await tripController.updateTripItem(

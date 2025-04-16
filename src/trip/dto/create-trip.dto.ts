@@ -1,5 +1,4 @@
-import { Type } from 'class-transformer';
-import { IsDate, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class CreateTripDto {
   @IsNotEmpty()
@@ -17,14 +16,4 @@ export class CreateTripDto {
   @IsOptional()
   @IsString()
   readonly type: string;
-
-  @IsOptional()
-  @IsDate()
-  @Type(() => Date)
-  readonly startDate: Date;
-
-  @IsOptional()
-  @IsDate()
-  @Type(() => Date)
-  readonly endDate: Date;
 }

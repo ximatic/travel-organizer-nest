@@ -10,6 +10,8 @@ export type TripDocument = mongoose.HydratedDocument<Trip>;
 
 @Schema()
 export class Trip {
+  _id: mongoose.Types.ObjectId;
+
   @Prop({ required: true })
   name: string;
 

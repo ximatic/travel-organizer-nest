@@ -1,11 +1,13 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
-import { HydratedDocument } from 'mongoose';
+import * as mongoose from 'mongoose';
 
-export type TripItemDocument = HydratedDocument<TripItem>;
+export type TripItemDocument = mongoose.HydratedDocument<TripItem>;
 
 @Schema()
 export class TripItem {
+  _id: mongoose.Types.ObjectId;
+
   @Prop({ required: true })
   name: string;
 

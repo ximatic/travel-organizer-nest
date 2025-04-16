@@ -4,10 +4,14 @@ import { getModelToken } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
 import {
+  MOCK_CREATE_TRIP_1,
+  MOCK_CREATE_TRIP_ITEM_1,
   MOCK_TRIP_1,
   MOCK_TRIP_2,
   MOCK_TRIP_ITEM_1,
   MOCK_TRIP_ITEM_2,
+  MOCK_UPDATE_TRIP_1,
+  MOCK_UPDATE_TRIP_ITEM_1,
 } from '../../__mocks__/constants/trip.constants';
 import { MOCK_USER_1 } from '../../__mocks__/constants/user.constants';
 import { tripModelMock } from '../../__mocks__/schema/trip.schema.mock';
@@ -105,9 +109,7 @@ describe('TripService', () => {
       const mockData = MOCK_TRIP_1;
       tripModel.create.mockResolvedValueOnce(mockData as any);
 
-      const createTripDto: CreateTripDto = {
-        ...MOCK_TRIP_1,
-      };
+      const createTripDto: CreateTripDto = MOCK_CREATE_TRIP_1;
       const result = await tripService.createTrip(createTripDto);
 
       expect(result).toEqual(mockData);
@@ -126,9 +128,7 @@ describe('TripService', () => {
       } as any);
 
       const id = MOCK_TRIP_1._id.toString();
-      const updateTripDto: UpdateTripDto = {
-        ...MOCK_TRIP_1,
-      };
+      const updateTripDto: UpdateTripDto = MOCK_UPDATE_TRIP_1;
       const result = await tripService.updateTrip(id, updateTripDto);
 
       expect(result).toEqual(mockData);
@@ -209,9 +209,7 @@ describe('TripService', () => {
       const mockData = MOCK_TRIP_1;
       tripModel.create.mockResolvedValueOnce(mockData as any);
 
-      const createTripDto: CreateTripDto = {
-        ...MOCK_TRIP_1,
-      };
+      const createTripDto: CreateTripDto = MOCK_CREATE_TRIP_1;
       const result = await tripService.createTripByUserId(
         MOCK_USER_1,
         createTripDto,
@@ -234,9 +232,7 @@ describe('TripService', () => {
       } as any);
 
       const id = MOCK_TRIP_1._id.toString();
-      const updateTripDto: UpdateTripDto = {
-        ...MOCK_TRIP_1,
-      };
+      const updateTripDto: UpdateTripDto = MOCK_UPDATE_TRIP_1;
       const result = await tripService.updateTripByUserId(
         MOCK_USER_1,
         id,
@@ -280,9 +276,7 @@ describe('TripService', () => {
       } as any);
 
       const id = MOCK_TRIP_1._id.toString();
-      const createTripItemDto: CreateTripItemDto = {
-        ...MOCK_TRIP_ITEM_1,
-      };
+      const createTripItemDto: CreateTripItemDto = MOCK_CREATE_TRIP_ITEM_1;
       const result = await tripService.createTripItem(id, createTripItemDto);
 
       expect(result).toEqual(mockData);
@@ -303,9 +297,7 @@ describe('TripService', () => {
 
       const tripId = MOCK_TRIP_1._id.toString();
       const tripItemId = MOCK_TRIP_ITEM_2._id.toString();
-      const updateTripItemDto: UpdateTripItemDto = {
-        ...MOCK_TRIP_ITEM_2,
-      };
+      const updateTripItemDto: UpdateTripItemDto = MOCK_UPDATE_TRIP_ITEM_1;
       const result = await tripService.updateTripItem(
         tripId,
         tripItemId,
