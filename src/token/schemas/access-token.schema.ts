@@ -2,6 +2,8 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 import * as mongoose from 'mongoose';
 
+import { BaseEntity } from '../../common/schemas/base-entity.schema';
+
 import { User } from '../../user/schemas/user.schema';
 
 export type AccessTokenDocument = mongoose.HydratedDocument<AccessToken>;
@@ -9,9 +11,7 @@ export type AccessTokenDocument = mongoose.HydratedDocument<AccessToken>;
 @Schema({
   collection: 'access-tokens',
 })
-export class AccessToken {
-  _id: mongoose.Types.ObjectId;
-
+export class AccessToken extends BaseEntity {
   @Prop({ required: true })
   token: string;
 
@@ -21,9 +21,6 @@ export class AccessToken {
     ref: User.name,
   })
   user: User;
-
-  @Prop({ required: true })
-  createdAt: Date;
 }
 
 export const AccessTokenSchema = SchemaFactory.createForClass(AccessToken);

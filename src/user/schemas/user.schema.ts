@@ -2,14 +2,14 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 import * as mongoose from 'mongoose';
 
+import { BaseEntity } from '../../common/schemas/base-entity.schema';
+
 import { UserRole } from '../models/user.enum';
 
 export type UserDocument = mongoose.HydratedDocument<User>;
 
 @Schema()
-export class User {
-  _id: mongoose.Types.ObjectId;
-
+export class User extends BaseEntity {
   @Prop({ required: true, unique: true })
   email: string;
 
@@ -18,12 +18,6 @@ export class User {
 
   @Prop({ default: UserRole.User })
   role: UserRole;
-
-  @Prop({ required: true })
-  createdAt: Date;
-
-  @Prop()
-  updatedAt: Date;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

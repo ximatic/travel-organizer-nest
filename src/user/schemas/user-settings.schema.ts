@@ -2,6 +2,8 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 import * as mongoose from 'mongoose';
 
+import { BaseEntity } from '../../common/schemas/base-entity.schema';
+
 import { User } from './user.schema';
 import {
   UserSettingsLanguage,
@@ -15,9 +17,7 @@ export type UserSettingsDocument = mongoose.HydratedDocument<UserSettings>;
 @Schema({
   collection: 'user-settings',
 })
-export class UserSettings {
-  _id: mongoose.Types.ObjectId;
-
+export class UserSettings extends BaseEntity {
   @Prop({ required: true })
   language: UserSettingsLanguage;
 
@@ -37,12 +37,6 @@ export class UserSettings {
     ref: User.name,
   })
   user: User;
-
-  @Prop({ required: true })
-  createdAt: Date;
-
-  @Prop()
-  updatedAt: Date;
 }
 
 export const UserSettingsSchema = SchemaFactory.createForClass(UserSettings);

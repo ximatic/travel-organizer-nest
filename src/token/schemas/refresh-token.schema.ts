@@ -2,6 +2,8 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 import * as mongoose from 'mongoose';
 
+import { BaseEntity } from '../../common/schemas/base-entity.schema';
+
 import { User } from '../../user/schemas/user.schema';
 
 export type RefreshTokenDocument = mongoose.HydratedDocument<RefreshToken>;
@@ -9,9 +11,7 @@ export type RefreshTokenDocument = mongoose.HydratedDocument<RefreshToken>;
 @Schema({
   collection: 'refresh-tokens',
 })
-export class RefreshToken {
-  _id: mongoose.Types.ObjectId;
-
+export class RefreshToken extends BaseEntity {
   @Prop({ required: true })
   token: string;
 
@@ -21,9 +21,6 @@ export class RefreshToken {
     ref: User.name,
   })
   user: User;
-
-  @Prop({ required: true })
-  createdAt: Date;
 }
 
 export const RefreshTokenSchema = SchemaFactory.createForClass(RefreshToken);

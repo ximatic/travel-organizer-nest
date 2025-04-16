@@ -2,6 +2,8 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 import * as mongoose from 'mongoose';
 
+import { BaseEntity } from '../../common/schemas/base-entity.schema';
+
 import { User } from '../../user/schemas/user.schema';
 
 import { TripItem, TripItemSchema } from './trip-item.schema';
@@ -9,9 +11,7 @@ import { TripItem, TripItemSchema } from './trip-item.schema';
 export type TripDocument = mongoose.HydratedDocument<Trip>;
 
 @Schema()
-export class Trip {
-  _id: mongoose.Types.ObjectId;
-
+export class Trip extends BaseEntity {
   @Prop({ required: true })
   name: string;
 
@@ -40,12 +40,6 @@ export class Trip {
     ref: User.name,
   })
   user: User;
-
-  @Prop({ required: true })
-  createdAt: Date;
-
-  @Prop()
-  updatedAt?: Date;
 }
 
 export const TripSchema = SchemaFactory.createForClass(Trip);
