@@ -9,6 +9,10 @@ import {
   MOCK_USER_SETTINGS_2,
 } from '../../__mocks__/constants/user.constants';
 import { userSettingsModelMock } from '../../__mocks__/schema/user-settings.schema.mock';
+import {
+  MOCK_CREATE_USER_SETTINGS_1,
+  MOCK_UPDATE_USER_SETTINGS_1,
+} from '../../__mocks__/dto/user.dto';
 
 import { UserSettings } from '../schemas/user-settings.schema';
 
@@ -77,13 +81,8 @@ describe('UserSettingsService', () => {
       const mockData = MOCK_USER_SETTINGS_1;
       userSettingsModel.create.mockResolvedValueOnce(mockData as any);
 
-      const createUserSettingsDto: CreateUserSettingsDto = {
-        language: MOCK_USER_SETTINGS_1.language,
-        dateFormat: MOCK_USER_SETTINGS_1.dateFormat,
-        timeFormat: MOCK_USER_SETTINGS_1.timeFormat,
-        theme: MOCK_USER_SETTINGS_1.theme,
-        user: MOCK_USER_1._id,
-      };
+      const createUserSettingsDto: CreateUserSettingsDto =
+        MOCK_CREATE_USER_SETTINGS_1;
       const result = await service.createUserSettings(createUserSettingsDto);
 
       expect(result).toEqual(mockData);
@@ -98,12 +97,8 @@ describe('UserSettingsService', () => {
         exec: jest.fn().mockResolvedValueOnce(mockData),
       } as any);
 
-      const updateUserSettingsDto: UpdateUserSettingsDto = {
-        language: MOCK_USER_SETTINGS_1.language,
-        dateFormat: MOCK_USER_SETTINGS_1.dateFormat,
-        timeFormat: MOCK_USER_SETTINGS_1.timeFormat,
-        theme: MOCK_USER_SETTINGS_1.theme,
-      };
+      const updateUserSettingsDto: UpdateUserSettingsDto =
+        MOCK_UPDATE_USER_SETTINGS_1;
       const result = await service.updateUserSettings(
         MOCK_USER_SETTINGS_1._id.toString(),
         updateUserSettingsDto,
@@ -155,12 +150,8 @@ describe('UserSettingsService', () => {
         exec: jest.fn().mockResolvedValueOnce(mockData),
       } as any);
 
-      const updateUserSettingsDto: UpdateUserSettingsDto = {
-        language: MOCK_USER_SETTINGS_1.language,
-        dateFormat: MOCK_USER_SETTINGS_1.dateFormat,
-        timeFormat: MOCK_USER_SETTINGS_1.timeFormat,
-        theme: MOCK_USER_SETTINGS_1.theme,
-      };
+      const updateUserSettingsDto: UpdateUserSettingsDto =
+        MOCK_UPDATE_USER_SETTINGS_1;
       const result = await service.updateUserSettingsByUserId(
         MOCK_USER_1._id,
         updateUserSettingsDto,

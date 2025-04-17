@@ -1,19 +1,20 @@
 import { Types } from 'mongoose';
 
+import { User } from '../../user/schemas/user.schema';
+import { UserProfile } from '../../user/schemas/user-profile.schema';
+import { UserSettings } from '../../user/schemas/user-settings.schema';
+
 import { UserRole } from '../../user/models/user.enum';
+
+import { UserDataResponse } from '../../user/models/user-data.model';
+import { UserInfoResponse } from '../../user/models/user-info.model';
+import { UserProfileResponse } from '../../user/models/user-profile.model';
 import {
   UserSettingsLanguage,
   UserSettingsDateFormat,
   UserSettingsTimeFormat,
   UserSettingsTheme,
 } from '../../user/models/user-settings.enum';
-
-import { User } from '../../user/schemas/user.schema';
-import { UserDataResponse } from '../../user/models/user-data.model';
-import { UserInfoResponse } from '../../user/models/user-info.model';
-import { UserProfile } from '../../user/schemas/user-profile.schema';
-import { UserProfileResponse } from '../../user/models/user-profile.model';
-import { UserSettings } from '../../user/schemas/user-settings.schema';
 import { UserSettingsResponse } from '../../user/models/user-settings.model';
 
 // user

@@ -20,11 +20,13 @@ import {
   MOCK_USER_1,
   MOCK_USER_DATA_RESPONSE_1,
   MOCK_USER_INFO_RESPONSE_1,
-  MOCK_USER_PROFILE_1,
   MOCK_USER_PROFILE_RESPONSE_1,
-  MOCK_USER_SETTINGS_1,
   MOCK_USER_SETTINGS_RESPONSE_1,
 } from '../../__mocks__/constants/user.constants';
+import {
+  MOCK_UPDATE_USER_PROFILE_1,
+  MOCK_UPDATE_USER_SETTINGS_1,
+} from '../../__mocks__/dto/user.dto';
 
 import { TokenGuard } from '../../token/guards/token.guard';
 
@@ -295,10 +297,8 @@ describe('UserController', () => {
   describe('updateUserProfile()', () => {
     const mockContext = getExecutionContextMock(MOCK_ACCESS_TOKEN_1);
 
-    const updateUserProfileDto: UpdateUserProfileDto = {
-      firstname: MOCK_USER_PROFILE_1.firstname,
-      lastname: MOCK_USER_PROFILE_1.lastname,
-    };
+    const updateUserProfileDto: UpdateUserProfileDto =
+      MOCK_UPDATE_USER_PROFILE_1;
 
     it('updating user profile works', async () => {
       const mockData = MOCK_USER_PROFILE_RESPONSE_1;
@@ -340,12 +340,8 @@ describe('UserController', () => {
   describe('updateUserSettings()', () => {
     const mockContext = getExecutionContextMock(MOCK_ACCESS_TOKEN_1);
 
-    const updateUserSettingsDto: UpdateUserSettingsDto = {
-      language: MOCK_USER_SETTINGS_1.language,
-      dateFormat: MOCK_USER_SETTINGS_1.dateFormat,
-      timeFormat: MOCK_USER_SETTINGS_1.timeFormat,
-      theme: MOCK_USER_SETTINGS_1.theme,
-    };
+    const updateUserSettingsDto: UpdateUserSettingsDto =
+      MOCK_UPDATE_USER_SETTINGS_1;
 
     it('updating user profile works', async () => {
       const mockData = MOCK_USER_SETTINGS_RESPONSE_1;

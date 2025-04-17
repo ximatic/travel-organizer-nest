@@ -8,6 +8,10 @@ import {
   MOCK_USER_PROFILE_1,
   MOCK_USER_PROFILE_2,
 } from '../../__mocks__/constants/user.constants';
+import {
+  MOCK_CREATE_USER_PROFILE_1,
+  MOCK_UPDATE_USER_PROFILE_1,
+} from '../../__mocks__/dto/user.dto';
 import { userProfileModelMock } from '../../__mocks__/schema/user-profile.schema.mock';
 
 import { UserProfile } from '../schemas/user-profile.schema';
@@ -77,11 +81,8 @@ describe('UserProfileService', () => {
       const mockData = MOCK_USER_PROFILE_1;
       userProfileModel.create.mockResolvedValueOnce(mockData as any);
 
-      const createUserProfileDto: CreateUserProfileDto = {
-        firstname: MOCK_USER_PROFILE_1.firstname,
-        lastname: MOCK_USER_PROFILE_1.lastname,
-        user: MOCK_USER_1._id,
-      };
+      const createUserProfileDto: CreateUserProfileDto =
+        MOCK_CREATE_USER_PROFILE_1;
       const result = await service.createUserProfile(createUserProfileDto);
 
       expect(result).toEqual(mockData);
@@ -96,10 +97,8 @@ describe('UserProfileService', () => {
         exec: jest.fn().mockResolvedValueOnce(mockData),
       } as any);
 
-      const updateUserProfileDto: UpdateUserProfileDto = {
-        firstname: MOCK_USER_PROFILE_1.firstname,
-        lastname: MOCK_USER_PROFILE_1.lastname,
-      };
+      const updateUserProfileDto: UpdateUserProfileDto =
+        MOCK_UPDATE_USER_PROFILE_1;
       const result = await service.updateUserProfile(
         MOCK_USER_PROFILE_1._id.toString(),
         updateUserProfileDto,

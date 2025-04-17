@@ -10,6 +10,7 @@ import {
   MOCK_USER_PROFILE_1,
   MOCK_USER_SETTINGS_1,
 } from '../../__mocks__/constants/user.constants';
+import { MOCK_CREATE_USER_1 } from '../../__mocks__/dto/user.dto';
 import { userProfileServiceMock } from '../../__mocks__/services/user-profile.service.mock';
 import { userSettingsServiceMock } from '../../__mocks__/services/user-settings.service.mock';
 import { userModelMock } from '../../__mocks__/schema/user.schema.mock';
@@ -126,10 +127,7 @@ describe('UserService', () => {
         const mockData = MOCK_USER_1;
         userModel.create.mockResolvedValueOnce(mockData as any);
 
-        const createUserDto: CreateUserDto = {
-          email: MOCK_USER_1.email,
-          password: MOCK_USER_1.password,
-        };
+        const createUserDto: CreateUserDto = MOCK_CREATE_USER_1;
         const result = await service.createUser(createUserDto);
 
         expect(result).toEqual(mockData);
