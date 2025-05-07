@@ -4,8 +4,6 @@ import { User } from '../../user/schemas/user.schema';
 import { UserProfile } from '../../user/schemas/user-profile.schema';
 import { UserSettings } from '../../user/schemas/user-settings.schema';
 
-import { UserRole } from '../../user/models/user.enum';
-
 import { UserDataResponse } from '../../user/models/user-data.model';
 import { UserInfoResponse } from '../../user/models/user-info.model';
 import { UserProfileResponse } from '../../user/models/user-profile.model';
@@ -17,22 +15,35 @@ import {
 } from '../../user/models/user-settings.enum';
 import { UserSettingsResponse } from '../../user/models/user-settings.model';
 
+import {
+  MOCK_EMAIL_1,
+  MOCK_EMAIL_2,
+  MOCK_FIRSTNAME_1,
+  MOCK_FIRSTNAME_2,
+  MOCK_LASTNAME_1,
+  MOCK_LASTNAME_2,
+  MOCK_PASSWORD_HASH_1,
+  MOCK_PASSWORD_HASH_2,
+  MOCK_ROLE_1,
+  MOCK_ROLE_2,
+} from './common.constants';
+
 // user
 
 export const MOCK_USER_1: User = {
   _id: new Types.ObjectId(),
-  email: 'test-1@example.com',
-  password: '$2b$10$J7kn4LdwDFJVayZXG9ZLB.PB7ev84Pp67OgOlIzNaLLX2gl.zPneC', // MOCK_PASSWORD_1
-  role: UserRole.User,
+  email: MOCK_EMAIL_1,
+  password: MOCK_PASSWORD_HASH_1, //'$2b$10$J7kn4LdwDFJVayZXG9ZLB.PB7ev84Pp67OgOlIzNaLLX2gl.zPneC', // MOCK_PASSWORD_1
+  role: MOCK_ROLE_1,
   createdAt: new Date(),
   updatedAt: new Date(),
 };
 
 export const MOCK_USER_2: User = {
   _id: new Types.ObjectId(),
-  email: 'test-2@example.com',
-  password: '$2b$10$O.cmipo02p9nMx8mWnCg/udP8spXJ4g3CZOfNSNWIHyGIg6AarUbm', // MOCK_PASSWORD_2
-  role: UserRole.Admin,
+  email: MOCK_EMAIL_2,
+  password: MOCK_PASSWORD_HASH_2, //'$2b$10$O.cmipo02p9nMx8mWnCg/udP8spXJ4g3CZOfNSNWIHyGIg6AarUbm', // MOCK_PASSWORD_2
+  role: MOCK_ROLE_2,
   createdAt: new Date(),
   updatedAt: new Date(),
 };
@@ -41,8 +52,8 @@ export const MOCK_USER_2: User = {
 
 export const MOCK_USER_PROFILE_1: UserProfile = {
   _id: new Types.ObjectId(),
-  firstname: 'Test Firstname #1',
-  lastname: 'Test Lastname #1',
+  firstname: MOCK_FIRSTNAME_1,
+  lastname: MOCK_LASTNAME_1,
   user: MOCK_USER_1,
   createdAt: new Date(),
   updatedAt: new Date(),
@@ -50,8 +61,8 @@ export const MOCK_USER_PROFILE_1: UserProfile = {
 
 export const MOCK_USER_PROFILE_2: UserProfile = {
   _id: new Types.ObjectId(),
-  firstname: 'Test Firstname #2',
-  lastname: 'Test Lastname #2',
+  firstname: MOCK_FIRSTNAME_2,
+  lastname: MOCK_LASTNAME_2,
   user: MOCK_USER_2,
   createdAt: new Date(),
   updatedAt: new Date(),
