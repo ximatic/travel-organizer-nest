@@ -32,7 +32,7 @@ export const MOCK_USER_2: User = {
   _id: new Types.ObjectId(),
   email: 'test-2@example.com',
   password: '$2b$10$O.cmipo02p9nMx8mWnCg/udP8spXJ4g3CZOfNSNWIHyGIg6AarUbm', // MOCK_PASSWORD_2
-  role: UserRole.User,
+  role: UserRole.Admin,
   createdAt: new Date(),
   updatedAt: new Date(),
 };
