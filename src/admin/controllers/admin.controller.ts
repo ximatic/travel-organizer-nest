@@ -11,8 +11,6 @@ import {
   UsePipes,
 } from '@nestjs/common';
 
-import { Request } from 'express';
-
 import { TokenGuard } from '../../token/guards/token.guard';
 import { AdminRoleGuard } from '../guards/admin-role.guard';
 
