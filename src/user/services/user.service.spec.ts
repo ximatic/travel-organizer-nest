@@ -178,9 +178,10 @@ describe('UserService', () => {
 
   describe('user info', () => {
     describe('getUserInfo()', () => {
-      it('returning all user profiles works', async () => {
+      it('returning user info works', async () => {
         const expectedResult = {
           email: MOCK_USER_1.email,
+          role: MOCK_USER_1.role,
           profile: {
             firstname: MOCK_USER_PROFILE_1.firstname,
             lastname: MOCK_USER_PROFILE_1.lastname,

@@ -120,12 +120,14 @@ export const MOCK_USER_SETTINGS_RESPONSE_2: UserSettingsResponse = {
 
 export const MOCK_USER_INFO_RESPONSE_1: UserInfoResponse = {
   email: MOCK_USER_1.email,
+  role: MOCK_USER_1.role,
   profile: MOCK_USER_PROFILE_RESPONSE_1,
   settings: MOCK_USER_SETTINGS_RESPONSE_1,
 };
 
 export const MOCK_USER_INFO_RESPONSE_2: UserInfoResponse = {
   email: MOCK_USER_2.email,
+  role: MOCK_USER_2.role,
   profile: MOCK_USER_PROFILE_RESPONSE_2,
   settings: MOCK_USER_SETTINGS_RESPONSE_2,
 };

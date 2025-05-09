@@ -226,6 +226,7 @@ export class UserService {
   ): UserInfoResponse {
     return {
       email: user.email,
+      role: user.role,
       profile: this.createUserProfileResponse(userProfile),
       settings: this.createUserSettingsResponse(userSettings),
     } as UserInfoResponse;
