@@ -126,6 +126,7 @@ export class AdminService {
     return {
       id: user._id.toString(),
       email: user.email,
+      role: user.role,
     } as AdminUserResponse;
   }
 }

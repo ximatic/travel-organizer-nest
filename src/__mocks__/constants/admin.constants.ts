@@ -7,9 +7,11 @@ import { AdminUserResponse } from '../../admin/models/admin-user.model';
 export const MOCK_ADMIN_USER_RESPONSE_1: AdminUserResponse = {
   id: MOCK_USER_1._id.toString(),
   email: MOCK_USER_1.email,
+  role: MOCK_USER_1.role,
 };
 
 export const MOCK_ADMIN_USER_RESPONSE_2: AdminUserResponse = {
   id: MOCK_USER_2._id.toString(),
   email: MOCK_USER_2.email,
+  role: MOCK_USER_2.role,
 };

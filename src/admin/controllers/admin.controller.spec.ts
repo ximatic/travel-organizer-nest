@@ -223,6 +223,7 @@ describe('AdminController', () => {
       service.deleteUser.mockResolvedValueOnce({
         id: mockData._id.toString(),
         email: mockData.email,
+        role: mockData.role,
       });
 
       let hasThrown = false;
