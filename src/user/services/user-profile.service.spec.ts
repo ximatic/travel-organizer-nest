@@ -7,12 +7,12 @@ import {
   MOCK_USER_1,
   MOCK_USER_PROFILE_1,
   MOCK_USER_PROFILE_2,
-} from '../../__mocks__/constants/user.constants';
+} from '../../../__mocks__/constants/user.constants';
 import {
   MOCK_CREATE_USER_PROFILE_1,
   MOCK_UPDATE_USER_PROFILE_1,
-} from '../../__mocks__/dto/user.dto';
-import { userProfileModelMock } from '../../__mocks__/schema/user-profile.schema.mock';
+} from '../../../__mocks__/dto/user.dto';
+import { userProfileModelMock } from '../../../__mocks__/schema/user-profile.schema.mock';
 
 import { UserProfile } from '../schemas/user-profile.schema';
 

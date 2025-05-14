@@ -2,13 +2,13 @@ import { Types } from 'mongoose';
 
 import { MOCK_USER_1 } from './user.constants';
 
-import { Trip } from '../../trip/schemas/trip.schema';
-import { TripItem } from '../../trip/schemas/trip-item.schema';
+import { Trip } from '../../src/trip/schemas/trip.schema';
+import { TripItem } from '../../src/trip/schemas/trip-item.schema';
 
-import { CreateTripDto } from '../../trip/dto/create-trip.dto';
-import { UpdateTripDto } from '../../trip/dto/update-trip.dto';
-import { CreateTripItemDto } from 'src/trip/dto/create-trip-item.dto';
-import { UpdateTripItemDto } from 'src/trip/dto/update-trip-item.dto';
+import { CreateTripDto } from '../../src/trip/dto/create-trip.dto';
+import { UpdateTripDto } from '../../src/trip/dto/update-trip.dto';
+import { CreateTripItemDto } from '../../src/trip/dto/create-trip-item.dto';
+import { UpdateTripItemDto } from '../../src/trip/dto/update-trip-item.dto';
 
 // trip
 

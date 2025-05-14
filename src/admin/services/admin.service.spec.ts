@@ -7,19 +7,19 @@ import {
   MOCK_LASTNAME_1,
   MOCK_PASSWORD_1,
   MOCK_ROLE_1,
-} from '../../__mocks__/constants/common.constants';
+} from '../../../__mocks__/constants/common.constants';
 import {
   MOCK_ADMIN_USER_RESPONSE_1,
   MOCK_ADMIN_USER_RESPONSE_2,
-} from '../../__mocks__/constants/admin.constants';
+} from '../../../__mocks__/constants/admin.constants';
 import {
   MOCK_USER_1,
   MOCK_USER_2,
   MOCK_USER_PROFILE_1,
   MOCK_USER_SETTINGS_1,
-} from '../../__mocks__/constants/user.constants';
+} from '../../../__mocks__/constants/user.constants';
 
-import { userServiceMock } from '../../__mocks__/services/user.service.mock';
+import { userServiceMock } from '../../../__mocks__/services/user.service.mock';
 
 import { UserService } from '../../user/services/user.service';
 

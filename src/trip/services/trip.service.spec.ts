@@ -12,10 +12,10 @@ import {
   MOCK_TRIP_ITEM_2,
   MOCK_UPDATE_TRIP_1,
   MOCK_UPDATE_TRIP_ITEM_1,
-} from '../../__mocks__/constants/trip.constants';
-import { MOCK_USER_1 } from '../../__mocks__/constants/user.constants';
-import { tripModelMock } from '../../__mocks__/schema/trip.schema.mock';
-import { MockDate } from '../../__mocks__/date.mock';
+} from '../../../__mocks__/constants/trip.constants';
+import { MOCK_USER_1 } from '../../../__mocks__/constants/user.constants';
+import { tripModelMock } from '../../../__mocks__/schema/trip.schema.mock';
+import { MockDate } from '../../../__mocks__/date.mock';
 
 import { Trip } from '../schemas/trip.schema';
 

@@ -9,19 +9,19 @@ import { Request } from 'express';
 
 import { createMock } from '@golevelup/ts-jest';
 
-import { tokenGuardMock } from '../../__mocks__/guards/token.guard.mock';
-import { authServiceMock } from '../../__mocks__/services/auth.service.mock';
+import { tokenGuardMock } from '../../../__mocks__/guards/token.guard.mock';
+import { authServiceMock } from '../../../__mocks__/services/auth.service.mock';
 import {
   MOCK_EMAIL_1,
   MOCK_PASSWORD_1,
   MOCK_PASSWORD_2,
   MOCK_FIRSTNAME_1,
   MOCK_LASTNAME_1,
-} from '../../__mocks__/constants/common.constants';
+} from '../../../__mocks__/constants/common.constants';
 import {
   MOCK_ACCESS_TOKEN_1,
   MOCK_AUTH_TOKEN_1,
-} from '../../__mocks__/constants/auth.constants';
+} from '../../../__mocks__/constants/auth.constants';
 
 import { TokenGuard } from '../../token/guards/token.guard';
 

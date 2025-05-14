@@ -12,6 +12,7 @@ export class CreateUserDto {
   @IsString()
   readonly password: string;
 
+  // TODO - it should be only allowed from Admin module
   @IsOptional()
   @Transform(() => UserRole)
   readonly role?: UserRole;

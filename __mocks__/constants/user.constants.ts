@@ -1,19 +1,19 @@
 import { Types } from 'mongoose';
 
-import { User } from '../../user/schemas/user.schema';
-import { UserProfile } from '../../user/schemas/user-profile.schema';
-import { UserSettings } from '../../user/schemas/user-settings.schema';
+import { User } from '../../src/user/schemas/user.schema';
+import { UserProfile } from '../../src/user/schemas/user-profile.schema';
+import { UserSettings } from '../../src/user/schemas/user-settings.schema';
 
-import { UserDataResponse } from '../../user/models/user-data.model';
-import { UserInfoResponse } from '../../user/models/user-info.model';
-import { UserProfileResponse } from '../../user/models/user-profile.model';
+import { UserDataResponse } from '../../src/user/models/user-data.model';
+import { UserInfoResponse } from '../../src/user/models/user-info.model';
+import { UserProfileResponse } from '../../src/user/models/user-profile.model';
 import {
   UserSettingsLanguage,
   UserSettingsDateFormat,
   UserSettingsTimeFormat,
   UserSettingsTheme,
-} from '../../user/models/user-settings.enum';
-import { UserSettingsResponse } from '../../user/models/user-settings.model';
+} from '../../src/user/models/user-settings.enum';
+import { UserSettingsResponse } from '../../src/user/models/user-settings.model';
 
 import {
   MOCK_EMAIL_1,

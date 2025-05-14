@@ -4,7 +4,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import {
   MOCK_PASSWORD_1,
   MOCK_PASSWORD_2,
-} from '../../__mocks__/constants/common.constants';
+} from '../../../__mocks__/constants/common.constants';
 
 import { PasswordSetupDto } from '../dto/password-setup.dto';
 

@@ -1,8 +1,8 @@
-import { CreateUserDto } from '../../user/dto/create-user.dto';
-import { CreateUserProfileDto } from '../../user/dto/create-user-profile.dto';
-import { UpdateUserProfileDto } from '../../user/dto/update-user-profile.dto';
-import { CreateUserSettingsDto } from '../../user/dto/create-user-settings.dto';
-import { UpdateUserSettingsDto } from '../../user/dto/update-user-settings.dto';
+import { CreateUserDto } from '../../src/user/dto/create-user.dto';
+import { CreateUserProfileDto } from '../../src/user/dto/create-user-profile.dto';
+import { UpdateUserProfileDto } from '../../src/user/dto/update-user-profile.dto';
+import { CreateUserSettingsDto } from '../../src/user/dto/create-user-settings.dto';
+import { UpdateUserSettingsDto } from '../../src/user/dto/update-user-settings.dto';
 
 import {
   MOCK_USER_PROFILE_1,

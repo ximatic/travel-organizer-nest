@@ -10,7 +10,7 @@ import { createMock } from '@golevelup/ts-jest';
 import {
   MOCK_ACCESS_TOKEN_1,
   MOCK_ACCESS_TOKEN_2,
-} from '../../__mocks__/constants/auth.constants';
+} from '../../../__mocks__/constants/auth.constants';
 
 import { AccessToken } from '../../token/schemas/access-token.schema';
 

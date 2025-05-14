@@ -6,7 +6,7 @@ import { createMock } from '@golevelup/ts-jest';
 
 import { TokenService } from '../services/token.service';
 
-import { MOCK_ACCESS_TOKEN_1 } from '../../__mocks__/constants/auth.constants';
+import { MOCK_ACCESS_TOKEN_1 } from '../../../__mocks__/constants/auth.constants';
 
 import { jwt } from '../../auth/constants/auth.constants';
 

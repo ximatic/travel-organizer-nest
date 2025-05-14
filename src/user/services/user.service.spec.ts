@@ -3,17 +3,17 @@ import { getModelToken } from '@nestjs/mongoose';
 
 import { Model } from 'mongoose';
 
-import { MOCK_PASSWORD_1 } from '../../__mocks__/constants/common.constants';
+import { MOCK_PASSWORD_1 } from '../../../__mocks__/constants/common.constants';
 import {
   MOCK_USER_1,
   MOCK_USER_2,
   MOCK_USER_PROFILE_1,
   MOCK_USER_SETTINGS_1,
-} from '../../__mocks__/constants/user.constants';
-import { MOCK_CREATE_USER_1 } from '../../__mocks__/dto/user.dto';
-import { userProfileServiceMock } from '../../__mocks__/services/user-profile.service.mock';
-import { userSettingsServiceMock } from '../../__mocks__/services/user-settings.service.mock';
-import { userModelMock } from '../../__mocks__/schema/user.schema.mock';
+} from '../../../__mocks__/constants/user.constants';
+import { MOCK_CREATE_USER_1 } from '../../../__mocks__/dto/user.dto';
+import { userProfileServiceMock } from '../../../__mocks__/services/user-profile.service.mock';
+import { userSettingsServiceMock } from '../../../__mocks__/services/user-settings.service.mock';
+import { userModelMock } from '../../../__mocks__/schema/user.schema.mock';
 
 import { UserProfileService } from './user-profile.service';
 import { UserSettingsService } from './user-settings.service';

@@ -13,17 +13,17 @@ import {
   MOCK_LASTNAME_1,
   MOCK_PASSWORD_1,
   MOCK_PASSWORD_2,
-} from '../../__mocks__/constants/common.constants';
-import { MOCK_ACCESS_TOKEN_1 } from '../../__mocks__/constants/auth.constants';
+} from '../../../__mocks__/constants/common.constants';
+import { MOCK_ACCESS_TOKEN_1 } from '../../../__mocks__/constants/auth.constants';
 import {
   MOCK_USER_1,
   MOCK_USER_PROFILE_1,
   MOCK_USER_SETTINGS_1,
-} from '../../__mocks__/constants/user.constants';
+} from '../../../__mocks__/constants/user.constants';
 
-import { jwtServiceMock } from '../../__mocks__/services/jwt.service.mock';
-import { tokenServiceMock } from '../../__mocks__/services/token.service.mock';
-import { userServiceMock } from '../../__mocks__/services/user.service.mock';
+import { jwtServiceMock } from '../../../__mocks__/services/jwt.service.mock';
+import { tokenServiceMock } from '../../../__mocks__/services/token.service.mock';
+import { userServiceMock } from '../../../__mocks__/services/user.service.mock';
 
 import { UserService } from '../../user/services/user.service';
 import { TokenService } from '../../token/services/token.service';

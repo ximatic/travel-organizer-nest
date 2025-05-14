@@ -1,4 +1,4 @@
-import { UserRole } from '../../user/models/user.enum';
+import { UserRole } from '../../src/user/models/user.enum';
 
 // user
 

@@ -7,12 +7,12 @@ import {
   MOCK_USER_1,
   MOCK_USER_SETTINGS_1,
   MOCK_USER_SETTINGS_2,
-} from '../../__mocks__/constants/user.constants';
-import { userSettingsModelMock } from '../../__mocks__/schema/user-settings.schema.mock';
+} from '../../../__mocks__/constants/user.constants';
+import { userSettingsModelMock } from '../../../__mocks__/schema/user-settings.schema.mock';
 import {
   MOCK_CREATE_USER_SETTINGS_1,
   MOCK_UPDATE_USER_SETTINGS_1,
-} from '../../__mocks__/dto/user.dto';
+} from '../../../__mocks__/dto/user.dto';
 
 import { UserSettings } from '../schemas/user-settings.schema';
 

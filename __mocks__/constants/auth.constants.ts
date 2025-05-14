@@ -2,8 +2,8 @@ import { Types } from 'mongoose';
 
 import { MOCK_USER_1, MOCK_USER_2 } from './user.constants';
 
-import { AccessToken } from '../../token/schemas/access-token.schema';
-import { RefreshToken } from '../../token/schemas/refresh-token.schema';
+import { AccessToken } from '../../src/token/schemas/access-token.schema';
+import { RefreshToken } from '../../src/token/schemas/refresh-token.schema';
 
 // access token
 

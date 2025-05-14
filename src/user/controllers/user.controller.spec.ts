@@ -9,24 +9,24 @@ import { Request } from 'express';
 
 import { createMock } from '@golevelup/ts-jest';
 
-import { tokenGuardMock } from '../../__mocks__/guards/token.guard.mock';
-import { userServiceMock } from '../../__mocks__/services/user.service.mock';
-import { MOCK_ACCESS_TOKEN_1 } from '../../__mocks__/constants/auth.constants';
+import { tokenGuardMock } from '../../../__mocks__/guards/token.guard.mock';
+import { userServiceMock } from '../../../__mocks__/services/user.service.mock';
+import { MOCK_ACCESS_TOKEN_1 } from '../../../__mocks__/constants/auth.constants';
 import {
   MOCK_PASSWORD_1,
   MOCK_PASSWORD_2,
-} from '../../__mocks__/constants/common.constants';
+} from '../../../__mocks__/constants/common.constants';
 import {
   MOCK_USER_1,
   MOCK_USER_DATA_RESPONSE_1,
   MOCK_USER_INFO_RESPONSE_1,
   MOCK_USER_PROFILE_RESPONSE_1,
   MOCK_USER_SETTINGS_RESPONSE_1,
-} from '../../__mocks__/constants/user.constants';
+} from '../../../__mocks__/constants/user.constants';
 import {
   MOCK_UPDATE_USER_PROFILE_1,
   MOCK_UPDATE_USER_SETTINGS_1,
-} from '../../__mocks__/dto/user.dto';
+} from '../../../__mocks__/dto/user.dto';
 
 import { TokenGuard } from '../../token/guards/token.guard';
 

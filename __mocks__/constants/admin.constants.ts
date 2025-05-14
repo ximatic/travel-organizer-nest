@@ -1,6 +1,6 @@
 import { MOCK_USER_1, MOCK_USER_2 } from './user.constants';
 
-import { AdminUserResponse } from '../../admin/models/admin-user.model';
+import { AdminUserResponse } from '../../src/admin/models/admin-user.model';
 
 // admin user response
 

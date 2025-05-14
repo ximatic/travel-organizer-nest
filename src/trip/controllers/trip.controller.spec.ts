@@ -15,11 +15,11 @@ import {
   MOCK_TRIP_ITEM_2,
   MOCK_UPDATE_TRIP_1,
   MOCK_UPDATE_TRIP_ITEM_1,
-} from '../../__mocks__/constants/trip.constants';
-import { MOCK_USER_1 } from '../../__mocks__/constants/user.constants';
-import { tokenGuardMock } from '../../__mocks__/guards/token.guard.mock';
-import { tripServiceMock } from '../../__mocks__/services/trip.service.mock';
-import { mockRequestAccessToken } from '../../__mocks__/request.mock';
+} from '../../../__mocks__/constants/trip.constants';
+import { MOCK_USER_1 } from '../../../__mocks__/constants/user.constants';
+import { tokenGuardMock } from '../../../__mocks__/guards/token.guard.mock';
+import { tripServiceMock } from '../../../__mocks__/services/trip.service.mock';
+import { mockRequestAccessToken } from '../../../__mocks__/request.mock';
 
 import { TokenGuard } from '../../token/guards/token.guard';
 

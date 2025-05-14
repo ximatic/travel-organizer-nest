@@ -1,18 +1,18 @@
 import { InternalServerErrorException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { tokenGuardMock } from '../../__mocks__/guards/token.guard.mock';
-import { adminRoleGuardMock } from '../../__mocks__/guards/admin-role.guard.mock';
-import { adminServiceMock } from '../../__mocks__/services/admin.service.mock';
+import { tokenGuardMock } from '../../../__mocks__/guards/token.guard.mock';
+import { adminRoleGuardMock } from '../../../__mocks__/guards/admin-role.guard.mock';
+import { adminServiceMock } from '../../../__mocks__/services/admin.service.mock';
 
 import {
   MOCK_ADMIN_USER_RESPONSE_1,
   MOCK_ADMIN_USER_RESPONSE_2,
-} from '../../__mocks__/constants/admin.constants';
+} from '../../../__mocks__/constants/admin.constants';
 import {
   MOCK_USER_1,
   MOCK_USER_PROFILE_1,
-} from '../../__mocks__/constants/user.constants';
+} from '../../../__mocks__/constants/user.constants';
 
 import { TokenGuard } from '../../token/guards/token.guard';
 import { AdminRoleGuard } from '../guards/admin-role.guard';

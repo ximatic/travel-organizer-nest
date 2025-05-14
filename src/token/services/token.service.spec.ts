@@ -6,9 +6,9 @@ import { Model } from 'mongoose';
 import {
   MOCK_ACCESS_TOKEN_1,
   MOCK_REFRESH_TOKEN_1,
-} from '../../__mocks__/constants/auth.constants';
-import { accessTokenModelMock } from '../../__mocks__/schema/access-token.schema.mock';
-import { refreshTokenModelMock } from '../../__mocks__/schema/refresh-token.schema.mock';
+} from '../../../__mocks__/constants/auth.constants';
+import { accessTokenModelMock } from '../../../__mocks__/schema/access-token.schema.mock';
+import { refreshTokenModelMock } from '../../../__mocks__/schema/refresh-token.schema.mock';
 
 import { AccessToken } from '../schemas/access-token.schema';
 import { RefreshToken } from '../schemas/refresh-token.schema';
