@@ -18,7 +18,10 @@ import { AdminService } from '../services/admin.service';
 
 import { PasswordValidationPipe } from '../../common/pipes/password-validation.pipe';
 
-import { AdminUserResponse } from '../models/admin-user.model';
+import {
+  AdminUserProfileResponse,
+  AdminUserResponse,
+} from '../models/admin-user.model';
 
 import { CreateAdminUserDto } from '../dto/create-admin-user.dto';
 import { UpdateAdminUserDto } from '../dto/update-admin-user.dto';
@@ -43,7 +46,9 @@ export class AdminController {
 
   @Get('user/:id')
   @UseGuards(TokenGuard, AdminRoleGuard)
-  async getAdminUser(@Param('id') id: string): Promise<AdminUserResponse> {
+  async getAdminUser(
+    @Param('id') id: string,
+  ): Promise<AdminUserProfileResponse> {
     try {
       return this.adminService.getUser(id);
     } catch {

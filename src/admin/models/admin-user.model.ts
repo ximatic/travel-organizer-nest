@@ -5,3 +5,8 @@ export interface AdminUserResponse {
   email: string;
   role: UserRole;
 }
+
+export interface AdminUserProfileResponse extends AdminUserResponse {
+  firstname: string;
+  lastname: string;
+}

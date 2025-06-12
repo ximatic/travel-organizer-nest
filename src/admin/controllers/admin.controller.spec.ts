@@ -6,6 +6,7 @@ import { adminRoleGuardMock } from '../../../__mocks__/guards/admin-role.guard.m
 import { adminServiceMock } from '../../../__mocks__/services/admin.service.mock';
 
 import {
+  MOCK_ADMIN_USER_PROFILE_RESPONSE_1,
   MOCK_ADMIN_USER_RESPONSE_1,
   MOCK_ADMIN_USER_RESPONSE_2,
 } from '../../../__mocks__/constants/admin.constants';
@@ -94,7 +95,7 @@ describe('AdminController', () => {
 
   describe('getUser()', () => {
     it('getting user works', async () => {
-      const mockData = MOCK_ADMIN_USER_RESPONSE_1;
+      const mockData = MOCK_ADMIN_USER_PROFILE_RESPONSE_1;
       service.getUser.mockResolvedValueOnce(mockData);
 
       let hasThrown = false;

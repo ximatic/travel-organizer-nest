@@ -1,4 +1,8 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 
 import * as bcrypt from 'bcrypt';
 
@@ -6,12 +10,16 @@ import { DEFAULT_USER_SETTINGS } from '../../user/constants/user-settings.consta
 
 import { UserService } from '../../user/services/user.service';
 
-import { AdminUserResponse } from '../models/admin-user.model';
+import {
+  AdminUserProfileResponse,
+  AdminUserResponse,
+} from '../models/admin-user.model';
 
 import { User } from '../../user/schemas/user.schema';
 
 import { CreateAdminUserDto } from '../dto/create-admin-user.dto';
 import { UpdateAdminUserDto } from '../dto/update-admin-user.dto';
+import { UserProfile } from 'src/user/schemas/user-profile.schema';
 
 @Injectable()
 export class AdminService {
@@ -25,8 +33,16 @@ export class AdminService {
     );
   }
 
-  async getUser(id: string): Promise<AdminUserResponse> {
-    return this.createAdminUserResponse(await this.userService.getUserById(id));
+  async getUser(id: string): Promise<AdminUserProfileResponse> {
+    const user = await this.userService.getUserById(id);
+    let userProfile;
+    if (!user) {
+      throw new NotFoundException(`User with ID ${id} not found`);
+    } else {
+      userProfile = await this.userService.getUserProfile(user);
+    }
+
+    return this.createAdminUserProfileResponse(user, userProfile);
   }
 
   async createUser(
@@ -128,5 +144,16 @@ export class AdminService {
       email: user.email,
       role: user.role,
     } as AdminUserResponse;
+  }
+
+  private createAdminUserProfileResponse(
+    user: User,
+    userProfile: UserProfile,
+  ): AdminUserProfileResponse {
+    return {
+      ...this.createAdminUserResponse(user),
+      firstname: userProfile.firstname,
+      lastname: userProfile.lastname,
+    } as AdminUserProfileResponse;
   }
 }

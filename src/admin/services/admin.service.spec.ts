@@ -1,4 +1,7 @@
-import { InternalServerErrorException } from '@nestjs/common';
+import {
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 
 import {
@@ -9,6 +12,7 @@ import {
   MOCK_ROLE_1,
 } from '../../../__mocks__/constants/common.constants';
 import {
+  MOCK_ADMIN_USER_PROFILE_RESPONSE_1,
   MOCK_ADMIN_USER_RESPONSE_1,
   MOCK_ADMIN_USER_RESPONSE_2,
 } from '../../../__mocks__/constants/admin.constants';
@@ -24,9 +28,9 @@ import { userServiceMock } from '../../../__mocks__/services/user.service.mock';
 import { UserService } from '../../user/services/user.service';
 
 import { CreateAdminUserDto } from '../dto/create-admin-user.dto';
+import { UpdateAdminUserDto } from '../dto/update-admin-user.dto';
 
 import { AdminService } from './admin.service';
-import { UpdateAdminUserDto } from '../dto/update-admin-user.dto';
 
 describe('AdminService', () => {
   let service: AdminService;
@@ -71,11 +75,29 @@ describe('AdminService', () => {
   describe('getUser()', () => {
     it('getting user works', async () => {
       userService.getUserById.mockResolvedValueOnce(MOCK_USER_1);
+      userService.getUserProfile.mockResolvedValueOnce(MOCK_USER_PROFILE_1);
 
       const result = await service.getUser(MOCK_USER_1._id.toString());
 
-      expect(result).toEqual(MOCK_ADMIN_USER_RESPONSE_1);
+      expect(result).toEqual(MOCK_ADMIN_USER_PROFILE_RESPONSE_1);
       expect(userService.getUserById).toHaveBeenCalled();
+      expect(userService.getUserProfile).toHaveBeenCalled();
+    });
+
+    it('getting user throws NotFoundException when User does not exist', async () => {
+      userService.getUserById.mockResolvedValueOnce(null);
+
+      let hasThrown = false;
+      try {
+        await service.getUser(MOCK_USER_1._id.toString());
+      } catch (error: any) {
+        hasThrown = true;
+        expect(error).toBeInstanceOf(NotFoundException);
+      }
+
+      expect(hasThrown).toBe(true);
+      expect(userService.getUserById).toHaveBeenCalled();
+      expect(userService.getUserProfile).toHaveBeenCalledTimes(0);
     });
   });
 
