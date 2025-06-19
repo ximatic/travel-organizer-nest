@@ -137,7 +137,7 @@ describe('AdminController', () => {
     };
 
     it('creating user works', async () => {
-      const mockData = MOCK_ADMIN_USER_RESPONSE_1;
+      const mockData = MOCK_ADMIN_USER_PROFILE_RESPONSE_1;
       service.createUser.mockResolvedValueOnce(mockData);
 
       let hasThrown = false;
@@ -180,7 +180,7 @@ describe('AdminController', () => {
     };
 
     it('updating user works', async () => {
-      const mockData = MOCK_ADMIN_USER_RESPONSE_1;
+      const mockData = MOCK_ADMIN_USER_PROFILE_RESPONSE_1;
       service.updateUser.mockResolvedValueOnce(mockData);
 
       let hasThrown = false;

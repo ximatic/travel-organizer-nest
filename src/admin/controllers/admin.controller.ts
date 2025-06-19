@@ -63,7 +63,7 @@ export class AdminController {
   @UsePipes(PasswordValidationPipe)
   async createAdminUser(
     @Body() createAdminUserDto: CreateAdminUserDto,
-  ): Promise<AdminUserResponse> {
+  ): Promise<AdminUserProfileResponse> {
     try {
       return this.adminService.createUser(createAdminUserDto);
     } catch {
@@ -79,7 +79,7 @@ export class AdminController {
   async updateAdminUser(
     @Param('id') id: string,
     @Body() updateAdminUserDto: UpdateAdminUserDto,
-  ): Promise<AdminUserResponse> {
+  ): Promise<AdminUserProfileResponse> {
     try {
       return this.adminService.updateUser(id, updateAdminUserDto);
     } catch {

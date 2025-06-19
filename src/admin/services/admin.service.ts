@@ -20,6 +20,7 @@ import { User } from '../../user/schemas/user.schema';
 import { CreateAdminUserDto } from '../dto/create-admin-user.dto';
 import { UpdateAdminUserDto } from '../dto/update-admin-user.dto';
 import { UserProfile } from 'src/user/schemas/user-profile.schema';
+import { UserProfileResponse } from 'src/user/models/user-profile.model';
 
 @Injectable()
 export class AdminService {
@@ -47,7 +48,7 @@ export class AdminService {
 
   async createUser(
     createAdminUserDto: CreateAdminUserDto,
-  ): Promise<AdminUserResponse> {
+  ): Promise<AdminUserProfileResponse> {
     const hashPasssword = await this.hashPassword(createAdminUserDto.password);
     const user = await this.userService.createUser({
       email: createAdminUserDto.email,
@@ -81,13 +82,13 @@ export class AdminService {
       );
     }
 
-    return this.createAdminUserResponse(user);
+    return this.createAdminUserProfileResponse(user, userProfile);
   }
 
   async updateUser(
     id: string,
     updateAdminUserDto: UpdateAdminUserDto,
-  ): Promise<AdminUserResponse> {
+  ): Promise<AdminUserProfileResponse> {
     let user;
     if (
       updateAdminUserDto.email ||
@@ -112,9 +113,10 @@ export class AdminService {
       );
     }
 
+    let userProfile;
     if (updateAdminUserDto.firstname || updateAdminUserDto.lastname) {
       try {
-        await this.userService.updateUserProfile(user, {
+        userProfile = await this.userService.updateUserProfile(user, {
           firstname: updateAdminUserDto.firstname,
           lastname: updateAdminUserDto.lastname,
         });
@@ -123,9 +125,11 @@ export class AdminService {
           `Can't process request and update an user. Please try again later.`,
         );
       }
+    } else {
+      userProfile = await this.userService.getUserProfile(user);
     }
 
-    return this.createAdminUserResponse(user);
+    return this.createAdminUserProfileResponse(user, userProfile);
   }
 
   async deleteUser(id: string): Promise<AdminUserResponse> {
@@ -148,7 +152,7 @@ export class AdminService {
 
   private createAdminUserProfileResponse(
     user: User,
-    userProfile: UserProfile,
+    userProfile: UserProfile | UserProfileResponse,
   ): AdminUserProfileResponse {
     return {
       ...this.createAdminUserResponse(user),

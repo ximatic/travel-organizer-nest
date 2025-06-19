@@ -168,7 +168,7 @@ describe('AdminService', () => {
         MOCK_USER_SETTINGS_1,
       );
 
-      const expectedResult = MOCK_ADMIN_USER_RESPONSE_1;
+      const expectedResult = MOCK_ADMIN_USER_PROFILE_RESPONSE_1;
 
       let hasThrown = false;
       let result;
@@ -201,7 +201,7 @@ describe('AdminService', () => {
         MOCK_USER_SETTINGS_1,
       );
 
-      const expectedResult = MOCK_ADMIN_USER_RESPONSE_1;
+      const expectedResult = MOCK_ADMIN_USER_PROFILE_RESPONSE_1;
 
       let hasThrown = false;
       let result;
@@ -273,7 +273,7 @@ describe('AdminService', () => {
       userService.updateUser.mockResolvedValueOnce(MOCK_USER_1);
       userService.updateUserProfile.mockResolvedValueOnce(MOCK_USER_PROFILE_1);
 
-      const expectedResult = MOCK_ADMIN_USER_RESPONSE_1;
+      const expectedResult = MOCK_ADMIN_USER_PROFILE_RESPONSE_1;
 
       let hasThrown = false;
       let result;
@@ -302,7 +302,7 @@ describe('AdminService', () => {
       userService.getUserById.mockResolvedValueOnce(MOCK_USER_1);
       userService.updateUserProfile.mockResolvedValueOnce(MOCK_USER_PROFILE_1);
 
-      const expectedResult = MOCK_ADMIN_USER_RESPONSE_1;
+      const expectedResult = MOCK_ADMIN_USER_PROFILE_RESPONSE_1;
 
       let hasThrown = false;
       let result;
@@ -330,8 +330,9 @@ describe('AdminService', () => {
       };
 
       userService.getUserById.mockResolvedValueOnce(MOCK_USER_1);
+      userService.getUserProfile.mockResolvedValueOnce(MOCK_USER_PROFILE_1);
 
-      const expectedResult = MOCK_ADMIN_USER_RESPONSE_1;
+      const expectedResult = MOCK_ADMIN_USER_PROFILE_RESPONSE_1;
 
       let hasThrown = false;
       let result;
