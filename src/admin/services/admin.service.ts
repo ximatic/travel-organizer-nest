@@ -53,6 +53,7 @@ export class AdminService {
     const user = await this.userService.createUser({
       email: createAdminUserDto.email,
       password: hashPasssword,
+      role: createAdminUserDto.role,
     });
 
     if (!user) {
@@ -89,22 +90,20 @@ export class AdminService {
     id: string,
     updateAdminUserDto: UpdateAdminUserDto,
   ): Promise<AdminUserProfileResponse> {
-    let user;
+    let user = await this.userService.getUserById(id);
     if (
       updateAdminUserDto.email ||
       updateAdminUserDto.password ||
       updateAdminUserDto.role
     ) {
-      const hashPasssword = await this.hashPassword(
-        updateAdminUserDto.password,
-      );
+      const password = updateAdminUserDto.password
+        ? await this.hashPassword(updateAdminUserDto.password)
+        : user.password;
       user = await this.userService.updateUser(id, {
-        email: updateAdminUserDto.email,
-        password: hashPasssword,
-        role: updateAdminUserDto.role,
+        email: updateAdminUserDto.email || user.email,
+        password: password,
+        role: updateAdminUserDto.role || user.role,
       });
-    } else {
-      user = await this.userService.getUserById(id);
     }
 
     if (!user) {
