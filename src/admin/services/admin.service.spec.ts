@@ -270,6 +270,7 @@ describe('AdminService', () => {
     });
 
     it('updating an exisiting user (user + profile) works', async () => {
+      userService.getUserById.mockResolvedValueOnce(MOCK_USER_1);
       userService.updateUser.mockResolvedValueOnce(MOCK_USER_1);
       userService.updateUserProfile.mockResolvedValueOnce(MOCK_USER_PROFILE_1);
 
@@ -288,6 +289,67 @@ describe('AdminService', () => {
       expect(hasThrown).toBe(false);
       expect(userService.updateUser).toHaveBeenCalled();
       expect(userService.updateUserProfile).toHaveBeenCalled();
+    });
+
+    it('updating an exisiting user (user with role only) works', async () => {
+      updateAdminUserDto = {
+        id,
+        email: '',
+        password: '',
+        firstname: '',
+        lastname: '',
+        role: MOCK_ROLE_1,
+      };
+
+      userService.getUserById.mockResolvedValueOnce(MOCK_USER_1);
+      userService.updateUser.mockResolvedValueOnce(MOCK_USER_1);
+      userService.getUserProfile.mockResolvedValueOnce(MOCK_USER_PROFILE_1);
+
+      const expectedResult = MOCK_ADMIN_USER_PROFILE_RESPONSE_1;
+
+      let hasThrown = false;
+      let result;
+      try {
+        result = await service.updateUser(id, updateAdminUserDto);
+      } catch {
+        hasThrown = true;
+      }
+
+      expect(result).toEqual(expectedResult);
+
+      expect(hasThrown).toBe(false);
+      expect(userService.updateUser).toHaveBeenCalled();
+      expect(userService.updateUserProfile).toHaveBeenCalledTimes(0);
+    });
+
+    it('updating an exisiting user (user with email only) works', async () => {
+      updateAdminUserDto = {
+        id,
+        email: MOCK_EMAIL_1,
+        password: '',
+        firstname: '',
+        lastname: '',
+      };
+
+      userService.getUserById.mockResolvedValueOnce(MOCK_USER_1);
+      userService.updateUser.mockResolvedValueOnce(MOCK_USER_1);
+      userService.getUserProfile.mockResolvedValueOnce(MOCK_USER_PROFILE_1);
+
+      const expectedResult = MOCK_ADMIN_USER_PROFILE_RESPONSE_1;
+
+      let hasThrown = false;
+      let result;
+      try {
+        result = await service.updateUser(id, updateAdminUserDto);
+      } catch {
+        hasThrown = true;
+      }
+
+      expect(result).toEqual(expectedResult);
+
+      expect(hasThrown).toBe(false);
+      expect(userService.updateUser).toHaveBeenCalled();
+      expect(userService.updateUserProfile).toHaveBeenCalledTimes(0);
     });
 
     it('updating an exisiting user (profile) works', async () => {

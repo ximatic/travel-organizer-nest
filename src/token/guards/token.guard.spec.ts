@@ -55,6 +55,20 @@ describe('TokenGuard', () => {
   });
 
   describe('canActivate()', () => {
+    it('should throw an UnauthorizedException when there is no Authorization in headers', async () => {
+      const mockContext = getExecutionContextMock({});
+
+      let hasThrown = false;
+      try {
+        await guard.canActivate(mockContext);
+      } catch (error: any) {
+        hasThrown = true;
+        expect(error).toBeInstanceOf(UnauthorizedException);
+      }
+
+      expect(hasThrown).toBe(true);
+    });
+
     it('should throw an UnauthorizedException when no Access Token is passed in Authorization headers', async () => {
       const mockContext = getExecutionContextMock({
         authorization: ``,
