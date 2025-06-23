@@ -21,6 +21,6 @@ export class CreateAdminUserDto {
   readonly lastname: string;
 
   @IsOptional()
-  @Transform(() => UserRole)
+  @Transform(({ value }) => value as UserRole)
   readonly role?: UserRole;
 }
