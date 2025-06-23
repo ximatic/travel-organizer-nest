@@ -10,10 +10,10 @@ export class UpdateUserInfoDto {
   readonly email?: string;
 
   @IsOptional()
-  @Transform(() => UpdateUserProfileDto)
+  @Transform(({ value }) => value as UpdateUserProfileDto)
   readonly profile?: UpdateUserProfileDto;
 
   @IsOptional()
-  @Transform(() => UpdateUserSettingsDto)
+  @Transform(({ value }) => value as UpdateUserSettingsDto)
   readonly settings?: UpdateUserSettingsDto;
 }

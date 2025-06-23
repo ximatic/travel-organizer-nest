@@ -9,6 +9,6 @@ export class UpdateUserDataDto {
   readonly email?: string;
 
   @IsOptional()
-  @Transform(() => UpdateUserProfileDto)
+  @Transform(({ value }) => value as UpdateUserProfileDto)
   profile?: UpdateUserProfileDto;
 }

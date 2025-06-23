@@ -12,6 +12,6 @@ export class UpdateUserDto extends PasswordSetupDto {
 
   // TODO - it should be only allowed from Admin module
   @IsOptional()
-  @Transform(() => UserRole)
+  @Transform(({ value }) => value as UserRole)
   readonly role?: UserRole;
 }

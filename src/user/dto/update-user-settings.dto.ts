@@ -10,18 +10,18 @@ import {
 
 export class UpdateUserSettingsDto {
   @IsOptional()
-  @Transform(() => UserSettingsLanguage)
+  @Transform(({ value }) => value as UserSettingsLanguage)
   language: UserSettingsLanguage;
 
   @IsOptional()
-  @Transform(() => UserSettingsDateFormat)
+  @Transform(({ value }) => value as UserSettingsDateFormat)
   dateFormat: UserSettingsDateFormat;
 
   @IsOptional()
-  @Transform(() => UserSettingsTimeFormat)
+  @Transform(({ value }) => value as UserSettingsTimeFormat)
   timeFormat: UserSettingsTimeFormat;
 
   @IsOptional()
-  @Transform(() => UserSettingsTheme)
+  @Transform(({ value }) => value as UserSettingsTheme)
   theme: UserSettingsTheme;
 }
