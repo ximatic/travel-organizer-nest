@@ -11,19 +11,19 @@ import {
 
 export class CreateUserSettingsDto {
   @IsOptional()
-  @Transform(() => UserSettingsLanguage)
+  @Transform(({ value }) => value as UserSettingsLanguage)
   language: string;
 
   @IsOptional()
-  @Transform(() => UserSettingsDateFormat)
+  @Transform(({ value }) => value as UserSettingsDateFormat)
   dateFormat: UserSettingsDateFormat;
 
   @IsOptional()
-  @Transform(() => UserSettingsTimeFormat)
+  @Transform(({ value }) => value as UserSettingsTimeFormat)
   timeFormat: UserSettingsTimeFormat;
 
   @IsOptional()
-  @Transform(() => UserSettingsTheme)
+  @Transform(({ value }) => value as UserSettingsTheme)
   theme: UserSettingsTheme;
 
   @IsNotEmpty()
