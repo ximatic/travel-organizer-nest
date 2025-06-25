@@ -167,6 +167,12 @@ describe('UserService', () => {
         const result = await service.deleteUser(MOCK_USER_1._id.toString());
 
         expect(result).toEqual(mockData);
+        expect(
+          userProfileService.deleteUserProfileByUserId,
+        ).toHaveBeenCalledWith(MOCK_USER_1._id);
+        expect(
+          userSettingsService.deleteUserSettingsByUserId,
+        ).toHaveBeenCalledWith(MOCK_USER_1._id);
         expect(userModel.findByIdAndDelete).toHaveBeenCalled();
       });
     });

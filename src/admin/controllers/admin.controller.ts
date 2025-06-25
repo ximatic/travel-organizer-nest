@@ -7,6 +7,7 @@ import {
   Param,
   Post,
   Put,
+  Req,
   UseGuards,
   UsePipes,
 } from '@nestjs/common';
@@ -91,7 +92,16 @@ export class AdminController {
 
   @Delete('user/:id')
   @UseGuards(TokenGuard, AdminRoleGuard)
-  async deleteAdminUser(@Param('id') id: string): Promise<void> {
+  async deleteAdminUser(
+    @Req() request: Request,
+    @Param('id') id: string,
+  ): Promise<void> {
+    if (request['accessToken'].user._id.toString() === id) {
+      throw new InternalServerErrorException(
+        `Can't process request. Try again later.`,
+      );
+    }
+
     try {
       await this.adminService.deleteUser(id);
     } catch {

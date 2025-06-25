@@ -7,6 +7,7 @@ import { RefreshToken } from '../../src/token/schemas/refresh-token.schema';
 
 // access token
 
+// token with user role
 export const MOCK_ACCESS_TOKEN_1: AccessToken = {
   _id: new Types.ObjectId(),
   token:
@@ -15,6 +16,7 @@ export const MOCK_ACCESS_TOKEN_1: AccessToken = {
   createdAt: new Date(),
 };
 
+// token with admin role
 export const MOCK_ACCESS_TOKEN_2: AccessToken = {
   _id: new Types.ObjectId(),
   token:

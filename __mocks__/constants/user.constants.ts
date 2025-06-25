@@ -30,6 +30,7 @@ import {
 
 // user
 
+// user role
 export const MOCK_USER_1: User = {
   _id: new Types.ObjectId(),
   email: MOCK_EMAIL_1,
@@ -39,6 +40,7 @@ export const MOCK_USER_1: User = {
   updatedAt: new Date(),
 };
 
+// admin role
 export const MOCK_USER_2: User = {
   _id: new Types.ObjectId(),
   email: MOCK_EMAIL_2,

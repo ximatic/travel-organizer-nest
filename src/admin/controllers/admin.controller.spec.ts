@@ -1,5 +1,7 @@
-import { InternalServerErrorException } from '@nestjs/common';
+import { ExecutionContext, InternalServerErrorException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
+
+import { createMock } from '@golevelup/ts-jest';
 
 import { tokenGuardMock } from '../../../__mocks__/guards/token.guard.mock';
 import { adminRoleGuardMock } from '../../../__mocks__/guards/admin-role.guard.mock';
@@ -11,6 +13,10 @@ import {
   MOCK_ADMIN_USER_RESPONSE_2,
 } from '../../../__mocks__/constants/admin.constants';
 import {
+  MOCK_ACCESS_TOKEN_1,
+  MOCK_ACCESS_TOKEN_2,
+} from '../../../__mocks__/constants/auth.constants';
+import {
   MOCK_USER_1,
   MOCK_USER_PROFILE_1,
 } from '../../../__mocks__/constants/user.constants';
@@ -20,10 +26,23 @@ import { AdminRoleGuard } from '../guards/admin-role.guard';
 
 import { AdminService } from '../services/admin.service';
 
+import { AccessToken } from '../../token/schemas/access-token.schema';
+
 import { CreateAdminUserDto } from '../dto/create-admin-user.dto';
 import { UpdateAdminUserDto } from '../dto/update-admin-user.dto';
 
 import { AdminController } from './admin.controller';
+
+const getExecutionContextMock = (
+  accessToken: string | AccessToken,
+): ExecutionContext => {
+  const mockContext = createMock<ExecutionContext>();
+  mockContext.switchToHttp().getRequest.mockReturnValue({
+    accessToken,
+  });
+
+  return mockContext;
+};
 
 describe('AdminController', () => {
   let controller: AdminController;
@@ -219,7 +238,29 @@ describe('AdminController', () => {
   });
 
   describe('deleteAdminUser()', () => {
+    it('deleting user throws an error when passed ID equals requesting user ID', async () => {
+      const mockContext = getExecutionContextMock(MOCK_ACCESS_TOKEN_1);
+      // service.deleteUser.mockImplementationOnce(() => {
+      //   throw new Error();
+      // });
+
+      let hasThrown = false;
+      try {
+        await controller.deleteAdminUser(
+          mockContext.switchToHttp().getRequest() as Request,
+          MOCK_USER_1._id.toString(),
+        );
+      } catch (error: any) {
+        hasThrown = true;
+        expect(error).toBeInstanceOf(InternalServerErrorException);
+      }
+
+      expect(hasThrown).toBe(true);
+      expect(service.deleteUser).toHaveBeenCalledTimes(0);
+    });
+
     it('deleting user works', async () => {
+      const mockContext = getExecutionContextMock(MOCK_ACCESS_TOKEN_2);
       const mockData = MOCK_USER_1;
       service.deleteUser.mockResolvedValueOnce({
         id: mockData._id.toString(),
@@ -229,7 +270,10 @@ describe('AdminController', () => {
 
       let hasThrown = false;
       try {
-        await controller.deleteAdminUser(MOCK_USER_1._id.toString());
+        await controller.deleteAdminUser(
+          mockContext.switchToHttp().getRequest() as Request,
+          MOCK_USER_1._id.toString(),
+        );
       } catch {
         hasThrown = true;
       }
@@ -239,13 +283,17 @@ describe('AdminController', () => {
     });
 
     it('deleting user throws an error', async () => {
+      const mockContext = getExecutionContextMock(MOCK_ACCESS_TOKEN_2);
       service.deleteUser.mockImplementationOnce(() => {
         throw new Error();
       });
 
       let hasThrown = false;
       try {
-        await controller.deleteAdminUser(MOCK_USER_1._id.toString());
+        await controller.deleteAdminUser(
+          mockContext.switchToHttp().getRequest() as Request,
+          MOCK_USER_1._id.toString(),
+        );
       } catch (error: any) {
         hasThrown = true;
         expect(error).toBeInstanceOf(InternalServerErrorException);

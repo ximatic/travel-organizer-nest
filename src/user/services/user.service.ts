@@ -66,8 +66,11 @@ export class UserService {
   }
 
   async deleteUser(id: string): Promise<User> {
-    // TODO - should be done together with deleteUserProfile
-    return this.userModel.findByIdAndDelete({ _id: id }).exec();
+    const user = await this.userModel.findByIdAndDelete({ _id: id }).exec();
+    await this.userProfileService.deleteUserProfileByUserId(user._id);
+    await this.userSettingsService.deleteUserSettingsByUserId(user._id);
+
+    return user;
   }
 
   // user info
