@@ -26,7 +26,7 @@ import { UpdateTripDto } from '../dto/update-trip.dto';
 import { CreateTripItemDto } from '../dto/create-trip-item.dto';
 import { UpdateTripItemDto } from '../dto/update-trip-item.dto';
 
-@Controller('trips')
+@Controller('trip')
 @UseGuards(TokenGuard)
 export class TripController {
   constructor(private readonly tripService: TripService) {}
