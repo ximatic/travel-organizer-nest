@@ -5,6 +5,7 @@ import { UserRole } from '../../src/user/models/user.enum';
 export const MOCK_EMAIL_1 = 'test-1@example.com';
 export const MOCK_EMAIL_2 = 'test-2@example.com';
 
+export const MOCK_PASSWORD_0 = 'invalid-password';
 export const MOCK_PASSWORD_1 = 'P@ssword123';
 export const MOCK_PASSWORD_2 = 'P@ssword321';
 
